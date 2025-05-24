@@ -45,6 +45,8 @@ use App\Http\Middleware\PeranMiddleware;
 use App\Http\Controllers\SkillMatchingController;
 use App\Http\Controllers\BerandaTraineeController;
 use App\Http\Controllers\ProfilController;
+use App\Http\Controllers\RiwayatController;
+use App\Http\Controllers\DetailRiwayatController;
 
 // Route Default
 Route::get('/', function () {
@@ -56,16 +58,14 @@ Route::get('/', function () {
 Route::get('/SkillMatching', function () {
     return view('SkillMatching');
 });
-
-// Beranda Trainee baru
-// Route::get('/BerandaTrainee', function () {
-//     return view('Traineev2.BerandaTrainee');
-// });
-
-// Jelajahi Trainee baru
-// Route::get('/Profil', function () {
-//     return view('Traineev2.Profil');
-// });
+// Riwayat
+Route::get('/Riwayat', function () {
+    return view('Traineev2.Riwayat');
+});
+// Detail Riwayat
+Route::get('/DetailRiwayat', function () {
+    return view('Traineev2.DetailRiwayat');
+});
 
 // perubahan end
 

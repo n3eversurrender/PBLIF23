@@ -11,11 +11,11 @@
         <h2 class=" text-xl sm:text-4xl lg:text-5xl font-bold whitespace-normal">
             Membentuk Keterampilan, Menggerakkan Industri!
         </h2>
-        @guest
+        <!-- @guest
         <a href="/Daftar" class="mt-4 sm:mt-10 text-sm sm:text-base inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
             Daftar Sekarang
         </a>
-        @endguest
+        @endguest -->
     </div>
 </div>
 
