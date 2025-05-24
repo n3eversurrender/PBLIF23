@@ -58,13 +58,25 @@ Route::get('/', function () {
 Route::get('/SkillMatching', function () {
     return view('SkillMatching');
 });
-// Riwayat
-Route::get('/Riwayat', function () {
-    return view('Traineev2.Riwayat');
+
+// Beranda Perusahaan
+Route::get('/BerandaPerusahaan', function () {
+    return view('Perusahaan.BerandaPerusahaan');
 });
-// Detail Riwayat
-Route::get('/DetailRiwayat', function () {
-    return view('Traineev2.DetailRiwayat');
+
+// lupa kata sandi
+Route::get('/lupasandi', function () {
+    return view('guest.LupaKataSandi');
+});
+
+// konfirmasi kata sandi
+Route::get('/konfirmasi', function () {
+    return view('guest.KonfirmasiKataSandi');
+});
+
+// Layouts Perusahaan
+Route::get('/main', function () {
+    return view('layouts.mainPerusahaan');
 });
 
 // perubahan end
@@ -104,7 +116,9 @@ Route::middleware(['auth', PeranMiddleware::class . ':Peserta'])->group(function
     Route::post('/logoutPeserta', [LoginPenggunaController::class, 'logoutPeserta'])->name('logoutPeserta');
     Route::get('/DashboardPeserta', [DashboardPesertaController::class, 'dashboardPeserta'])->name('DashboardPeserta');
     Route::get('/BerandaTrainee', [BerandaTraineeController::class, 'berandaTrainee'])->name('BerandaTrainee');
-     Route::get('/Profil', [ProfilController::class, 'profil'])->name('Profil');
+    Route::get('/Riwayat', [RiwayatController::class, 'riwayat'])->name('Riwayat');
+    Route::get('/DetailRiwayat', [DetailRiwayatController::class, 'detailRiwayat'])->name('DetailRiwayat');
+    Route::get('/Profil', [ProfilController::class, 'profil'])->name('Profil');
     Route::get('/Kursus', [KursusController::class, 'Kursus']);
     Route::get('/KursusModul/{id_kursus}', [KursusController::class, 'kursusModul'])->name('kursusModul.show');
     Route::get('/KursusMateri', [KursusController::class, 'kursusMateri'])->name('kursusMateri');

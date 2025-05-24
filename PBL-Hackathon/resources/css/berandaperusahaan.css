@@ -1,0 +1,30 @@
+/* Animasi untuk modal */
+.modal-enter {
+    opacity: 0;
+}
+.modal-enter-active {
+    opacity: 1;
+    transition: opacity 200ms;
+}
+.modal-exit {
+    opacity: 1;
+}
+.modal-exit-active {
+    opacity: 0;
+    transition: opacity 200ms;
+}
+
+/* Tombol close yang lebih besar */
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    font-size: 2rem;
+    color: white;
+    cursor: pointer;
+    transition: transform 0.2s;
+    z-index: 60;
+}
+.close-btn:hover {
+    transform: scale(1.2);
+}

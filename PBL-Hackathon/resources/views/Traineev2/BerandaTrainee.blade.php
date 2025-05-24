@@ -18,8 +18,6 @@
                 Selamat Datang, <span class="font-semibold text-gray-700 text-2xl">William James Moriarty</span>👋
             </h1>
             <p id="datetime" class="sm:text-sm ps-4 text-xs font-normal text-TeksSecond pt-5  sm:pt-3 lg:py-1"></p>
-               
-            </div>
         </div>
     </section>
     <!-- Rekomendasi kursus -->

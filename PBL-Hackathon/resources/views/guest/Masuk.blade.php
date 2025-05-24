@@ -88,7 +88,7 @@
                 </div>
 
                 <div class="mb-4 lg:mb-6 text-right text-xs sm:text-sm font-semibold mt-2 w-full text-HoverGlow hover:text-ButtonBase transition duration-700">
-                    <a href="#">Lupa kata sandi?</a>
+                    <a href="/lupasandi">Lupa kata sandi?</a>
                 </div>
 
                 <div class="flex justify-center sm:mt-8 mt-0 lg:mt-0 ">

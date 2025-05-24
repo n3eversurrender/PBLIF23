@@ -68,7 +68,7 @@
                     <input type="text"
                         aria-label=" input"
                         class="  border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Sarjana">
+                        placeholder="Cth.Sarjana">
 
                 </div>
             </div>
@@ -77,7 +77,7 @@
                 <label class="block mb-2 mt-6 text-sm font-bold text-gray-900 dark:text-white">Minat Bidang</label>
                 <textarea
                     class=" border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="contohh. welding"></textarea>
+                    placeholder="Cth.welding"></textarea>
             </div>
         </div>
 
@@ -90,7 +90,7 @@
                     <input type="text"
                         aria-label=" input"
                         class="  border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="cth. QA/QC inpector">
+                        placeholder="Cth. QA/QC inpector">
                 </div>
 
                 <div class="w-full sm:mt-[72px] mt-5">
@@ -98,7 +98,7 @@
                     <input type="number"
                         aria-label=" input"
                         class="  border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Sarjana">
+                        placeholder="Cth.2">
 
                 </div>
             </div>
@@ -107,7 +107,7 @@
                 <label class="block mb-2 mt-6 text-sm font-bold text-gray-900 dark:text-white">Kemampuan (Opsional)</label>
                 <textarea
                     class=" border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-gray-400 dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="Visual inpection, NOT"></textarea>
+                    placeholder="Cth. Visual inpection, NOT"></textarea>
             </div>
 
         </div>

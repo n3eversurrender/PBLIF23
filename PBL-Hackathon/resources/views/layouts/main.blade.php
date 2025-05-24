@@ -100,16 +100,18 @@
                     @endif
                     @else
                     <!-- Tampilkan tombol login jika pengguna belum login ppp -->
-                    <button type="button" id="login-button"
-                        class="mt-1.5 text-ButtonBase hover:text-HoverGlow transition duration-500 font-medium rounded-lg text-xs sm:text-sm lg:px-5 px-3 py-2 me-2 mb-2 group"
-                        onclick="window.location.href='/Masuk';">
-                        <i class="fa-solid fa-user me-2 text-blue-600 group-hover:text-HoverGlow transition duration-500"></i>
-                        Masuk
-                    </button>
+                    <div>
+                        <button type="button" id="login-button"
+                            class="mt-1.5 text-ButtonBase hover:text-HoverGlow transition duration-500 font-medium rounded-lg text-xs sm:text-sm lg:px-5 px-3 py-2 me-2 mb-2 group"
+                            onclick="window.location.href='/Masuk';">
+                            <i class="fa-solid fa-user me-2 text-blue-600 group-hover:text-HoverGlow transition duration-500"></i>
+                            Masuk
+                        </button>
 
-                    <a href="/Daftar" class="mt-1.5 bg-ButtonBase hover:bg-HoverGlow transition duration-500 text-white  font-medium rounded-lg text-xs sm:text-sm lg:px-5 px-3 py-2 me-2 mb-2 group">
-                        Daftar
-                    </a>
+                        <a href="/Daftar" class="mt-1.5 bg-ButtonBase hover:bg-HoverGlow transition duration-500 text-white  font-medium rounded-lg text-xs sm:text-sm lg:px-5 px-3 py-2 me-2 mb-2 group">
+                            Daftar
+                        </a>
+                    </div>
                     @endif
                 </div>
 
@@ -167,7 +169,7 @@
                             </a>
                         </li>
                         <li>
-                            <a href="#"
+                            <a href="/Riwayat"
                                 class="{{ request()->is('Riwayat') ? 'text-blue-600 font-bold' : 'text-gray-500' }} block py-2 px-3 rounded md:p-0 hover:text-black transition duration-700">
                                 Riwayat
                             </a>
