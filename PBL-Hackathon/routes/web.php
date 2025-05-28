@@ -96,6 +96,10 @@ Route::post('/pengguna/store', [ManajemenAkunController::class, 'store'])->name(
 
 
 Route::get('/Masuk', [ManajemenAkunController::class, 'Masuk'])->name('Masuk');
+Route::get('/Masuk/google', [LoginPenggunaController::class, 'handleLoginGoogle'])->name('Masuk.google');
+Route::get('/auth/google/callback', [LoginPenggunaController::class, 'handleLoginGoogleCalback'])->name('Masuk.google.callback');
+
+
 Route::get('/CoursePage/{kursus_id}', [MainController::class, 'coursePage'])->name('coursePage');
 Route::get('/DaftarTransaksi', [MainController::class, 'daftarTransaksi'])->name('daftarTransaksi');
 Route::post('/DaftarPendaftaran', [MainController::class, 'store']);
@@ -132,7 +136,7 @@ Route::middleware(['auth', PeranMiddleware::class . ':Peserta'])->group(function
 
     Route::put('/peserta/{peserta_id}', [PengaturanPesertaController::class, 'updatePesertaKeahlian'])->name('pesertaKeahlian.update');
     Route::delete('/peserta/{peserta_id}', [PengaturanPesertaController::class, 'destroyPeserta'])->name('peserta.destroy');
-    
+
     Route::get('/DaftarPelatihan', [DaftarPelatihanController::class, 'daftarPelatihan']);
     Route::get('/daftar-pelatihan/{pendaftaran_id}/sertifikat', [DaftarPelatihanController::class, 'downloadSertifikat'])->name('DaftarPelatihan.sertifikat');
     Route::delete('/daftar-pelatihan/{pendaftaran_id}', [DaftarPelatihanController::class, 'destroy'])->name('DaftarPelatihan.destroy');

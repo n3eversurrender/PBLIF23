@@ -6,6 +6,7 @@ use App\Models\Pengguna;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Laravel\Socialite\Facades\Socialite;
 
 class LoginPenggunaController extends Controller
 {
@@ -72,6 +73,34 @@ class LoginPenggunaController extends Controller
         Auth::logout();
         return redirect('/Masuk');
     }
+
+    public function handleLoginGoogle()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+
+    public function handleLoginGoogleCalback()
+    {
+        $googleUser = Socialite::driver('google')->stateless()->user();
+        $user = Pengguna::where('email', $googleUser->email)->first();
+        if (!$user) {
+            $user = Pengguna::create([
+                'nama' => $googleUser->name,
+                'email' => $googleUser->email,
+                'no_telepon' => '-',
+                'alamat' => '-',
+                'jenis_kelamin' => null,
+                'peran' => 'Peserta',
+                'status' => 'Aktif',
+                'kata_sandi' => Hash::make(rand(100000, 999999)),
+            ]);
+        }
+        Auth::login($user);
+        return redirect()->route('DashboardPeserta')->with('success', 'login berhasil');
+    }
+
+
 
 
 }

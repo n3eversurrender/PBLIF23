@@ -15,8 +15,7 @@
 <body>
     <div class="flex flex-col lg:flex-row lg:justify-between h-screen">
         <!-- Image Section -->
-        <img class="w-full h-48 sm:h-1/3 object-cover lg:w-1/3 lg:h-auto"
-            src="{{ asset('image/12.webp') }}"
+        <img class="w-full h-48 sm:h-1/3 object-cover lg:w-1/3 lg:h-auto" src="{{ asset('image/12.webp') }}"
             alt="Background Main" />
 
         <!-- Form Section -->
@@ -30,13 +29,13 @@
             <div class="w-full px-4 lg:px-0 mt-2 sm:mt-5 lg:mt-0 lg:max-w-md">
                 <!-- Minat Bidang -->
                 <div class="mb-2">
-                    <a href="#"
+                    <a href="{{ route('Masuk.google', ['id' => 1]) }}"
                         class="flex items-center justify-center gap-3 border border-gray-300 text-gray-900 text-sm font-medium rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 w-full py-2.5 px-4 hover:bg-gray-300 transition duration-700 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        
+
                         <i class="fa-brands fa-google text-lg" style="color: #000000;"></i>
                         <span>Masuk dengan Google</span>
 
-                    </a> 
+                    </a>
                 </div>
 
                 <!-- Line atau -->
@@ -51,9 +50,9 @@
 
             <!-- Cek apakah ada pesan kesalahan untuk login_error -->
             @if ($errors->has('login_error'))
-            <div class="text-red-500 text-sm mb-4">
-                <strong>{{ $errors->first('login_error') }}</strong>
-            </div>
+                <div class="text-red-500 text-sm mb-4">
+                    <strong>{{ $errors->first('login_error') }}</strong>
+                </div>
             @endif
 
             <form method="POST" action="{{ route('login') }}" class="w-full px-12 lg:px-0 mt-5 lg:mt-0 lg:max-w-md">
@@ -67,7 +66,7 @@
                         placeholder="john.doe@company.com" />
                     <!-- Pesan error untuk email -->
                     @error('email')
-                    <div class="text-red-500 text-sm">{{ $message }}</div>
+                        <div class="text-red-500 text-sm">{{ $message }}</div>
                     @enderror
 
                 </div>
@@ -83,12 +82,13 @@
                         id="togglePassword"></i>
                     <!-- Pesan error untuk kata sandi -->
                     @error('kata_sandi')
-                    <div class="text-red-500 text-sm">{{ $message }}</div>
+                        <div class="text-red-500 text-sm">{{ $message }}</div>
                     @enderror
                 </div>
 
-                <div class="mb-4 lg:mb-6 text-right text-xs sm:text-sm font-semibold mt-2 w-full text-HoverGlow hover:text-ButtonBase transition duration-700">
-                    <a href="/lupasandi">Lupa kata sandi?</a>
+                <div
+                    class="mb-4 lg:mb-6 text-right text-xs sm:text-sm font-semibold mt-2 w-full text-HoverGlow hover:text-ButtonBase transition duration-700">
+                    <a href="#">Lupa kata sandi?</a>
                 </div>
 
                 <div class="flex justify-center sm:mt-8 mt-0 lg:mt-0 ">
@@ -100,7 +100,8 @@
             </form>
 
 
-            <a href="/Daftar" class="group font-semibold text-sm sm:text-base mt-2 text-ButtonBase transition duration-700">
+            <a href="/Daftar"
+                class="group font-semibold text-sm sm:text-base mt-2 text-ButtonBase transition duration-700">
                 <span class="group-hover:text-HoverGlow text-slate-950">Belum Punya Akun?</span>
                 <span class="group-hover:text-HoverGlow">Daftar</span>
             </a>
@@ -110,17 +111,17 @@
     </div>
 
     @if (session('success'))
-    <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            Swal.fire({
-                position: "middle",
-                icon: "success",
-                title: "{{ session('success') }}",
-                showConfirmButton: false,
-                timer: 1500
+        <script>
+            document.addEventListener('DOMContentLoaded', (event) => {
+                Swal.fire({
+                    position: "middle",
+                    icon: "success",
+                    title: "{{ session('success') }}",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
             });
-        });
-    </script>
+        </script>
     @endif
 </body>
 
