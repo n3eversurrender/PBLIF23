@@ -160,9 +160,6 @@
             });
         </script>
     </form>
-
-
-
 </main>
 
 @endsection

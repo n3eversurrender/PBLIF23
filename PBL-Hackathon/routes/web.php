@@ -79,6 +79,27 @@ Route::get('/main', function () {
     return view('layouts.mainPerusahaan');
 });
 
+// Beranda Perusahaan
+Route::get('/LandingPage', function () {
+    return view('Perusahaan.LandingPage');
+});
+
+// Profil Perusahaan
+Route::get('/ProfilPerusahaan', function () {
+    return view('Perusahaan.Profil');
+});
+
+// Edit Profil Perusahaan
+Route::get('/EditProfil', function () {
+    return view('Perusahaan.EditProfil');
+});
+
+// Kelola Galeri Perusahaan
+Route::get('/KelolaGaleri', function () {
+    return view('Perusahaan.KelolaGaleri');
+});
+
+
 // perubahan end
 
 // Route Layout

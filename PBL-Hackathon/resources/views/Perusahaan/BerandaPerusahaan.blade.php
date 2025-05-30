@@ -1,27 +1,80 @@
-@extends('layouts.main')
+@extends('layouts.maintrainee')
 
 @vite(['resources/js/home.js'])
 @vite(['resources/css/berandaperusahaan.css'])
-@section('Main')
+@section('MainTrainee')
 
-<main>
-    <div class="relative w-full">
+<main class="bg-gray-100">
+
+    <!-- <div class="relative w-full">
         <img class="h-auto w-full max-h-[700px] object-cover" src="{{ asset('image/12.webp') }}" alt="Background Main">
         <div class="absolute left-4 sm:left-16 top-36 sm:top-1/2 transform -translate-y-1/2 text-white p-2 rounded w-1/2">
             <h2 class=" text-xl sm:text-4xl lg:text-5xl font-bold whitespace-normal">
                 Membentuk Keterampilan, Menggerakkan Industri!
             </h2>
-            <!-- @guest
+            @guest
         <a href="/Daftar" class="mt-4 sm:mt-10 text-sm sm:text-base inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
             Daftar Sekarang
         </a>
-        @endguest -->
+        @endguest
         </div>
-    </div>
+    </div> -->
 
-    <div class="sm:mx-10 mx-5">
+    <!-- container -->
+    <div class="sm:mx-10 mx-5 mt-16">
+        <div class="max-w-6xl pt-6">
+            <!-- Welcome -->
+            <div class="mb-6">
+                <h2 class="text-2xl font-semibold">Selamat Datang, PT. SkillMaju 👋</h2>
+                <p class="text-gray-600 mt-1">Kelola kursus Anda</p>
+            </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 py-8 px-14">
+            <!-- Stat Card 1 -->
+            <div class="bg-white rounded-xl shadow-xl p-6 border-t-4 border-blue-500 card-hover">
+                <div class="flex justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Kursus Aktif</p>
+                        <h3 class="text-3xl font-bold text-gray-800 mt-2">24</h3>
+                    </div>
+                    <div class="p-3 rounded-lg bg-blue-50 text-blue-600">
+                        <i class="fas fa-book-open text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stat Card 2 -->
+            <div class="bg-white rounded-xl shadow-xl p-6 border-t-4 border-blue-500 card-hover">
+                <div class="flex justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Total Peserta</p>
+                        <h3 class="text-3xl font-bold text-gray-800 mt-2">1,842</h3>
+                    </div>
+                    <div class="p-3 rounded-lg bg-purple-50 text-purple-600">
+                        <i class="fas fa-users text-xl"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Stat Card 3 -->
+            <div class="bg-white rounded-xl shadow-xl p-6 border-t-4 border-blue-500 card-hover">
+                <div class="flex justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Rating Rata-rata</p>
+                        <h3 class="text-3xl font-bold text-gray-800 mt-2">4.7</h3>
+                    </div>
+                    <div class="p-3 rounded-lg bg-amber-50 text-amber-600">
+                        <i class="fas fa-star text-xl"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
         <!-- Profil perusahaan -->
-        <section class="my-5 sm:my-10">
+        <!-- <section class="my-5 sm:my-10">
             <div class="flex items-center space-x-4 sm:mb-8 mb-4">
                 <h1 class="text-3xl font-bold uppercase">Profil Perusahaan</h1>
                 <div class="flex-1 border-t border-2 border-gray-300"></div>
@@ -63,13 +116,13 @@
                 </div>
             </div>
 
-        </section>
+        </section> -->
 
         <!-- Kursus tersedia -->
-        <section class="my-20">
+        <section class="my-10">
             <h1 class="text-3xl font-bold uppercase mb-6">kursus tersedia</h1>
             <!-- Grid Container -->
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mx-4">
                 <!-- Card 1 -->
                 <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
                     <!-- Course Image -->
@@ -269,8 +322,67 @@
             </div>
         </section>
 
+        <!-- Recent Reviews -->
+        <section class="mb-20 mx-10 bg-white p-6 rounded-xl shadow-xl">
+            <div class=" mb-4">
+                <h3 class="text-3xl mb-6 font-bold uppercase">Ulasan perusahaan</h3>
+            </div>
+            <div class="rounded-xl shadow-sm overflow-hidden px-4">
+                <div class="divide-y divide-gray-100">
+                    <!-- Review 1 -->
+                    <div class="p-5 bg-white my-4">
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center text-blue-600 font-medium mr-4">
+                                <span>AS</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center mb-1">
+                                    <h4 class="font-medium text-gray-800">Andi Susanto</h4>
+                                    <span class="text-xs text-gray-500">2 hari lalu</span>
+                                </div>
+                                <div class="flex mb-2">
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                </div>
+                                <p class="text-sm text-gray-600 line-clamp-2">Kursus yang sangat bagus! Materi disampaikan dengan jelas dan instruktur sangat berpengalaman. Saya sangat merekomendasikan kursus ini untuk pemula.</p>
+                                <p class="text-xs text-gray-500 mt-2">Pemrograman Web Modern</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Review 2 -->
+                    <div class="p-5 bg-white my-4">
+                        <div class="flex items-start">
+                            <div class="w-10 h-10 rounded-full bg-purple-100 flex items-center justify-center text-purple-600 font-medium mr-4">
+                                <span>BD</span>
+                            </div>
+                            <div class="flex-1">
+                                <div class="flex justify-between items-center mb-1">
+                                    <h4 class="font-medium text-gray-800">Budi Darmawan</h4>
+                                    <span class="text-xs text-gray-500">5 hari lalu</span>
+                                </div>
+                                <div class="flex mb-2">
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <i class="fas fa-star text-yellow-400 text-xs"></i>
+                                    <i class="far fa-star text-yellow-400 text-xs"></i>
+                                </div>
+                                <p class="text-sm text-gray-600 line-clamp-2">Materi kursus sangat relevan dengan kebutuhan industri saat ini. Hanya saja beberapa video kualitasnya kurang bagus.</p>
+                                <p class="text-xs text-gray-500 mt-2">Pengembangan Aplikasi Mobile</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
         <!-- galeri perusahaan -->
-        <section class="mb-20">
+        <section class="pb-20">
             <h1 class="text-3xl mb-6 font-bold uppercase">galeri perusahaan</h1>
             <!-- Grid Galeri -->
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
@@ -354,7 +466,7 @@
                 </nav>
             </div>
             <!-- Modal -->
-            <div class="fixed inset-0 bg-black/90 z-50 flex items-center justify-center hidden" id="imageModal">
+            <div class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center" id="imageModal">
                 <div class="close-btn" id="closeModal">
                     <i class="fas fa-times"></i>
                 </div>
@@ -386,6 +498,7 @@
                         modalTitle.textContent = title;
                         modalDate.textContent = date;
                         imageModal.classList.remove('hidden');
+                        imageModal.classList.add('flex');
                         document.body.style.overflow = 'hidden'; // Mencegah scrolling latar belakang
                     });
                 });
@@ -411,10 +524,12 @@
 
                 // Fungsi untuk menutup modal
                 function closeGalleryModal() {
+                    imageModal.classList.remove('flex');
                     imageModal.classList.add('hidden');
                     document.body.style.overflow = 'auto'; // Mengembalikan scrolling
                 }
             </script>
+
             <!-- <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mx-10">
                 <div class="grid gap-4">
                     <div>
