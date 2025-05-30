@@ -2,10 +2,41 @@
 
 @section('Main')
 
-<section class="container mx-auto sm:py-10 sm:px-5">
-    <div class="flex flex-col lg:flex-row items-center lg:items-start bg-white rounded-lg p-6">
+<!-- esklusif wilayah batam desain 1 -->
+<section class="sm:pt-20">
+    <div class="relative bg-gradient-to-r from-ButtonBase to-blue-800 overflow-hidden">
+        <div class="absolute inset-0">
+            <svg class="absolute left-0 top-0 h-full w-auto opacity-20 text-blue-500" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                <!-- Simplified Batam island shape -->
+                <path fill="currentColor" d="M100,50 Q120,30 140,50 Q160,70 150,90 Q140,110 120,120 Q100,130 80,120 Q60,110 50,90 Q40,70 60,50 Q80,30 100,50 Z" />
+            </svg>
+        </div>
+        <div class=" px-8 py-12 sm:py-16 md:px-12">
+            <div class="max-w-3xl mx-auto text-center">
+                <h2 class="text-3xl font-extrabold text-white sm:text-4xl">
+                    <span class="block">Kursus Eksklusif untuk</span>
+                    <span class="block text-yellow-300">Wilayah Batam</span>
+                </h2>
+                <p class="mt-4 text-lg text-blue-100">
+                    Kami dengan bangga melayani seluruh area Batam dengan program kursus berkualitas tinggi. Saat ini layanan kami hanya tersedia untuk penduduk Batam.
+                </p>
+                <div class="mt-8 inline-flex items-center bg-white bg-opacity-20 backdrop-blur-sm rounded-full px-6 py-2 text-sm font-medium text-white">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+                    </svg>
+                    Batam • Kepulauan Riau
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="container mx-auto sm:py-10 sm:px-5 cursor-default">
+    <div class="flex flex-col lg:flex-row items-centerlg:items-start bg-white rounded-lg p-6">
         <div class="w-full lg:w-1/2 p-4">
-            <img src="{{ asset('image/1234.png') }}" alt="Welder Image" class="rounded-lg  object-cover" />
+            <img src="{{ asset('image/1234.png') }}" alt="Welder Image" class="rounded-lg hover:brightness-50 object-cover" />
         </div>
 
         <div class="w-full lg:w-1/2 p-4">
@@ -20,7 +51,60 @@
     </div>
 </section>
 
-<section>
+<!-- esklusif wilayah batam desain 2 -->
+<!-- <section>
+    <div class="relative bg-white rounded-2xl overflow-hidden shadow-lg">
+        <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-50 opacity-70"></div>
+        <div class="relative z-10 grid md:grid-cols-2 gap-8 p-8">
+            <div class="flex flex-col justify-center">
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Kami Hadir Khusus untuk Batam</h2>
+                <p class="text-gray-700 mb-6">
+                    Sebagai bagian dari komitmen kami terhadap kualitas, saat ini kami membatasi layanan hanya untuk wilayah Batam. Ini memungkinkan kami memberikan fokus dan pelayanan terbaik.
+                </p>
+                <ul class="space-y-3">
+                    <li class="flex items-start">
+                        <svg class="flex-shrink-0 h-6 w-6 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span class="text-gray-700">Kurikulum disesuaikan dengan kebutuhan Batam</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="flex-shrink-0 h-6 w-6 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span class="text-gray-700">Instruktur yang memahami konteks lokal</span>
+                    </li>
+                    <li class="flex items-start">
+                        <svg class="flex-shrink-0 h-6 w-6 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
+                        </svg>
+                        <span class="text-gray-700">Jaringan alumni yang kuat di Batam</span>
+                    </li>
+                </ul>
+            </div>
+            <div class="relative">
+                <div class="relative h-full min-h-[300px] bg-blue-50 rounded-xl overflow-hidden flex items-center justify-center">
+                   
+                    <svg class="w-full h-auto max-w-xs" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#3B82F6" fill-opacity="0.2" stroke="#3B82F6" stroke-width="2" d="M100,50 Q120,30 140,50 Q160,70 150,90 Q140,110 120,120 Q100,130 80,120 Q60,110 50,90 Q40,70 60,50 Q80,30 100,50 Z" />
+                        
+                        <circle cx="100" cy="80" r="5" fill="#EF4444" class="animate-pulse" />
+                        <circle cx="120" cy="100" r="3" fill="#10B981" />
+                        <circle cx="80" cy="100" r="3" fill="#10B981" />
+                        <circle cx="90" cy="70" r="3" fill="#10B981" />
+                        <circle cx="130" cy="70" r="3" fill="#10B981" />
+                        <text x="100" y="180" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#1E40AF">Pulau Batam</text>
+                    </svg>
+                </div>
+                <div class="absolute -bottom-4 -right-4 bg-white px-4 py-2 rounded-lg shadow-md border border-gray-100">
+                    <span class="text-sm font-medium text-blue-600">Wilayah Layanan Kami</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> -->
+
+<section class=" cursor-default">
     <div class="bg-white">
         <div class="mx-auto max-w-7xl px-6 lg:px-8">
             <div class="mx-auto sm:px-8 max-w-5xl lg:text-center">
@@ -75,11 +159,9 @@
                                         d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" />
                                 </svg>
                             </div>
-                            Jalur Pembelajaran yang Fleksibel
+                            Pembelajaran Praktis dan Terarah
                         </dt>
-                        <dd class="mt-2 text-sm sm:text-base leading-7 text-TeksSecond text-justify">Baik Anda seorang
-                            pemula atau yang sudah maju dalam karier Anda, SkillBridge menawarkan opsi pembelajaran fleksibel
-                            yang sesuai dengan jadwal Anda. Anda dapat belajar sesuai keinginan Anda, dengan konten yang dirancang untuk berbagai tingkat keahlian.</dd>
+                        <dd class="mt-2 text-sm sm:text-base leading-7 text-TeksSecond text-justify">SkillBridge tidak hanya memberikan teori, tetapi juga pembelajaran berbasis praktik langsung. Materi dirancang untuk mengasah keterampilan nyata sesuai kebutuhan industri, baik untuk pemula maupun yang sudah berpengalaman.</dd>
                     </div>
 
                     <div class="relative pl-16">
@@ -105,7 +187,7 @@
     <!-- Row 2: Empat kolom -->
 </section>
 
-<div class="container mx-auto mt-10">
+<div class="container mx-auto mt-20 cursor-default">
     <div class="max-w-5xl mx-auto text-center">
         <h2 class=" text-2xl sm:text-3xl font-bold text-slate-950">
             Pimpin Jalan dengan SkillBridge
@@ -118,7 +200,7 @@
 </div>
 
 <!-- Container untuk menampung semua konten -->
-<div class="flex justify-center">
+<div class="flex justify-center cursor-default">
     <div class="w-full h-96">
         <div
             class="bg-white border border-gray-200 shadow dark:bg-gray-800 dark:border-gray-700 h-full overflow-hidden">
@@ -128,7 +210,7 @@
                 <div class="absolute inset-0 bg-black opacity-30 rounded-t-lg"></div>
                 <div class="absolute left-8 sm:left-24 bottom-1/2 transform translate-y-1/2">
                     <p class="text-white text-2xl sm:text-3xl font-bold mb-5">Bergabunglah dengan SkillBridge</p>
-                    <a href="#" class="bg-[#0D92F4] rounded-lg text-white text-base font-medium text-center px-6 sm:px-4 py-2.5">Bergabung</a>
+                    <!-- <a href="#" class="bg-[#0D92F4] rounded-lg text-white text-base font-medium text-center px-6 sm:px-4 py-2.5">Bergabung</a> -->
                 </div>
             </div>
         </div>
@@ -138,7 +220,7 @@
 
 <div class="container mx-auto p-5 sm:p-10">
     <div class="sm:flex">
-        <div class="sm:w-1/2 p-4">
+        <div class="sm:w-1/2 p-4 cursor-default">
             <h2 class="font-bold text-2xl mb-2 sm:text-3xl text-slate-950">Pertanyaan yang sering diajukan</h2>
             <p class="text-sm text-slate-800">Bagian FAQ kami menawarkan jawaban cepat
                 tentang kursus pengelasan kami, yang mencakup topik seperti durasi, sertifikasi,
@@ -166,9 +248,9 @@
                 </h2>
                 <div id="accordion-open-body-1" class="hidden" aria-labelledby="accordion-open-heading-1">
                     <div class="p-5 border border-b-0 border-gray-200 text-xs sm:text-sm dark:border-gray-700 dark:bg-gray-900">
-                        <p class="mb-2 text-gray-500 dark:text-gray-400">SkillBridge adalah sebuah platform pelatihan berbasis web yang dirancang untuk menghubungkan individu dengan mentor ahli dalam bidang fabrikasi, seperti pengelasan, fitting, dan pengecatan. 
+                        <p class="mb-2 text-gray-500 dark:text-gray-400 cursor-default">SkillBridge adalah sebuah platform pelatihan berbasis web yang dirancang untuk menghubungkan individu dengan mentor ahli dalam bidang fabrikasi, seperti pengelasan, fitting, dan pengecatan.
                             Platform ini bertujuan untuk menyediakan kursus dan pelatihan yang relevan dengan kebutuhan industri, khususnya di daerah Batam. SkillBridge memungkinkan pengguna untuk mendapatkan pelatihan praktis yang langsung disesuaikan dengan kebutuhan pasar tenaga kerja.</p>
-                        
+
                     </div>
                 </div>
                 <h2 id="accordion-open-heading-2">
@@ -191,8 +273,8 @@
                 </h2>
                 <div id="accordion-open-body-2" class="hidden" aria-labelledby="accordion-open-heading-2">
                     <div class="p-5 border border-b-0 text-xs sm:text-sm border-gray-200 dark:border-gray-700">
-                        <p class="mb-2 text-gray-500 dark:text-gray-400">Kursus yang ditawarkan di SkillBridge mencakup keterampilan praktis dalam bidang fabrikasi, seperti pengelasan, fitting, pengecatan, dan lainnya, sesuai dengan kebutuhan industri. Setiap kursus dirancang untuk memberikan pengetahuan dan keterampilan yang langsung dapat diterapkan di tempat kerja.</p>
-                        
+                        <p class="mb-2 text-gray-500 dark:text-gray-400 cursor-default">Kursus yang ditawarkan di SkillBridge mencakup keterampilan praktis dalam bidang fabrikasi, seperti pengelasan, fitting, pengecatan, dan lainnya, sesuai dengan kebutuhan industri. Setiap kursus dirancang untuk memberikan pengetahuan dan keterampilan yang langsung dapat diterapkan di tempat kerja.</p>
+
                     </div>
                 </div>
                 <h2 id="accordion-open-heading-3">
@@ -215,7 +297,7 @@
                 </h2>
                 <div id="accordion-open-body-3" class="hidden" aria-labelledby="accordion-open-heading-3">
                     <div class="p-5 border border-t-0 text-xs sm:text-sm border-gray-200 dark:border-gray-700">
-                        <p class="mb-2 text-gray-500 dark:text-gray-400">SkillBridge menyediakan sistem rekomendasi berbasis AI untuk membantu Anda memilih kursus yang paling sesuai dengan kebutuhan dan tujuan Anda. Sistem ini menganalisis informasi yang Anda berikan, seperti minat, keterampilan, pengalaman, dan lokasi, untuk memberikan rekomendasi kursus yang optimal.</p>  
+                        <p class="mb-2 text-gray-500 dark:text-gray-400 cursor-default">SkillBridge menyediakan sistem rekomendasi berbasis AI untuk membantu Anda memilih kursus yang paling sesuai dengan kebutuhan dan tujuan Anda. Sistem ini menganalisis informasi yang Anda berikan, seperti minat, keterampilan, pengalaman, dan lokasi, untuk memberikan rekomendasi kursus yang optimal.</p>
                     </div>
                 </div>
             </div>
@@ -228,7 +310,7 @@
     <div class="flex flex-col min-h-screen bg-black/60">
         <div class="container flex flex-col flex-1 px-10 py-12 mx-auto">
             <div class="flex-1 lg:flex lg:items-center lg:-mx-6">
-                <div class="text-white lg:w-1/2 lg:mx-6">
+                <div class="text-white lg:w-1/2 lg:mx-6 cursor-default">
                     <h2 class="text-2xl font-semibold capitalize lg:text-3xl">Terhubung dengan SkillBridge</h2>
                     <p class="max-w-xl text-sm sm:text-base mt-6">
                         SkillBridge adalah platform inovatif yang menghubungkan pelatih dan peserta pelatihan
@@ -241,8 +323,8 @@
                 <div class="mt-8 lg:w-1/2 lg:mx-6">
                     <div
                         class="w-full px-8 py-6 sm:py-10 mx-auto overflow-hidden bg-white shadow-2xl rounded-xl dark:bg-gray-900 lg:max-w-xl">
-                        <h1 class="text-xl sm:text-3xl font-medium text-gray-700 dark:text-gray-200">Umpan Balik</h1>
-                        <p class="mt-2 text-sm sm:text-base text-gray-500 dark:text-gray-400">
+                        <h1 class="text-xl sm:text-3xl font-medium text-gray-700 dark:text-gray-200 cursor-default">Umpan Balik</h1>
+                        <p class="mt-2 text-sm sm:text-base text-gray-500 dark:text-gray-400 cursor-default">
                             Kami sangat menghargai masukan Anda! Jika Anda memiliki waktu, kami akan sangat berterima kasih jika Anda dapat memberikan ulasan tentang pengalaman Anda menggunakan aplikasi ini. Ulasan Anda akan membantu kami untuk terus meningkatkan kualitas aplikasi.
                         </p>
                         <form method="POST" action="{{ route('umpan_balik.store') }}" class="mt-6 text-sm sm:text-base">
@@ -251,18 +333,18 @@
                                 <label for="nama_komentar" class="block  text-sm text-gray-600 dark:text-gray-200">Nama</label>
                                 <input id="nama_komentar" name="nama_komentar" type="text" placeholder="John Doe"
                                     class="block w-full px-5 py-3 mt-2 text-sm placeholder:text-sm text-gray-700 bg-white border border-gray-200 rounded-md dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring" />
-                                    @error('nama_komentar')
-                                    <div class="text-red-500 text-sm">{{ $message }}</div>
-                                    @enderror
+                                @error('nama_komentar')
+                                <div class="text-red-500 text-sm">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <div class="flex-1 mt-6">
                                 <label for="komentar" class="block mt-2 text-sm text-gray-600 dark:text-gray-200">Komentar</label>
                                 <textarea id="komentar" name="komentar" placeholder="Ulasan kamu..."
                                     class="block w-full px-5 py-3 mt-2 text-gray-700 text-sm placeholder:text-sm bg-white border border-gray-200 rounded-md dark:bg-gray-900 dark:text-gray-300 dark:border-gray-600 focus:border-blue-400 focus:ring-blue-300 focus:ring-opacity-40 dark:focus:border-blue-300 focus:outline-none focus:ring"></textarea>
-                                    @error('komentar')
-                                    <div class="text-red-500 text-sm">{{ $message }}</div>
-                                    @enderror
+                                @error('komentar')
+                                <div class="text-red-500 text-sm">{{ $message }}</div>
+                                @enderror
                             </div>
 
                             <button type="submit"
@@ -273,18 +355,18 @@
                     </div>
                 </div>
                 @if (session('success'))
-    <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            Swal.fire({
-                position: "middle",
-                icon: "success",
-                title: "{{ session('success') }}",
-                showConfirmButton: false,
-                timer: 1500
-            });
-        });
-    </script>
-    @endif
+                <script>
+                    document.addEventListener('DOMContentLoaded', (event) => {
+                        Swal.fire({
+                            position: "middle",
+                            icon: "success",
+                            title: "{{ session('success') }}",
+                            showConfirmButton: false,
+                            timer: 1500
+                        });
+                    });
+                </script>
+                @endif
             </div>
         </div>
     </div>

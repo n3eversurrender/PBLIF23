@@ -277,7 +277,7 @@
                             <!-- Course Content -->
                             <div class="py-6 px-4 sm:p-6">
                                 <div class="flex justify-between items-start mb-2 cursor-default">
-                                    <span class="bg-blue-100 text-blue-800 text-[10px] sm:text-xs font-medium px-2.5 py-0.5 rounded"></span>
+                                    <span class="text-blue-800 text-[10px] sm:text-xs font-medium py-0.5 rounded me-2">{{ json_decode($item->kategori)->nama_kategori }}</span>
                                     <div class="flex items-center">
                                         <i class="fas fa-star text-yellow-400 text-sm"></i>
                                         <span class="text-gray-700 text-[10px] sm:text-xs font-medium ml-1">{{ number_format($item->average_rating, 1) ?? 'Belum Ada Rating' }}</span>

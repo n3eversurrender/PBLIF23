@@ -116,30 +116,23 @@
                 <div class="items-center absolute top-14 sm:top-0 right-0 z-10 sm:relative justify-between hidden sm:w-full md:flex md:w-auto md:order-1" id="navbar-default">
                     <ul class="flex flex-col font-medium text-sm p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-transparent md:dark:bg-transparent dark:border-gray-700">
                         <li>
-                            <a href="/BerandaTrainee"
-                                class="{{ request()->is('BerandaTrainee') ? ' text-blue-600 font-bold' : 'text-gray-500' }} block py-2 px-3 rounded md:border-0 md:p-0 hover:text-black transition duration-700">
+                            <a href="/BerandaPerusahaan"
+                                class="{{ request()->is('BerandaPerusahaan') ? ' text-blue-600 font-bold' : 'text-gray-500' }} block py-2 px-3 rounded md:border-0 md:p-0 hover:text-black transition duration-700">
                                 Beranda
                             </a>
                         </li>
                         <li>
-                            <a href="/Jelajahi"
-                                class="{{ request()->is('Jelajahi') ? ' text-blue-600 font-bold' : 'text-gray-500' }} block py-2 px-3 rounded md:border-0 md:p-0 hover:text-black transition duration-700">
+                            <a href="#"
+                                class="{{ request()->is('DaftarKursus') ? ' text-blue-600 font-bold' : 'text-gray-500' }} block py-2 px-3 rounded md:border-0 md:p-0 hover:text-black transition duration-700">
                                 Jelajahi
                             </a>
                         </li>
                         <li>
-                            <a href="#"
-                                class="{{ request()->is('TentangKami') ? ' text-blue-600 font-bold' : 'text-gray-500' }} block py-2 px-3 rounded md:border-0 md:p-0 hover:text-black transition duration-700">
+                            <a href="/ProfilPerusahaan"
+                                class="{{ request()->is('ProfilPerusahaan') ? ' text-blue-600 font-bold' : 'text-gray-500' }} block py-2 px-3 rounded md:border-0 md:p-0 hover:text-black transition duration-700">
                                 Profil
                             </a>
                         </li>
-                         <li>
-                            <a href="#"
-                                class="{{ request()->is('TentangKami') ? ' text-blue-600 font-bold' : 'text-gray-500' }} block py-2 px-3 rounded md:border-0 md:p-0 hover:text-black transition duration-700">
-                                Riwayat
-                            </a>
-                        </li>
-                        
                     </ul>
                 </div>
             </div>
@@ -149,7 +142,29 @@
     <div>
         @yield('MainTrainee')
     </div>
-    
+
+
+    <!-- whatsapp -->
+    <section>
+        <!-- Floating WhatsApp Button with Hover Tooltip -->
+        <div class="fixed bottom-4 right-4 z-50 group">
+            <a href="https://wa.me/6283184047697" target="_blank"
+                class="bg-green-500 hover:bg-green-600 text-white p-3 rounded-full shadow-lg transition duration-300 flex items-center justify-center">
+                <!-- WhatsApp Icon -->
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M20.52 3.48A11.75 11.75 0 0 0 2.63 17.38l-1.38 5.06 5.21-1.37a11.72 11.72 0 0 0 5.55 1.41c6.48 0 11.75-5.27 11.75-11.75a11.7 11.7 0 0 0-3.24-8.25zm-8.77 17.26a9.91 9.91 0 0 1-5.06-1.38l-.36-.21-3.1.82.83-3.02-.24-.37a9.92 9.92 0 1 1 7.93 4.16zm5.45-7.38c-.3-.15-1.76-.86-2.03-.96-.27-.1-.47-.15-.67.15-.2.3-.77.95-.94 1.14-.17.2-.35.22-.64.07-.3-.15-1.26-.46-2.4-1.47-.89-.8-1.48-1.77-1.65-2.07-.17-.3-.02-.46.13-.6.13-.13.3-.35.45-.52.15-.17.2-.3.3-.5.1-.2.05-.37-.02-.52-.08-.15-.67-1.61-.92-2.2-.24-.58-.48-.5-.67-.51h-.57c-.2 0-.52.07-.79.37s-1.04 1.02-1.04 2.5 1.07 2.9 1.22 3.1c.15.2 2.1 3.2 5.08 4.49.71.31 1.26.5 1.69.64.71.23 1.35.2 1.86.12.57-.09 1.76-.72 2.01-1.41.25-.69.25-1.27.17-1.41-.08-.13-.27-.2-.57-.35z" />
+                </svg>
+            </a>
+
+            <!-- Tooltip Text -->
+            <div class="absolute right-14 bottom-1/2 translate-y-1/2 bg-gray-300 hover:shadow-2xl text-black text-sm px-4 py-2 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none shadow-lg w-max whitespace-nowrap">
+                Dapatkan bantuan dengan menghubungi admin
+            </div>
+
+        </div>
+
+    </section>
+
     <!-- Footer -->
     <footer class="bg-white md:px-4 dark:bg-gray-900">
         <div class="mx-auto w-full max-w-screen-xl p-4 py-6 lg:py-8">
