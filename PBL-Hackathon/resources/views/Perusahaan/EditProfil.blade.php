@@ -1,9 +1,7 @@
-@extends('layouts.maintrainee')
+@extends('layouts.mainNavPerusahaan')
 
-@vite(['resources/js/home.js'])
-@vite(['resources/css/berandaperusahaan.css'])
-@section('MainTrainee')
-
+@section('MainNavPerusahaan')
+@vite(['resources/js/richtext.js'])
 <!-- Quill CSS -->
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
@@ -78,82 +76,6 @@
                         <div id="editor-deskripsi" class="bg-white h-60 border border-gray-300 rounded p-3 overflow-y-auto"></div>
                     </div>
                 </div>
-
-                <!-- Education -->
-                <!-- <div class="mt-3">
-                    <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Pendidikan</label>
-                    <div>
-                        <div id="toolbar-pendidikan" class="mb-2">
-                            <span class="ql-formats">
-                                <button class="ql-bold"></button>
-                                <button class="ql-italic"></button>
-                                <button class="ql-underline"></button>
-                            </span>
-                            <span class="ql-formats">
-                                <button class="ql-list" value="ordered"></button>
-                                <button class="ql-list" value="bullet"></button>
-                            </span>
-                        </div>
-                        <div id="editor-pendidikan" class="bg-white h-60 border border-gray-300 rounded p-2"></div>
-                    </div>
-                </div> -->
-
-                <!-- Services -->
-                <!-- <div class="mt-3">
-                    <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Layanan</label>
-                    <div>
-                        <div id="toolbar-layanan" class="mb-2">
-                            <span class="ql-formats">
-                                <button class="ql-bold"></button>
-                                <button class="ql-italic"></button>
-                                <button class="ql-underline"></button>
-                            </span>
-                            <span class="ql-formats">
-                                <button class="ql-list" value="ordered"></button>
-                                <button class="ql-list" value="bullet"></button>
-                            </span>
-                        </div>
-                        <div id="editor-layanan" class="bg-white h-60 border border-gray-300 rounded p-2"></div>
-                    </div>
-                </div> -->
-
-                <!-- Visi-->
-                <!-- <div class="mt-10">
-                    <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Visi</label>
-                    <div>
-                        <div id="toolbar-visi" class="mb-2">
-                            <span class="ql-formats">
-                                <button class="ql-bold"></button>
-                                <button class="ql-italic"></button>
-                                <button class="ql-underline"></button>
-                            </span>
-                            <span class="ql-formats">
-                                <button class="ql-list" value="ordered"></button>
-                                <button class="ql-list" value="bullet"></button>
-                            </span>
-                        </div>
-                        <div id="editor-visi" class="bg-white h-60 border border-gray-300 rounded p-2"></div>
-                    </div>
-                </div> -->
-
-                <!-- Misi -->
-                <!-- <div class="mt-10">
-                    <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Misi</label>
-                    <div>
-                        <div id="toolbar-misi" class="mb-2">
-                            <span class="ql-formats">
-                                <button class="ql-bold"></button>
-                                <button class="ql-italic"></button>
-                                <button class="ql-underline"></button>
-                            </span>
-                            <span class="ql-formats">
-                                <button class="ql-list" value="ordered"></button>
-                                <button class="ql-list" value="bullet"></button>
-                            </span>
-                        </div>
-                        <div id="editor-misi" class="bg-white h-60 border border-gray-300 rounded p-2"></div>
-                    </div>
-                </div> -->
             </div>
         </div>
 
@@ -167,20 +89,5 @@
     </form>
 </main>
 <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
-<script>
-  const editors = [
-    { toolbar: '#toolbar-deskripsi', editor: '#editor-deskripsi' },
-  ];
-
-  editors.forEach(({ toolbar, editor }) => {
-    new Quill(editor, {
-      theme: 'snow',
-      modules: {
-        toolbar: toolbar
-      },
-      placeholder: 'Anda bisa memasukkan informasi umum tentang perusahaan anda seperti deskripsi, pendidikan, layanan, visi, misi dan lainnya...'  // Tambahkan placeholder di sini
-    });
-  });
-</script>
 
 @endsection

@@ -6,7 +6,7 @@
     @csrf
     <div class="mb-5">
         <label for="judul" class="block mb-2 text-base lg:text-xl font-bold text-gray-900 dark:text-white">Judul Kursus</label>
-        <input type="text" name="judul" id="judul" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"" >
+        <input type="text" name="judul" id="judul" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
         @error('judul')
             <div class="text-red-500 text-sm">{{ $message }}</div>
         @enderror
@@ -80,7 +80,7 @@
     <div class="sm:flex gap-3 mb-5">
     <div class="sm:w-1/2">
             <label for="lokasi" class="block mb-2 text-base lg:text-xl font-bold text-gray-900 dark:text-white">Lokasi</label>
-            <input type="text" name="lokasi" id="lokasi" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"" >
+            <input type="text" name="lokasi" id="lokasi" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" >
             @error('lokasi')
                 <div class="text-red-500 text-sm">{{ $message }}</div>
             @enderror
