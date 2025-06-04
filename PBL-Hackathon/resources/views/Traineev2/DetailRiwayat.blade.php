@@ -7,9 +7,9 @@
         <div class="container mx-auto px-4 py-8 max-w-4xl">
             <!-- Header Section -->
             <div class="border-b border-gray-200 pb-6 lg:mb-8 mx-2 cursor-default">
-                <h1 class="text-3xl md:text-4xl font-bold">Workshop React Mastery</h1>
+                <h1 class="text-3xl md:text-4xl font-bold">{{ $pendaftaran->kursus->judul }}</h1>
                 <span class="inline-block mt-3 px-4 py-1 rounded-full bg-blue-100 text-ButtonBase text-sm font-medium">
-                    <i class="fas fa-spinner fa-spin mr-1"></i> Sedang Diambil
+                    <i class="fas fa-spinner fa-spin mr-1"></i> {{ $pendaftaran->status_pendaftaran ?? 'Status Tidak Tersedia' }}
                 </span>
             </div>
 
@@ -22,21 +22,21 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                     <div>
                         <p class="text-gray-500 text-sm">Tanggal Pembelian</p>
-                        <p class="font-medium">06 Agustus 2023</p>
+                        <p class="font-medium">{{ \Carbon\Carbon::parse($pendaftaran->tgl_pendaftaran)->translatedFormat('d F Y') }}</p>
                     </div>
                     <div>
                         <p class="text-gray-500 text-sm">Kode Pendaftaran</p>
-                        <p class="font-medium">SB-REACT-0823-001</p>
+                        <p class="font-medium">PEN-{{ $pendaftaran->pendaftaran_id }}</p>
                     </div>
                     <div>
                         <p class="text-gray-500 text-sm">Metode Pembayaran</p>
-                        <p class="font-medium">Transfer Bank (BCA)</p>
+                        <p class="font-medium">{{ $pendaftaran->pembayaran->first()->metode_pembayaran ?? '-' }}</p>
                     </div>
                 </div>
             </div>
 
             <!-- Course Details Card -->
-            <div class="bg-white rounded-xl shadow-sm  p-4 sm:p-8 lg:p-6 mb-6">
+            <div class="bg-white rounded-xl shadow-sm p-4 sm:p-8 lg:p-6 mb-6">
                 <div class="flex items-center mb-5 cursor-default">
                     <i class="fas fa-book-open text-ButtonBase text-xl mr-3"></i>
                     <h2 class="text-xl font-semibold">Detail Kursus</h2>
@@ -46,63 +46,23 @@
                         <div class="mb-5 cursor-default">
                             <p class="text-gray-500 text-sm mb-2">Deskripsi</p>
                             <p class="text-gray-700">
-                                Workshop intensif selama 1 hari untuk menguasai React JS dari dasar hingga konsep intermediate.
-                                Anda akan belajar membangun aplikasi React modern dengan hooks, context API, dan integrasi dengan backend.
+                                {{ $pendaftaran->kursus->deskripsi }}
                             </p>
                         </div>
                         <table class="w-full cursor-default">
                             <thead class="bg-gray-200 rounded-lg text-xs sm:text-sm">
                                 <tr>
-                                    <th class="py-3 px-4 text-left font-semibold text-primary">Sesi</th>
-                                    <th class="py-3 px-4 text-left font-semibold text-primary">Tanggal</th>
-                                    <th class="py-3 px-4 text-left font-semibold text-primary">Waktu</th>
+                                    <th class="py-3 px-4 text-left font-semibold text-primary">Tanggal Mulai</th>
+                                    <th class="py-3 px-4 text-left font-semibold text-primary">Tanggal Selesai</th>
                                     <th class="py-3 px-4 text-left font-semibold text-primary">Lokasi</th>
                                 </tr>
                             </thead>
                             <tbody class="divide-y divide-gray-200 text-[10px] sm:text-sm">
-                                <!-- Sesi 1 -->
                                 <tr class="hover:bg-gray-50 transition">
-                                    <td class="py-4 px-4 font-medium">Sesi 1</td>
-                                    <td class="py-4 px-4">
-                                        <div class="flex items-center">
-                                            15 Agustus 2023
-                                        </div>
-                                    </td>
-                                    <td class="py-4 px-4">
-                                        <div class="flex items-center">
-                                            09:00 - 12:00 WIB
-                                        </div>
-                                    </td>
-                                    <td class="py-4 px-4">
-                                        <div class="flex items-center">
-                                            Gedung A, Lantai 3
-                                        </div>
-                                    </td>
-
+                                    <td class="py-4 px-4">{{ \Carbon\Carbon::parse($pendaftaran->kursus->tgl_mulai)->translatedFormat('d F Y') }}</td>
+                                    <td class="py-4 px-4">{{ \Carbon\Carbon::parse($pendaftaran->kursus->tgl_selesai)->translatedFormat('d F Y') }}</td>
+                                    <td class="py-4 px-4">{{ $pendaftaran->kursus->lokasi }}</td>
                                 </tr>
-
-                                <!-- Sesi 2 -->
-                                <tr class="hover:bg-gray-50 transition">
-                                    <td class="py-4 px-4 font-medium">Sesi 2</td>
-                                    <td class="py-4 px-4">
-                                        <div class="flex items-center">
-                                            17 Agustus 2023
-                                        </div>
-                                    </td>
-                                    <td class="py-4 px-4">
-                                        <div class="flex items-center">
-                                            13:00 - 16:00 WIB
-                                        </div>
-                                    </td>
-                                    <td class="py-4 px-4">
-                                        <div class="flex items-center">
-                                            Gedung A, Lantai 3
-                                        </div>
-                                    </td>
-
-                                </tr>
-
-
                             </tbody>
                         </table>
                     </div>
@@ -113,8 +73,8 @@
                             Informasi Penting
                         </h3>
                         <ul class="list-disc text-xs md:text-sm pl-5 space-y-2 text-gray-700">
-                            <li>Setiap sesi memiliki materi yang berbeda</li>
-                            <li>Lokasi mungkin berubah - cek email konfirmasi 1 hari sebelum sesi</li>
+                            <li>Pastikan hadir tepat waktu.</li>
+                            <li>Periksa email secara berkala untuk update kursus.</li>
                         </ul>
                     </div>
                 </div>
@@ -143,7 +103,7 @@
                             <div class="md:mb-8 mb-2">
                                 <h1 class="text-xl md:text-3xl font-bold text-primary mb-2">Beri Ulasan</h1>
                                 <p class="text-gray-600 text-xs md:text-sm">Bagikan pengalaman Anda mengikuti</p>
-                                <p class="font-semibold text-xs md:text-sm">Workshop React Mastery</p>
+                                <p class="font-semibold text-xs md:text-sm">{{ $pendaftaran->kursus->judul }}</p>
                             </div>
 
                             <!-- Review Form -->
@@ -152,14 +112,16 @@
                                 <div class="flex items-start mb-2 p-4 bg-gray-50 rounded-lg">
                                     <img src="{{ asset('image/SKILLB.png') }}" alt="Thumbnail Kursus" class="md:w-20 md:h-20 w-10 h-10 rounded-full object-cover mr-4">
                                     <div>
-                                        <h3 class="font-bold text-base md:text-lg">Workshop React Mastery</h3>
+                                        <h3 class="font-bold text-base md:text-lg">{{ $pendaftaran->kursus->judul }}</h3>
                                         <div class="mt-1 flex items-center text-amber-400">
                                             <i class="fas fa-star"></i>
                                             <i class="fas fa-star"></i>
                                             <i class="fas fa-star"></i>
                                             <i class="fas fa-star"></i>
                                             <i class="fas fa-star-half-alt"></i>
-                                            <span class="text-gray-600 ml-2 text-xs md:text-sm">4.3 (128 ulasan)</span>
+                                            <span class="text-gray-600 ml-2 text-xs md:text-sm">
+                                                {{ number_format($averageRating, 1) }} ({{ $totalReview }} ulasan)
+                                            </span>
                                         </div>
                                     </div>
                                 </div>
@@ -255,7 +217,6 @@
 
 
                     </section>
-
                     <!-- Scenario 4: Already reviewed -->
                     <div class="bg-gray-50 md:p-4 p-2 rounded-lg text-xs md:text-sm">
                         <div class="flex items-center text-amber-400 mb-2">
