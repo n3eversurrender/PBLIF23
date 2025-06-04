@@ -113,20 +113,76 @@
     <div class="lg:py-6 py-4 text-sm lg:text-lg text-gray-500">
       <P>KURSUS DITERBITKAN OLEH <b>{{ $kursus->pengguna ? $kursus->pengguna->nama : 'Nama Tidak Ditemukan' }}</b></P>
       <p class="text-sm">{{ $kursus->deskripsi }}</p>
+      <p class="text-base mt-2 font-semibold">Mentor : <span>Niati</span></p>
     </div>
     <!-- course modul -->
-    <div class="w-full max-w-4xl mx-auto border border-gray-300 rounded-lg">
-      <div class="cursor-default p-3 lg:p-4 text-lg lg:text-xl font-bold text-gray-700 bg-gray-100 border-b border-gray-300">
-        <h1>Modul Kursus</h1>
+    <div class="w-full max-w-4xl mx-auto rounded-lg">
+      <div class="cursor-default p-3 lg:p-4 text-lg lg:text-xl font-bold text-gray-700">
+        <h1>Jadwal Kursus</h1>
       </div>
+      <table class="w-full cursor-default">
+        <thead class="bg-gray-200 rounded-lg text-xs sm:text-sm">
+          <tr>
+            <th class="py-3 px-4 text-left font-semibold text-primary">Sesi</th>
+            <th class="py-3 px-4 text-left font-semibold text-primary">Tanggal</th>
+            <th class="py-3 px-4 text-left font-semibold text-primary">Waktu</th>
+            <th class="py-3 px-4 text-left font-semibold text-primary">Lokasi</th>
+          </tr>
+        </thead>
+        <tbody class="divide-y divide-gray-200 text-[10px] sm:text-sm">
+          <!-- Sesi 1 -->
+          <tr class="hover:bg-gray-50 transition">
+            <td class="py-4 px-4 font-medium">Sesi 1</td>
+            <td class="py-4 px-4">
+              <div class="flex items-center">
+                15 Agustus 2023
+              </div>
+            </td>
+            <td class="py-4 px-4">
+              <div class="flex items-center">
+                09:00 - 12:00 WIB
+              </div>
+            </td>
+            <td class="py-4 px-4">
+              <div class="flex items-center">
+                Gedung A, Lantai 3
+              </div>
+            </td>
 
-      <!-- Module 1 -->
-      <div class="border-b border-gray-200 ">
+          </tr>
+
+          <!-- Sesi 2 -->
+          <tr class="hover:bg-gray-50 transition">
+            <td class="py-4 px-4 font-medium">Sesi 2</td>
+            <td class="py-4 px-4">
+              <div class="flex items-center">
+                17 Agustus 2023
+              </div>
+            </td>
+            <td class="py-4 px-4">
+              <div class="flex items-center">
+                13:00 - 16:00 WIB
+              </div>
+            </td>
+            <td class="py-4 px-4">
+              <div class="flex items-center">
+                Gedung A, Lantai 3
+              </div>
+            </td>
+
+          </tr>
+
+
+        </tbody>
+      </table>
+
+      <!-- kurikulum lama hapus aja -->
+      <!-- <div class="border-b border-gray-200 ">
         <div id="accordion-collapse" class="mt-5">
-          @if($kursus->kurikulum->isEmpty()) <!-- Check if kurikulum is empty -->
+          @if($kursus->kurikulum->isEmpty()) 
           <p class="text-center text-gray-500 dark:text-gray-400">Tidak ada modul yang tersedia.</p>
           @else
-          @foreach($kursus->kurikulum as $kurikulum) <!-- Loop through kurikulums -->
+          @foreach($kursus->kurikulum as $kurikulum) 
           <h2 id="accordion-collapse-heading-{{ $kurikulum->kurikulum_id }}">
             <button type="button" class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-collapse-body-{{ $kurikulum->kurikulum_id }}" aria-expanded="false" aria-controls="accordion-collapse-body-{{ $kurikulum->kurikulum_id }}">
               <span class="text-left">{{ $kurikulum->nama_topik }}</span>
@@ -136,7 +192,7 @@
           <div id="accordion-collapse-body-{{ $kurikulum->kurikulum_id }}" class="hidden" aria-labelledby="accordion-collapse-heading-{{ $kurikulum->kurikulum_id }}">
             <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
               <div class="flex flex-col md:flex-row items-start gap-4">
-                <!-- Pemutar video YouTube atau pesan alternatif -->
+              
                 @if($kurikulum->materi)
                 <div class="mt-4 md:mt-0 flex-shrink-0">
                   <iframe width="560" height="315" src="{{ $kurikulum->materi }}"
@@ -151,7 +207,7 @@
                 </div>
                 @endif
 
-                <!-- Deskripsi di sebelah kanan video -->
+                
                 <div class="flex-1">
                   <p>{{ $kurikulum->deskripsi }}</p>
                 </div>
@@ -161,7 +217,7 @@
           @endforeach
           @endif
         </div>
-      </div>
+      </div> -->
 
 
       <style>

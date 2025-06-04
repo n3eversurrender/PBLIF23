@@ -1,8 +1,8 @@
-@extends('layouts.maintrainee')
+@extends('layouts.mainNavPerusahaan')
 
 @vite(['resources/js/home.js'])
 @vite(['resources/css/berandaperusahaan.css'])
-@section('MainTrainee')
+@section('MainNavPerusahaan')
 
 <main class="sm:mx-10 mx-5 mt-16">
     <div class="flex items-center space-x-4  pt-8">
@@ -200,61 +200,57 @@
                 </div>
             </div>
         </div>
-
-        <script>
-            // Script untuk modal galeri
-            const imageModal = document.getElementById('imageModal');
-            const modalImage = document.getElementById('modalImage');
-            const modalTitle = document.getElementById('modalTitle');
-            const modalDate = document.getElementById('modalDate');
-            const closeModal = document.getElementById('closeModal');
-
-            // Buka modal saat gambar diklik
-            document.querySelectorAll('.gallery-item').forEach(item => {
-                item.addEventListener('click', function() {
-                    const imgSrc = this.querySelector('img').src;
-                    const title = this.querySelector('h3').textContent;
-                    const date = this.querySelector('p').textContent;
-
-                    modalImage.src = imgSrc;
-                    modalTitle.textContent = title;
-                    modalDate.textContent = date;
-                    imageModal.classList.remove('hidden');
-                    imageModal.classList.add('flex');
-                    document.body.style.overflow = 'hidden'; // Mencegah scrolling latar belakang
-                });
-            });
-
-            // Tutup modal saat tombol X diklik
-            closeModal.addEventListener('click', function() {
-                closeGalleryModal();
-            });
-
-            // Tutup modal saat mengklik di luar gambar
-            imageModal.addEventListener('click', function(e) {
-                if (e.target === imageModal) {
-                    closeGalleryModal();
-                }
-            });
-
-            // Tutup modal dengan tombol ESC
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape' && !imageModal.classList.contains('hidden')) {
-                    closeGalleryModal();
-                }
-            });
-
-            // Fungsi untuk menutup modal
-            function closeGalleryModal() {
-                imageModal.classList.remove('flex');
-                imageModal.classList.add('hidden');
-                document.body.style.overflow = 'auto'; // Mengembalikan scrolling
-            }
-        </script>
-
     </section>
-
-
 </main>
+<script>
+    // Script untuk modal galeri
+    const imageModal = document.getElementById('imageModal');
+    const modalImage = document.getElementById('modalImage');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalDate = document.getElementById('modalDate');
+    const closeModal = document.getElementById('closeModal');
+
+    // Buka modal saat gambar diklik
+    document.querySelectorAll('.gallery-item').forEach(item => {
+        item.addEventListener('click', function() {
+            const imgSrc = this.querySelector('img').src;
+            const title = this.querySelector('h3').textContent;
+            const date = this.querySelector('p').textContent;
+
+            modalImage.src = imgSrc;
+            modalTitle.textContent = title;
+            modalDate.textContent = date;
+            imageModal.classList.remove('hidden');
+            imageModal.classList.add('flex');
+            document.body.style.overflow = 'hidden'; // Mencegah scrolling latar belakang
+        });
+    });
+
+    // Tutup modal saat tombol X diklik
+    closeModal.addEventListener('click', function() {
+        closeGalleryModal();
+    });
+
+    // Tutup modal saat mengklik di luar gambar
+    imageModal.addEventListener('click', function(e) {
+        if (e.target === imageModal) {
+            closeGalleryModal();
+        }
+    });
+
+    // Tutup modal dengan tombol ESC
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && !imageModal.classList.contains('hidden')) {
+            closeGalleryModal();
+        }
+    });
+
+    // Fungsi untuk menutup modal
+    function closeGalleryModal() {
+        imageModal.classList.remove('flex');
+        imageModal.classList.add('hidden');
+        document.body.style.overflow = 'auto'; // Mengembalikan scrolling
+    }
+</script>
 
 @endsection

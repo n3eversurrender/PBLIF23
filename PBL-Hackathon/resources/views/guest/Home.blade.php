@@ -2,26 +2,98 @@
 
 @section('Main')
 
+<script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+
 <!-- Javascript home -->
 @vite(['resources/js/home.js'])
 
-<div class="relative w-full cursor-default">
+<!-- <div class="relative w-full cursor-default">
     <img class="w-full lg:h-screen max-h-[700px] object-cover brightness-50" src="{{ asset('image/12.webp') }}" alt="Background Main">
     <div class="absolute left-4 sm:left-16 top-36 sm:top-1/2 transform -translate-y-1/2 text-white p-2 rounded w-1/2">
         <h2 class=" text-xl sm:text-4xl lg:text-5xl font-bold whitespace-normal">
             Membentuk Keterampilan, Menggerakkan Industri!
         </h2>
         <p class="mt-5 text-lg">Tingkatkan keterampilan Anda dengan program kursus berkualitas tinggi yang dirancang khusus untuk kebutuhan masyarakat Batam.</p>
-        <p class="bg-ButtonBase text-white py-3 ps-18 rounded-full font-semibold text-lg shadow-lg mt-5 w-1/2">
+        <p class="bg-ButtonBase text-white py-3 ps-10 rounded-full font-semibold text-lg shadow-lg mt-5 w-1/2">
             Mulai Belajar Sekarang
         </p>
-        <!-- @guest
-        <a href="/Daftar" class="mt-4 sm:mt-10 text-sm sm:text-base inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
-            Daftar Sekarang
-        </a>
-        @endguest -->
+    </div>
+</div> -->
+
+<div
+    x-data="{
+  slide: 1,
+  total: 2,
+  init() {
+    setInterval(() => {
+      this.slide = this.slide === this.total ? 1 : this.slide + 1;
+    }, 10000); // 10000 ms = 10 detik
+  }
+}"
+    x-init="init()"
+    class="relative w-full overflow-hidden min-h-screen">
+    <!-- SLIDES CONTAINER -->
+    <div
+        class="flex transition-transform duration-700 ease-in-out"
+        :style="'transform: translateX(-' + (slide - 1) * 100 + '%)'">
+        <!-- Slide 1 -->
+        <div class="w-full flex-shrink-0 relative min-h-screen">
+            <img
+                class="w-full h-full lg:h-screen max-h-[700px] object-cover object-center brightness-50"
+                src="{{ asset('image/12.webp') }}"
+                alt="Background Main" />
+            <div
+                class="absolute left-4 sm:left-16 top-36 sm:top-1/2 transform -translate-y-1/2 text-white p-2 rounded w-11/12 sm:w-1/2 z-10">
+                <h2 class="text-xl sm:text-4xl lg:text-5xl font-bold whitespace-normal">
+                    Membentuk Keterampilan, Menggerakkan Industri!
+                </h2>
+                <p class="mt-5 text-lg">
+                    Tingkatkan keterampilan Anda dengan program kursus berkualitas tinggi yang dirancang khusus untuk kebutuhan masyarakat Batam.
+                </p>
+                <p
+                    class="bg-ButtonBase text-white py-3 px-6 rounded-full font-semibold text-lg shadow-lg mt-5 inline-block">
+                    Mulai Belajar Sekarang
+                </p>
+            </div>
+        </div>
+
+        <!-- Slide 2 -->
+        <div class="w-full flex-shrink-0 relative min-h-screen">
+            <img
+                class="w-full h-full lg:h-screen max-h-[700px] object-cover object-center brightness-50"
+                src="{{ asset('image/12.webp') }}"
+                alt="Slide 2 Background" />
+            <div
+                class="absolute left-4 sm:left-16 top-36 sm:top-1/2 transform -translate-y-1/2 text-white p-2 rounded w-11/12 sm:w-1/2 z-10">
+                <h2 class="text-xl sm:text-4xl lg:text-5xl font-bold whitespace-normal">
+                    Daftarkan Perusahaan Anda Sekarang
+                </h2>
+                <p class="mt-5 text-lg">
+                    Bantu kembangkan industri Batam dengan bergabung sebagai mitra pelatihan kami.
+                </p>
+                <a
+                    href="https://forms.gle/MBhRLnamd2QiWCkw5"
+                    target="_blank"
+                    class="inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold text-lg py-3 px-6 rounded-full mt-5 shadow-lg">
+                    Isi Formulir Pendaftaran
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE INDICATORS -->
+    <div class="absolute bottom-5 left-1/2 transform -translate-x-1/2 flex space-x-3 z-20">
+        <button
+            @click="slide = 1"
+            :class="slide === 1 ? 'bg-white' : 'bg-gray-400'"
+            class="w-4 h-4 rounded-full transition-colors duration-300"></button>
+        <button
+            @click="slide = 2"
+            :class="slide === 2 ? 'bg-white' : 'bg-gray-400'"
+            class="w-4 h-4 rounded-full transition-colors duration-300"></button>
     </div>
 </div>
+
 
 <section class=" cursor-default">
     <!-- Row 1: Satu kolom -->
@@ -401,7 +473,7 @@
                         <div class="absolute inset-0 bg-black opacity-30 rounded-t-lg"></div>
                         <div class="absolute left-8 sm:left-24 bottom-1/2 transform translate-y-1/2">
                             <h2 class="text-white text-3xl font-bold mb-5 cursor-default">Daftar Perusahaan</h2>
-                            <a href="#" class="bg-CalmBlue transition duration-700 hover:bg-HoverGlow rounded-lg lg:text-base text-white font-medium text-center px-4 py-2.5">Daftarkan perusahaan Anda sekarang</a>
+                            <a href="https://forms.gle/MBhRLnamd2QiWCkw5" target="_blank" class="bg-CalmBlue transition duration-700 hover:bg-HoverGlow rounded-lg lg:text-base text-white font-medium text-center px-4 py-2.5">Daftarkan perusahaan Anda sekarang</a>
                         </div>
                     </div>
                 </div>

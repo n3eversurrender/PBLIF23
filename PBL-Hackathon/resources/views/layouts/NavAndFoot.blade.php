@@ -12,11 +12,11 @@
 <body class="w-full">
 
     <!-- Navbar + Image -->
-    <nav class="bg-black bg-opacity-90 border-gray-200 dark:bg-black dark:bg-opacity-50 fixed top-0 w-full z-10">
-        <div class="max-w-screen-2xl grid grid-cols-12 items-center sm:justify-between mx-auto p-2 sm:p-4">
+    <nav class="bg-white shadow-md border-b border-gray-200 dark:bg-black dark:bg-opacity-50 fixed top-0 left-0 w-full z-10">
+        <div class="max-w-screen-2xl grid grid-cols-12 items-center sm:justify-between mx-auto  px-2 py-2 sm:px-4">
             <a href="#" class="flex {{ Auth::check() ? 'col-span-9' : 'col-span-8' }} sm:col-span-5 items-center space-x-2 rtl:space-x-reverse">
-                <img src="{{ asset('image/SKILLB.png') }}" class="w-10 h-10 rounded-full" alt="Flowbite Logo" />
-                <span class="self-center text-lg sm:text-2xl font-semibold whitespace-nowrap text-white">SKILL BRIDGE</span>
+                <img src="{{ asset('image/SKILLB.png') }}" class="w-7 h-7 rounded-full" alt="Flowbite Logo" />
+                <span class="self-center text-lg sm:text-xl font-bold whitespace-nowrap">SKILL BRIDGE</span>
             </a>
 
             <div class="{{ Auth::check() ? 'col-span-3' : 'col-span-4' }} flex  gap-x-3  sm:col-span-7 sm:flex sm:justify-between">
@@ -95,10 +95,19 @@
                     </div>
                     @endif
                     @else
-                    <!-- Tampilkan tombol login jika pengguna belum login -->
-                    <button type="button" id="login-button" class=" mt-1.5 text-gray-900 bg-white  hover:bg-HoverGlow hover:text-white transition duration-500 font-medium rounded-lg text-xs sm:text-sm lg:px-5 px-3 lg:py-2.5 py-2 me-2 mb-2 group" onclick="window.location.href='/Masuk';">
-                        Masuk
-                    </button>
+                    <!-- Tampilkan tombol login jika pengguna belum login ppp -->
+                    <div>
+                        <button type="button" id="login-button"
+                            class="mt-1.5 text-ButtonBase hover:text-HoverGlow transition duration-500 font-medium rounded-lg text-xs sm:text-sm lg:px-5 px-3 py-2 me-2 mb-2 group"
+                            onclick="window.location.href='/Masuk';">
+                            <i class="fa-solid fa-user me-2 text-blue-600 group-hover:text-HoverGlow transition duration-500"></i>
+                            Masuk
+                        </button>
+
+                        <a href="/Daftar" class="mt-1.5 bg-ButtonBase hover:bg-HoverGlow transition duration-500 text-white  font-medium rounded-lg text-xs sm:text-sm lg:px-5 px-3 py-2 me-2 mb-2 group">
+                            Daftar
+                        </a>
+                    </div>
                     @endif
 
                 </div>
@@ -111,25 +120,59 @@
                 </button>
 
                 <div class="items-center absolute top-14 sm:top-0 right-0 z-10 sm:relative justify-between hidden sm:w-full md:flex md:w-auto md:order-1" id="navbar-default">
-                    <ul class="flex flex-col font-medium p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-transparent md:dark:bg-transparent dark:border-gray-700">
+                    <ul class="flex flex-col font-medium text-sm p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-transparent md:dark:bg-transparent dark:border-gray-700">
+
+                        {{-- BERANDA (Selalu di depan, tergantung status login) --}}
+                        @auth
                         <li>
-                            <a href="/Home"
-                                class="{{ request()->is('Home') ? ' text-blue-600 font-bold' : 'text-black sm:text-white' }} block py-2 px-3 rounded md:border-0 md:p-0 hover:text-blue-500">
+                            <a href="/BerandaTrainee"
+                                class="{{ request()->is('BerandaTrainee') ? 'text-blue-600 font-bold' : 'text-gray-500' }} block py-2 px-3 rounded md:p-0 hover:text-black transition duration-700">
                                 Beranda
                             </a>
                         </li>
+                        @else
+                        <li>
+                            <a href="/Home"
+                                class="{{ request()->is('Home') ? 'text-blue-600 font-bold' : 'text-gray-500' }} block py-2 px-3 rounded md:p-0 hover:text-black transition duration-700">
+                                Beranda
+                            </a>
+                        </li>
+                        @endauth
+
+                        {{-- TENTANG KAMI (hanya untuk guest) --}}
+                        @guest
                         <li>
                             <a href="/TentangKami"
-                                class="{{ request()->is('TentangKami') ? ' text-blue-600 font-bold' : 'text-black sm:text-white' }} block py-2 px-3 rounded md:border-0 md:p-0 hover:text-blue-500">
+                                class="{{ request()->is('TentangKami') ? 'text-blue-600 font-bold' : 'text-gray-500' }} block py-2 px-3 rounded md:p-0 hover:text-black transition duration-700">
                                 Tentang Kami
                             </a>
                         </li>
+                        @endguest
+
+                        {{-- JELAJAHI (selalu muncul) --}}
                         <li>
                             <a href="/DaftarKursus"
-                                class="{{ request()->is('DaftarKursus', 'CoursePage/*', 'DaftarTransaksi') ? ' text-blue-600 font-bold' : 'text-black sm:text-white' }} block py-2 px-3 rounded md:border-0 md:p-0 hover:text-blue-500">
-                                Kursus
+                                class="{{ request()->is('DaftarKursus') || request()->is('DaftarKursus') ? 'text-blue-600 font-bold' : 'text-gray-500' }} block py-2 px-3 rounded md:p-0 hover:text-black transition duration-700">
+                                Jelajahi
                             </a>
                         </li>
+
+                        {{-- PROFIL & RIWAYAT (hanya jika login) --}}
+                        @auth
+                        <li>
+                            <a href="/Profil"
+                                class="{{ request()->is('Profil') ? 'text-blue-600 font-bold' : 'text-gray-500' }} block py-2 px-3 rounded md:p-0 hover:text-black transition duration-700">
+                                Profil
+                            </a>
+                        </li>
+                        <li>
+                            <a href="/Riwayat"
+                                class="{{ request()->is('Riwayat') ? 'text-blue-600 font-bold' : 'text-gray-500' }} block py-2 px-3 rounded md:p-0 hover:text-black transition duration-700">
+                                Riwayat
+                            </a>
+                        </li>
+                        @endauth
+
                     </ul>
                 </div>
             </div>

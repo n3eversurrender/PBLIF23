@@ -59,6 +59,11 @@ Route::get('/SkillMatching', function () {
     return view('SkillMatching');
 });
 
+// Detail Profil perusahaan di jelajahi
+Route::get('/detailProfil', function () {
+    return view('guest.DetailProfilPerusahaan');
+});
+
 // Beranda Perusahaan
 Route::get('/BerandaPerusahaan', function () {
     return view('Perusahaan.BerandaPerusahaan');
@@ -75,8 +80,8 @@ Route::get('/konfirmasi', function () {
 });
 
 // Layouts Perusahaan
-Route::get('/main', function () {
-    return view('layouts.mainPerusahaan');
+Route::get('/statistik', function () {
+    return view('Perusahaan.Statistik');
 });
 
 // Beranda Perusahaan
@@ -99,6 +104,47 @@ Route::get('/EditProfil', function () {
 Route::get('/KelolaGaleri', function () {
     return view('Perusahaan.KelolaGaleri');
 });
+
+// Kelola Jadwal Perusahaan
+Route::get('/jadwal', function () {
+    return view('Perusahaan.Jadwal');
+});
+
+// Kelola Jadwal Perusahaan sepsifik
+Route::get('/kelolajadwal', function () {
+    return view('Perusahaan.KelolaJadwal');
+});
+
+// Kelola Kursus Perusahaan
+Route::get('/kursus', function () {
+    return view('Perusahaan.Kursus');
+});
+
+// Kelola Tambah Kursus Perusahaan
+Route::get('/tambahkursus', function () {
+    return view('Perusahaan.TambahKursus');
+});
+
+// Kelola jadwal Kursus Perusahaan
+Route::get('/tambahjadwal', function () {
+    return view('Perusahaan.TambahJadwal');
+});
+
+// Kelola jadwal Kursus Perusahaan
+Route::get('/detailkursus', function () {
+    return view('Perusahaan.DetailKursus');
+});
+
+// Kelola ulasan Perusahaan
+Route::get('/ulasan', function () {
+    return view('Perusahaan.Ulasan');
+});
+
+// Kelola detail ulasan Perusahaan
+Route::get('/detailulasan', function () {
+    return view('Perusahaan.DetailUlasan');
+});
+
 
 
 // perubahan end
