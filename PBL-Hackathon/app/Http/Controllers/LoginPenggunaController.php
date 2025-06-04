@@ -46,7 +46,7 @@ class LoginPenggunaController extends Controller
             case 'Pelatih':
                 return redirect()->route('DashboardPelatih');
             case 'Peserta':
-                return redirect()->route('DashboardPeserta');
+                return redirect()->route('BerandaTrainee');
             case 'Admin':
                 return redirect()->route('dashboard');
             case 'Superadmin':
@@ -97,7 +97,7 @@ class LoginPenggunaController extends Controller
             ]);
         }
         Auth::login($user);
-        return redirect()->route('DashboardPeserta')->with('success', 'login berhasil');
+        return redirect()->route('BerandaTrainee')->with('success', 'login berhasil');
     }
 
 

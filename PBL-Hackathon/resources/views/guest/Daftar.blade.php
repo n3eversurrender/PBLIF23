@@ -14,7 +14,7 @@
 <body>
     <div class="flex flex-col lg:flex-row lg:justify-between h-full">
 
-        <img class="w-full h-48 sm:h-80 object-cover lg:w-1/3 lg:h-auto" src="{{ asset('image/12.webp') }}"
+        <img class="w-full min-h-screen sm:h-80 object-cover lg:w-1/3 lg:h-auto" src="{{ asset('image/12.webp') }}"
             alt="Background Main" />
         <div class="bg-white p-4 w-full mt-5  lg:mt-0 mb-10 flex flex-col justify-center items-center">
             <h2 class="font-bold text-2xl sm:text-3xl lg:text-4xl text-center my-2 lg:my-10 w-full">Buat Akun Anda</h2>
@@ -67,54 +67,7 @@
                         @enderror
                     </div>
                 </div>
-                <div class="mb-6">
-                    <label for="no_telepon" class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">No
-                        Telepon</label>
-                    <input type="number" id="no_telepon" name="no_telepon"
-                        class="border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                        placeholder="08123300220" />
-                    @error('no_telepon')
-                        <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="mb-6">
-                    <label for="alamat"
-                        class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Alamat</label>
-                    <textarea id="alamat" name="alamat" rows="4"
-                        class="block p-2.5 w-full text-sm text-gray-900 rounded-lg border border-Border focus:ring-blue-500 focus:border-blue-500"
-                        placeholder="Masukkan alamat lengkap..."></textarea>
-                    @error('alamat')
-                        <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
-                    @enderror
-                </div>
-                <div class="grid gap-6 mb-6 md:grid-cols-2">
-                    <div>
-                        <label for="jenis_kelamin"
-                            class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Jenis Kelamin</label>
-                        <select id="jenis_kelamin" name="jenis_kelamin"
-                            class="border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                            <option selected disabled>Pilih Jenis Kelamin</option>
-                            <option value="Laki-laki">Laki-Laki</option>
-                            <option value="Perempuan">Perempuan</option>
-                        </select>
-                        @error('jenis_kelamin')
-                            <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
-                        @enderror
-                    </div>
-                    <div>
-                        <label for="peran"
-                            class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Peran</label>
-                        <select id="peran" name="peran"
-                            class="border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5">
-                            <option selected disabled>Pilih Peran</option>
-                            <option value="Peserta">Peserta</option>
-                            <option value="Pelatih">Pelatih</option>
-                        </select>
-                        @error('peran')
-                            <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
-                        @enderror
-                    </div>
-                </div>
+
                 <div class="grid gap-6 mb-6 md:grid-cols-2">
                     <div class="lg:mb-3">
                         <label for="kata_sandi"
