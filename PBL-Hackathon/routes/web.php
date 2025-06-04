@@ -94,6 +94,7 @@ Route::get('/EditProfil', function () {
     return view('Perusahaan.EditProfil');
 });
 
+
 // Kelola Galeri Perusahaan
 Route::get('/KelolaGaleri', function () {
     return view('Perusahaan.KelolaGaleri');
@@ -142,8 +143,9 @@ Route::middleware(['auth', PeranMiddleware::class . ':Peserta'])->group(function
     Route::get('/DashboardPeserta', [DashboardPesertaController::class, 'dashboardPeserta'])->name('DashboardPeserta');
     Route::get('/BerandaTrainee', [BerandaTraineeController::class, 'berandaTrainee'])->name('BerandaTrainee');
     Route::get('/Riwayat', [RiwayatController::class, 'riwayat'])->name('Riwayat');
-    Route::get('/DetailRiwayat', [DetailRiwayatController::class, 'detailRiwayat'])->name('DetailRiwayat');
+    Route::get('/DetailRiwayat/{id}', [DetailRiwayatController::class, 'detailRiwayat'])->name('DetailRiwayat');
     Route::get('/Profil', [ProfilController::class, 'profil'])->name('Profil');
+    Route::post('/profil/update', [ProfilController::class, 'update'])->name('profile.update');
     Route::get('/Kursus', [KursusController::class, 'Kursus']);
     Route::get('/KursusModul/{id_kursus}', [KursusController::class, 'kursusModul'])->name('kursusModul.show');
     Route::get('/KursusMateri', [KursusController::class, 'kursusMateri'])->name('kursusMateri');
@@ -166,7 +168,6 @@ Route::middleware(['auth', PeranMiddleware::class . ':Peserta'])->group(function
     Route::get('/daftar-pelatihan/sertifikat/{pendaftaran_id}', [DaftarPelatihanController::class, 'downloadSertifikat'])->name('DaftarPelatihan.sertifikat');
     Route::get('/daftar-pelatihan/{pendaftaran_id}/sertifikat', [DaftarPelatihanController::class, 'downloadSertifikat'])->name('DaftarPelatihan.sertifikat');
     Route::delete('/daftar-pelatihan/{pendaftaran_id}', [DaftarPelatihanController::class, 'destroy'])->name('DaftarPelatihan.destroy');
-
 });
 
 
@@ -246,5 +247,4 @@ Route::middleware(['auth', PeranMiddleware::class . ':Admin'])->group(function (
 
     Route::get('/DataUmpanBalik', [DataUmpanBalikController::class, 'dataUmpanBalik']);
     Route::delete('/DataUmpanBalik/{id}', [DataUmpanBalikController::class, 'destroy'])->name('UmpanBalik.destroy');
-
 });

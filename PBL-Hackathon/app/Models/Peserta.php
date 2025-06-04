@@ -13,7 +13,21 @@ class Peserta extends Model
     protected $primaryKey = 'peserta_id';
 
     protected $fillable = [
-        'pengguna_id', 'tahun_pengalaman', 'bulan_pengalaman', 'nama_keahlian'
+        'pengguna_id',
+        'status',
+        'pendidikan',
+        'minat_bidang',
+        'bidang_saat_ini',
+        'kemampuan',
+        'tahun_pengalaman',
+        'bulan_pengalaman',
+        'nama_keahlian'
+    ];
+
+    protected $casts = [
+        'minat_bidang' => 'array',
+        'bidang_saat_ini' => 'array',
+        'kemampuan' => 'array',
     ];
 
     public function pengguna()

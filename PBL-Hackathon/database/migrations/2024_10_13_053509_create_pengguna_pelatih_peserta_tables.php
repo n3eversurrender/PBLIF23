@@ -24,16 +24,10 @@ class CreatePenggunaPelatihPesertaTables extends Migration
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan'])->nullable();
             $table->string('kata_sandi');
             $table->string('foto_profil')->nullable();
-            $table->enum('peran', ['Pelatih', 'Peserta', 'Admin'])->nullable();
-            $table->enum('status', ['Aktif', 'Tidak Aktif'])->nullable();
-            $table->timestamps();
-        });
-
-        Schema::create('verifikasi', function (Blueprint $table) {
-            $table->id('verifikasi_id');
-            $table->unsignedBigInteger('pengguna_id'); // Gunakan unsignedBigInteger untuk foreign key
-            $table->foreign('pengguna_id')->references('pengguna_id')->on('pengguna')->onDelete('cascade');
-            $table->enum('status_verifikasi', ['Menunggu', 'Disetujui', 'Ditolak'])->default('Menunggu');
+            $table->enum('peran', ['Perusahaan', 'Peserta', 'Admin'])->nullable();
+            $table->enum('status_verifikasi', ['Belum Diverifikasi', 'Sudah Diverifikasi', 'Ditolak'])
+                ->default('Belum Diverifikasi')
+                ->nullable();
             $table->timestamps();
         });
 
@@ -53,9 +47,18 @@ class CreatePenggunaPelatihPesertaTables extends Migration
         Schema::create('peserta', function (Blueprint $table) {
             $table->id('peserta_id');
             $table->unsignedBigInteger('pengguna_id')->nullable();
+
+            $table->enum('status', ['Mahasiswa', 'Pekerja', 'Dosen', 'Lainnya'])->nullable();
+            $table->enum('pendidikan', ['SD', 'SMP', 'SMA', 'D3', 'S1', 'S2', 'S3'])->nullable();
+
+            $table->json('minat_bidang')->nullable(); // Contoh: ["Welding", "Fitting", "Automation"]
+            $table->json('bidang_saat_ini')->nullable(); // Contoh: [{"bidang": "Welding", "tahun": 2, "bulan": 3}, ...]
+            $table->json('kemampuan')->nullable(); // Contoh: ["AutoCAD", "SolidWorks", "CNC"]
+
             $table->integer('tahun_pengalaman')->nullable();
             $table->integer('bulan_pengalaman')->nullable();
             $table->string('nama_keahlian')->nullable();
+
             $table->foreign('pengguna_id')->references('pengguna_id')->on('pengguna')->onDelete('cascade');
             $table->timestamps();
         });
@@ -123,7 +126,7 @@ class CreatePenggunaPelatihPesertaTables extends Migration
             $table->foreign('kursus_id')->references('kursus_id')->on('kursus')->onDelete('cascade');
             $table->timestamps();
         });
-        
+
         // Tabel pembayaran
         Schema::create('pembayaran', function (Blueprint $table) {
             $table->id('pembayaran_id');
