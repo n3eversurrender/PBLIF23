@@ -1,8 +1,8 @@
-@extends('layouts.maintrainee')
+@extends('layouts.mainNavPerusahaan')
 
 @vite(['resources/js/home.js'])
 @vite(['resources/css/berandaperusahaan.css'])
-@section('MainTrainee')
+@section('MainNavPerusahaan')
 
 <main class="sm:mx-10 mx-5 mt-16">
     <!-- Breadcrumb -->
@@ -17,7 +17,6 @@
     <!-- Kelola galeri perusahaan -->
     <div class="mx-16">
         <h1 class="font-bold text-2xl text-center mt-5 mb-16">Kelola Galeri Perusahaan</h1>
-        <!-- <a href="#" class="font-semibold bg-ButtonBase hover:bg-HoverGlow transition duration-700 py-2.5 px-5 rounded-lg text-white">Tambah Galeri</a> -->
         <form action="">
             <div class="sm:mt-6 mt-4">
                 <div class="flex justify-end">
@@ -80,8 +79,6 @@
                             </div>
                         </td>
                     </tr>
-
-                    <!-- Tambahkan baris lain sesuai kebutuhan -->
                 </tbody>
             </table>
 

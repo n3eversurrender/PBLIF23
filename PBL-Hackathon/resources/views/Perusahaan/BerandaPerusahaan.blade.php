@@ -1,24 +1,10 @@
-@extends('layouts.maintrainee')
+@extends('layouts.mainNavPerusahaan')
 
 @vite(['resources/js/home.js'])
 @vite(['resources/css/berandaperusahaan.css'])
-@section('MainTrainee')
+@section('MainNavPerusahaan')
 
 <main class="bg-gray-100">
-
-    <!-- <div class="relative w-full">
-        <img class="h-auto w-full max-h-[700px] object-cover" src="{{ asset('image/12.webp') }}" alt="Background Main">
-        <div class="absolute left-4 sm:left-16 top-36 sm:top-1/2 transform -translate-y-1/2 text-white p-2 rounded w-1/2">
-            <h2 class=" text-xl sm:text-4xl lg:text-5xl font-bold whitespace-normal">
-                Membentuk Keterampilan, Menggerakkan Industri!
-            </h2>
-            @guest
-        <a href="/Daftar" class="mt-4 sm:mt-10 text-sm sm:text-base inline-block bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded">
-            Daftar Sekarang
-        </a>
-        @endguest
-        </div>
-    </div> -->
 
     <!-- container -->
     <div class="sm:mx-10 mx-5 mt-16">
@@ -71,52 +57,6 @@
                 </div>
             </div>
         </div>
-
-
-        <!-- Profil perusahaan -->
-        <!-- <section class="my-5 sm:my-10">
-            <div class="flex items-center space-x-4 sm:mb-8 mb-4">
-                <h1 class="text-3xl font-bold uppercase">Profil Perusahaan</h1>
-                <div class="flex-1 border-t border-2 border-gray-300"></div>
-            </div>
-            <div class="sm:grid lg:grid-cols-4 sm:grid-cols-3 gap-4">
-                <div class=" sm:col-span-1">
-                    <img src="{{ asset('image/12.webp') }}" class="rounded-lg aspect-square sm:aspect-9/16 object-cover" />
-                </div>
-                <div class="lg:col-span-3 sm:col-span-2 px-2 lg:px-6 mt-5 sm:mt-0 text-sm sm:text-base">
-                    <p>
-                        Established in 2004, PT. DUA UTAMA JAYA committed to deliver customer satisfaction. With our extensive experiences in related industries, we execute projects professionally based on standard and your specification.mus eget est sit amet, condimentum hendrerit erat. In porta quis odio eget mollis.
-                    </p>
-                    <p>
-                        DUJ’s scopes are  in two business areas:
-                    </p>
-
-                    <label class="font-bold">EDUCATION:</label>
-                    <ul>
-                        <li>- Provision of the welding institute (TWI) Training (Courses and Certification)</li>
-                        <li>- DUTC Training</li>
-                    </ul>
-
-                    <label class="font-bold">SERVICES:</label>
-                    <ul>
-                        <li>- Inspection and Testing (For welder qualification test) </li>
-                        <li>- Manpower Supply</li>
-                        <li>- Welding Works (structural & piping)</li>
-                        <li>- Process WPS Procedure</li>
-                        <li>- Rental Equipment</li>
-                    </ul>
-
-                    <label class="font-bold">VISION</label>
-                    <p>Having contributions in developing human resources and to developing professional skillfull labor according to the Republic Indonesia Government’s program. PT. DUA UTAMA JAYA as a strategic option to works and as a bridge to reach the career successfully in the future.</p>
-
-                    <label class="font-bold">MISION</label>
-                    <p>To be the right partner in competitive business environment and to fulfill mutual benefit.</p>
-                    <p>lorem50</p>
-                    <p>Address: Comp. Green Town Warehouse No. 1, Jalan Yos Sudarso, Bengkong, Bengkong Laut, Kec. Bengkong, Kota Batam, Kepulauan Riau 29457</p>
-                </div>
-            </div>
-
-        </section> -->
 
         <!-- Kursus tersedia -->
         <section class="my-10">
