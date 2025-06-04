@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
@@ -69,6 +70,15 @@ Route::get('/lupasandi', function () {
     return view('guest.LupaKataSandi');
 });
 
+
+Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
+
+Route::get('reset-password/{token}', [AuthController::class, 'showResetForm'])->name('password.reset');
+Route::post('reset-password', [AuthController::class, 'reset'])->name('password.update');
+
+
+
+
 // konfirmasi kata sandi
 Route::get('/konfirmasi', function () {
     return view('guest.KonfirmasiKataSandi');
@@ -88,7 +98,8 @@ Route::get('/MainPeserta', [MainController::class, 'mainPeserta']);
 Route::get('/MainPelatih', [MainController::class, 'mainPelatih']);
 
 // Route Web Skill Bridge
-Route::get('/Home', [MainController::class, 'Home'])->name('home');;
+Route::get('/Home', [MainController::class, 'Home'])->name('home');
+;
 Route::get('/DaftarKursus', [MainController::class, 'daftarKursus'])->name('daftarKursus');
 Route::get('/TentangKami', [MainController::class, 'tentangKami']);
 Route::get('/Daftar', [ManajemenAkunController::class, 'Daftar']);
