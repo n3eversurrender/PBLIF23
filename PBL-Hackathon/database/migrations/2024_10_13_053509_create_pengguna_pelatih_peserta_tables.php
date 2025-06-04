@@ -123,7 +123,7 @@ class CreatePenggunaPelatihPesertaTables extends Migration
             $table->foreign('kursus_id')->references('kursus_id')->on('kursus')->onDelete('cascade');
             $table->timestamps();
         });
-        
+
         // Tabel pembayaran
         Schema::create('pembayaran', function (Blueprint $table) {
             $table->id('pembayaran_id');

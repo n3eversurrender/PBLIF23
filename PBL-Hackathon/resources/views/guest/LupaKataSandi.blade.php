@@ -15,8 +15,7 @@
 <body>
     <div class="flex flex-col lg:flex-row lg:justify-between h-screen">
         <!-- Image Section -->
-        <img class="w-full h-48 sm:h-1/3 object-cover lg:w-1/3 lg:h-auto"
-            src="{{ asset('image/12.webp') }}"
+        <img class="w-full h-48 sm:h-1/3 object-cover lg:w-1/3 lg:h-auto" src="{{ asset('image/12.webp') }}"
             alt="Background Main" />
 
         <!-- Form Section -->
@@ -28,51 +27,81 @@
 
             <!-- Cek apakah ada pesan kesalahan untuk login_error -->
             <!-- @if ($errors->has('login_error'))
-            <div class="text-red-500 text-sm mb-4">
+<div class="text-red-500 text-sm mb-4">
                 <strong>{{ $errors->first('login_error') }}</strong>
             </div>
-            @endif -->
+@endif -->
 
-            <form  action="" class="w-full px-12 lg:px-0 mt-5 lg:mt-0 lg:max-w-md">
-                
+            <form action="{{ route('password.email', ['id' => 1]) }}"
+                class="w-full px-12 lg:px-0 mt-5 lg:mt-0 lg:max-w-md" method="post">
+                @csrf
+
                 <div class="mb-4 lg:mb-6">
                     <label for="email" class="block mb-2 text-sm font-semibold text-gray-950 dark:text-white">
                         Email
                     </label>
-                    <input type="email" id="email"
+                    <input type="email" name="email" id="email"
                         class="border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="john.doe@company.com" />
                     <!-- <span class="text-xs text-red-600">Masukkan email aktif yang sesuai dengan akun yang anda gunakan sebelumnya</span> -->
                     <!-- Pesan error untuk email -->
                     <!-- @error('email')
-                    <div class="text-red-500 text-sm">{{ $message }}</div>
-                    @enderror -->
+    <div class="text-red-500 text-sm">{{ $message }}</div>
+@enderror -->
 
                 </div>
 
                 <div class="flex justify-center sm:mt-8 mt-0 lg:mt-0 ">
-                    <a href="/konfirmasi" type="submit"
+                    <button type="submit" type="submit"
                         class="text-white bg-ButtonBase hover:bg-HoverGlow focus:ring-4 focus:outline-none focus:ring-HoverGlow font-semibold rounded-lg text-sm w-full sm:w-1/2 lg:w-full px-5 py-2 text-center transition duration-700">
                         Kirim
-                    </a>
+                    </button>
                 </div>
             </form>
         </div>
     </div>
 
+    {{-- SUCCESS --}}
     @if (session('success'))
-    <script>
-        document.addEventListener('DOMContentLoaded', (event) => {
-            Swal.fire({
-                position: "middle",
-                icon: "success",
-                title: "{{ session('success') }}",
-                showConfirmButton: false,
-                timer: 1500
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                Swal.fire({
+                    position: "middle",
+                    icon: "success",
+                    title: "{{ session('success') }}",
+                    showConfirmButton: false,
+                    timer: 1500
+                });
             });
-        });
-    </script>
+        </script>
     @endif
+
+    {{-- ERROR MESSAGE --}}
+    @if (session('error'))
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Oops...",
+                    text: "{{ session('error') }}",
+                });
+            });
+        </script>
+    @endif
+
+    {{-- VALIDATION ERRORS --}}
+    @if ($errors->any())
+        <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                Swal.fire({
+                    icon: "error",
+                    title: "Validasi gagal!",
+                    html: `{!! implode('<br>', $errors->all()) !!}`
+                });
+            });
+        </script>
+    @endif
+
 </body>
 
 </html>
