@@ -43,8 +43,8 @@ class LoginPenggunaController extends Controller
 
         // Arahkan ke dashboard sesuai peran
         switch ($pengguna->peran) {
-            case 'Pelatih':
-                return redirect()->route('DashboardPelatih');
+            case 'Perusahaan':
+                return redirect()->route('StatistikPerusahaan');
             case 'Peserta':
                 return redirect()->route('BerandaTrainee');
             case 'Admin':

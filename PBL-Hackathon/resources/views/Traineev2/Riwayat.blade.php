@@ -20,7 +20,9 @@
                             <div class="ml-4">
                                 <div class="flex items-center flex-wrap">
                                     <h3 class="font-bold text-dark mr-2">{{ $item->kursus->judul }}</h3>
-                                    @if (empty($item->rating))
+                                    @if ($item->has_reviewed)
+                                    <span class="bg-green-100 text-green-700 text-xs px-2 py-0.5 rounded">Ulasan sudah diberikan</span>
+                                    @else
                                     <span class="bg-secondary text-sky-500 text-xs px-2 py-0.5 rounded">Anda belum memberikan ulasan</span>
                                     @endif
                                 </div>

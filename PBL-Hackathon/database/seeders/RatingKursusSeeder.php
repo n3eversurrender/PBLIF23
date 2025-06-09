@@ -18,7 +18,7 @@ class RatingKursusSeeder extends Seeder
             DB::table('rating_kursus')->insert([
                 'kursus_id' => rand(1, 30), // Randomly select course ID between 1 and 30
                 'pengguna_id' => rand(6, 30), // Randomly assign a user ID between 6 and 30
-                'rating' => rand(5, 10), // Random rating between 1 and 10
+                'rating' => rand(1, 5), // Random rating between 1 and 10
                 'komentar' => $faker->sentence(), // Generate a random comment
                 'created_at' => now(),
                 'updated_at' => now(),
