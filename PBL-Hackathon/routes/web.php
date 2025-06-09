@@ -49,112 +49,34 @@ use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\DetailRiwayatController;
 
+use App\Http\Controllers\PerusahaanController;
+use App\Http\Controllers\GaleriController;
+use App\Http\Controllers\JadwalController;
+use App\Http\Controllers\UlasanController;
+use App\Http\Controllers\ProfilPerusahaanController;
+use App\Http\Controllers\LandingPageController;
+use App\Http\Controllers\GuestController;
+use App\Http\Controllers\KursusPerushaanController;
+
 // Route Default
 Route::get('/', function () {
     return redirect('/Home');
 });
 
-// perubahan start
 // Skill Matching
 Route::get('/SkillMatching', function () {
     return view('SkillMatching');
 });
-
-// Detail Profil perusahaan di jelajahi
-Route::get('/detailProfil', function () {
-    return view('guest.DetailProfilPerusahaan');
-});
-
-// Beranda Perusahaan
-Route::get('/BerandaPerusahaan', function () {
-    return view('Perusahaan.BerandaPerusahaan');
-});
-
-// lupa kata sandi
-Route::get('/lupasandi', function () {
-    return view('guest.LupaKataSandi');
-});
-
 
 Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
 
 Route::get('reset-password/{token}', [AuthController::class, 'showResetForm'])->name('password.reset');
 Route::post('reset-password', [AuthController::class, 'reset'])->name('password.update');
 
-
-
-
 // konfirmasi kata sandi
 Route::get('/konfirmasi', function () {
     return view('guest.KonfirmasiKataSandi');
 });
-
-// Layouts Perusahaan
-Route::get('/statistik', function () {
-    return view('Perusahaan.Statistik');
-});
-
-// Beranda Perusahaan
-Route::get('/LandingPage', function () {
-    return view('Perusahaan.LandingPage');
-});
-
-// Profil Perusahaan
-Route::get('/ProfilPerusahaan', function () {
-    return view('Perusahaan.Profil');
-});
-
-// Edit Profil Perusahaan
-Route::get('/EditProfil', function () {
-    return view('Perusahaan.EditProfil');
-});
-
-
-// Kelola Galeri Perusahaan
-Route::get('/KelolaGaleri', function () {
-    return view('Perusahaan.KelolaGaleri');
-});
-
-// Kelola Jadwal Perusahaan
-Route::get('/jadwal', function () {
-    return view('Perusahaan.Jadwal');
-});
-
-// Kelola Jadwal Perusahaan sepsifik
-Route::get('/kelolajadwal', function () {
-    return view('Perusahaan.KelolaJadwal');
-});
-
-// Kelola Kursus Perusahaan
-Route::get('/kursus', function () {
-    return view('Perusahaan.Kursus');
-});
-
-// Kelola Tambah Kursus Perusahaan
-Route::get('/tambahkursus', function () {
-    return view('Perusahaan.TambahKursus');
-});
-
-// Kelola jadwal Kursus Perusahaan
-Route::get('/tambahjadwal', function () {
-    return view('Perusahaan.TambahJadwal');
-});
-
-// Kelola jadwal Kursus Perusahaan
-Route::get('/detailkursus', function () {
-    return view('Perusahaan.DetailKursus');
-});
-
-// Kelola ulasan Perusahaan
-Route::get('/ulasan', function () {
-    return view('Perusahaan.Ulasan');
-});
-
-// Kelola detail ulasan Perusahaan
-Route::get('/detailulasan', function () {
-    return view('Perusahaan.DetailUlasan');
-});
-
 
 
 // perubahan end
@@ -166,8 +88,7 @@ Route::get('/MainPeserta', [MainController::class, 'mainPeserta']);
 Route::get('/MainPelatih', [MainController::class, 'mainPelatih']);
 
 // Route Web Skill Bridge
-Route::get('/Home', [MainController::class, 'Home'])->name('home');
-;
+Route::get('/Home', [MainController::class, 'Home'])->name('home');;
 Route::get('/DaftarKursus', [MainController::class, 'daftarKursus'])->name('daftarKursus');
 Route::get('/TentangKami', [MainController::class, 'tentangKami']);
 Route::get('/Daftar', [ManajemenAkunController::class, 'Daftar']);
@@ -191,7 +112,6 @@ Route::post('/rekomendasi', [RekomendasiController::class, 'getRecommendation'])
 
 
 
-
 Route::post('/Masuk', [LoginPenggunaController::class, 'login'])->name('login');
 
 // Route Peserta
@@ -201,6 +121,8 @@ Route::middleware(['auth', PeranMiddleware::class . ':Peserta'])->group(function
     Route::get('/BerandaTrainee', [BerandaTraineeController::class, 'berandaTrainee'])->name('BerandaTrainee');
     Route::get('/Riwayat', [RiwayatController::class, 'riwayat'])->name('Riwayat');
     Route::get('/DetailRiwayat/{id}', [DetailRiwayatController::class, 'detailRiwayat'])->name('DetailRiwayat');
+    Route::post('/ulasan/{id}', [DetailRiwayatController::class, 'submitUlasan'])->name('ulasan.submit');
+
     Route::get('/Profil', [ProfilController::class, 'profil'])->name('Profil');
     Route::post('/profil/update', [ProfilController::class, 'update'])->name('profile.update');
     Route::get('/Kursus', [KursusController::class, 'Kursus']);
@@ -228,44 +150,53 @@ Route::middleware(['auth', PeranMiddleware::class . ':Peserta'])->group(function
 });
 
 
-Route::middleware(['auth', PeranMiddleware::class . ':Pelatih'])->group(function () {
+Route::middleware(['auth', PeranMiddleware::class . ':Perusahaan'])->group(function () {
     Route::post('/logoutPelatih', [LoginPenggunaController::class, 'logoutPelatih'])->name('logoutPelatih');
-    Route::get('/DashboardPelatih', [DashboardPelatihController::class, 'dashboardPelatih'])->name('DashboardPelatih');
 
-    Route::get('/PengaturanPelatih', [PengaturanPelatihController::class, 'pengaturanPelatih'])->name('PengaturanPelatih');
-    Route::put('/pelatih/update', [PengaturanPelatihController::class, 'updatePelatih'])->name('pelatih.update');
-    Route::post('/pelatih/store', [PengaturanPelatihController::class, 'storePelatih'])->name('pelatih.store');
-    Route::post('/pengaturan-pelatih/verifikasi', [PengaturanPelatihController::class, 'ajukanVerifikasi'])->name('pengaturanPelatih.ajukanVerifikasi');
+    //NEW
+    Route::get('/statistik', [PerusahaanController::class, 'statistikPerusahaan'])->name('StatistikPerusahaan');
 
+    // Beranda Perusahaan
+    Route::get('/BerandaPerusahaan', [PerusahaanController::class, 'berandaPerusahaan'])->name('BerandaPerusahaan');
 
-    Route::put('/pelatih/{pelatih_id}', [PengaturanPelatihController::class, 'updatePelatihSpesialisasi'])->name('pelatihSpesialisasi.update');
-    Route::delete('/pelatih/{pelatih_id}', [PengaturanPelatihController::class, 'destroyPelatih'])->name('pelatih.destroy');
+    // Detail Profil perusahaan (guest)
+    Route::get('/detailProfil', [GuestController::class, 'detailProfilPerusahaan'])->name('DetailProfilPerusahaan');
 
-    Route::get('/PengelolaanSertifikat', [PengelolaanSertifikatController::class, 'pengelolaanSertifikat'])->name('PengelolaanSertifikat');
-    Route::get('/TambahSertifikat', [PengelolaanSertifikatController::class, 'tambahSertifikat'])->name('TambahSertifikat');
-    Route::get('/get-peserta/{kursus_id}', [PengelolaanSertifikatController::class, 'getPesertaByKursusId']);
-    Route::post('/tambah-sertifikat', [PengelolaanSertifikatController::class, 'store'])->name('sertifikat.store');
-    Route::get('/edit-sertifikat/{sertifikat_id}', [PengelolaanSertifikatController::class, 'editSertifikat'])->name('sertifikat.edit');
-    Route::put('/update-sertifikat/{sertifikat_id}', [PengelolaanSertifikatController::class, 'update'])->name('sertifikat.update');
-    Route::delete('/delete-sertifikat/{sertifikat_id}', [PengelolaanSertifikatController::class, 'destroy'])->name('sertifikat.delete');
+    // Landing Page
+    Route::get('/LandingPage', [LandingPageController::class, 'landingPage'])->name('LandingPagePerusahaan');
 
-    Route::get('/PengelolaanPelatihan', [PengelolaanPelatihanController::class, 'pengelolaanPelatihan']);
-    Route::get('/PengelolaanPelatihanDetail/{kursus_id}', [PengelolaanPelatihanController::class, 'pengelolaanPelatihanDetail'])->name('pengelolaanPelatihanDetail.show');
+    // Profil Perusahaan
+    Route::get('/ProfilPerusahaan', [ProfilPerusahaanController::class, 'profilPerusahaan'])->name('ProfilPerusahaan');
 
-    Route::delete('/pendaftaran/{pendaftaran_id}', [PengelolaanPelatihanController::class, 'destroy'])->name('Pendaftaran.destroy');
-    Route::put('/pendaftaran/{pendaftaran_id}', [PengelolaanPelatihanController::class, 'update'])->name('pendaftaran.update');
+    // Edit Profil Perusahaan
+    Route::get('/EditProfil', [ProfilPerusahaanController::class, 'editProfilPerusahaan'])->name('EditProfilPerusahaan');
 
-    Route::get('/PengelolaanKursus', [PengelolaanKursusController::class, 'pengelolaanKursus'])->name('PengelolaanKursus');
-    Route::delete('/PengelolaanKursus/{kursus_id}', [PengelolaanKursusController::class, 'destroy'])->name('PengelolaanKursus.destroy');
-    Route::put('/PengelolaanKursus/{kursus_id}', [PengelolaanKursusController::class, 'update'])->name('PengelolaanKursus.update');
-    Route::post('/PengelolaanKursus', [PengelolaanKursusController::class, 'store'])->name('PengelolaanKursus.store');
-    Route::get('/TambahKursus', [TambahKursusController::class, 'tambahKursus']);
+    // Kelola Galeri
+    Route::get('/KelolaGaleri', [GaleriController::class, 'kelolaGaleri'])->name('KelolaGaleri');
 
-    Route::get('/PengelolaanKurikulum', [PengelolaanKurikulumController::class, 'pengelolaanKurikulum'])->name('PengelolaanKurikulum');
-    Route::get('/TambahKurikulum/{kursus_id}', [PengelolaanKurikulumController::class, 'tambahKurikulum'])->name('tambahKurikulum');
-    Route::post('/kurikulum/store', [PengelolaanKurikulumController::class, 'store'])->name('kurikulum.store');
-    Route::put('/kurikulum/{id}', [PengelolaanKurikulumController::class, 'update'])->name('PengelolaanKurikulum.update');
-    Route::delete('/kurikulum/{id}', [PengelolaanKurikulumController::class, 'destroy'])->name('PengelolaanKurikulum.destroy');
+    // Kursus
+    Route::get('/kursus', [KursusPerushaanController::class, 'indexKursus'])->name('KursusPerusahaan');
+
+    // Tambah Kursus
+    Route::get('/tambahkursus', [KursusPerushaanController::class, 'tambahKursus'])->name('TambahKursus');
+
+    // Detail Kursus
+    Route::get('/detailkursus', [KursusPerushaanController::class, 'detailKursus'])->name('DetailKursus');
+
+    // Jadwal (semua)
+    Route::get('/jadwal', [JadwalController::class, 'indexJadwal'])->name('JadwalPerusahaan');
+
+    // Kelola Jadwal spesifik
+    Route::get('/kelolajadwal', [JadwalController::class, 'kelolaJadwal'])->name('KelolaJadwal');
+
+    // Tambah Jadwal Kursus
+    Route::get('/tambahjadwal', [JadwalController::class, 'tambahJadwal'])->name('TambahJadwal');
+
+    // Ulasan
+    Route::get('/ulasan', [UlasanController::class, 'indexUlasan'])->name('UlasanPerusahaan');
+
+    // Detail Ulasan
+    Route::get('/detailulasan', [UlasanController::class, 'detailUlasan'])->name('DetailUlasan');
 });
 
 // Route Admin

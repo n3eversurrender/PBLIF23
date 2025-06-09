@@ -51,7 +51,7 @@ class CreatePenggunaPelatihPesertaTables extends Migration
             $table->enum('status', ['Mahasiswa', 'Pekerja', 'Dosen', 'Lainnya'])->nullable();
             $table->enum('pendidikan', ['SD', 'SMP', 'SMA', 'D3', 'S1', 'S2', 'S3'])->nullable();
 
-            $table->json('minat_bidang')->nullable(); // Contoh: ["Welding", "Fitting", "Automation"]
+            $table->string('minat_bidang')->nullable();
             $table->json('bidang_saat_ini')->nullable(); // Contoh: [{"bidang": "Welding", "tahun": 2, "bulan": 3}, ...]
             $table->json('kemampuan')->nullable(); // Contoh: ["AutoCAD", "SolidWorks", "CNC"]
 

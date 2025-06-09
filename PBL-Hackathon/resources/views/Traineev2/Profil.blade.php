@@ -120,8 +120,8 @@
                 </div>
             </div>
             @php
-            $minatBidang = $user->peserta->minat_bidang;
-            $kemampuan = $user->peserta->kemampuan;
+            $minatBidang = isset($user->peserta) ? $user->peserta->minat_bidang : [];
+            $kemampuan = isset($user->peserta) ? $user->peserta->kemampuan : [];
 
             // Handle kalau masih dalam bentuk string JSON
             if (is_string($minatBidang)) {
