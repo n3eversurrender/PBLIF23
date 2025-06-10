@@ -74,7 +74,7 @@
     <div class="sm:ml-64">
         <div class="grid grid-cols-7 sm:flex justify-between items-center bg-white pt-4 px-4">
             <h1 class="text-3xl col-span-6 lg:text-4xl font-extrabold dark:text-white">
-                Selamat Datang <span class="text-2xl text-gray-600 font-semibold">PT. SkillMaju</span>
+                Selamat Datang <span class="text-2xl text-gray-600 font-semibold"> {{ Auth::user()->nama }}</span>
             </h1>
             <div class="flex items-center space-x-4">
 
