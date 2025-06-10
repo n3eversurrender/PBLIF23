@@ -19,34 +19,39 @@
                         <th class="px-4 py-3 text-left font-semibold text-gray-600">No</th>
                         <th class="px-4 py-3 text-left font-semibold text-gray-600">Nama Kursus</th>
                         <th class="px-4 py-3 text-left font-semibold text-gray-600">Level</th>
-                        <th class="px-4 py-3 text-left font-semibold text-gray-600">Peserta</th>
-                        <th class="px-4 py-3 text-left font-semibold text-gray-600">Pertemuan</th>
+                        <th class="px-4 py-3 text-left font-semibold text-gray-600">Kategori</th>
+                        <th class="px-4 py-3 text-left font-semibold text-gray-600">Peserta</th> {{-- Mengganti "Kapasitas" jadi "Peserta" untuk menampilkan jumlah --}}
+                        <th class="px-4 py-3 text-left font-semibold text-gray-600">Status</th>
                         <th class="px-4 py-3 text-left font-semibold text-gray-600">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100">
-                    <!-- Baris Kursus 1 -->
+                    @forelse($kursus as $index => $item)
                     <tr class="hover:bg-gray-50">
-                        <td class="px-4 py-3">1</td>
-                        <td class="px-4 py-3 font-medium text-gray-800">Welding Pro</td>
-                        <td class="px-4 py-3 text-gray-600">Lanjutan</td>
-                        <td class="px-4 py-3 text-gray-600">35</td>
-                        <td class="px-4 py-3 text-gray-600">7x</td>
+                        <td class="px-4 py-3">{{ $index + 1 }}</td>
+                        <td class="px-4 py-3 font-medium text-gray-800">{{ $item->judul }}</td>
+                        <td class="px-4 py-3 text-gray-600">{{ $item->tingkat_kesulitan }}</td>
+                        <td class="px-4 py-3 text-gray-600">{{ $item->kategori->nama_kategori ?? 'N/A' }}</td> {{-- Mengakses nama kategori --}}
+                        <td class="px-4 py-3 text-gray-600">{{ $item->pendaftaran->count() }}</td> {{-- Menampilkan jumlah peserta --}}
+                        <td class="px-4 py-3 text-gray-600">{{ $item->status }}</td>
                         <td class="px-4 py-3 space-x-2">
-                            <a href="/detailkursus" class="text-blue-600 hover:underline text-sm">Detail</a>
-                            <a href="javascript:void(0);" onclick='openEditModal({ nama: "Welding Pro" })' class="text-green-600 hover:underline text-sm">Edit</a>
+                            <a href="/detailkursus/{{ $item->kursus_id }}" class="text-blue-600 hover:underline text-sm">Detail</a>
+                            <a href="javascript:void(0);" onclick='openEditModal({ id: {{ $item->kursus_id }}, nama: "{{ $item->judul }}" })' class="text-green-600 hover:underline text-sm">Edit</a>
                             <button onclick="openModal()" class="text-red-600 hover:underline text-sm">Hapus</button>
                         </td>
                     </tr>
-
-                    <!-- Tambahkan baris kursus lainnya di sini -->
+                    @empty
+                    <tr>
+                        <td colspan="7" class="px-4 py-3 text-center text-gray-500">Belum ada kursus yang Anda buat.</td>
+                    </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
     </div>
 
     <!-- Modal Edit Kursus -->
-    <div id="editModal"  class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50">
+    <div id="editModal" class="fixed inset-0 z-50 hidden items-center justify-center bg-black bg-opacity-50">
         <div class="bg-white w-full max-w-3xl max-h-[90vh] p-6 rounded-lg relative overflow-y-auto">
             <button onclick="closeEditModal()" class="absolute top-3 right-3 text-gray-600 hover:text-gray-900">
                 <i class="fas fa-times"></i>
