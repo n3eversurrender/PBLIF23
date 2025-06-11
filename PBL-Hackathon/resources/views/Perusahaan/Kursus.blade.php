@@ -35,7 +35,7 @@
                         <td class="px-4 py-3 text-gray-600">{{ $item->pendaftaran->count() }}</td> {{-- Menampilkan jumlah peserta --}}
                         <td class="px-4 py-3 text-gray-600">{{ $item->status }}</td>
                         <td class="px-4 py-3 space-x-2">
-                            <a href="/detailkursus/{{ $item->kursus_id }}" class="text-blue-600 hover:underline text-sm">Detail</a>
+                            <a href="{{ route('DetailKursus', ['id' => $item->kursus_id]) }}" class="text-blue-600 hover:underline text-sm">Detail</a>
                             <a href="javascript:void(0);" onclick='openEditModal({ id: {{ $item->kursus_id }}, nama: "{{ $item->judul }}" })' class="text-green-600 hover:underline text-sm">Edit</a>
                             <button onclick="openModal()" class="text-red-600 hover:underline text-sm">Hapus</button>
                         </td>

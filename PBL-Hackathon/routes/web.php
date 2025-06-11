@@ -182,7 +182,7 @@ Route::middleware(['auth', PeranMiddleware::class . ':Perusahaan'])->group(funct
     Route::post('/tambahkursus', [KursusPerushaanController::class, 'simpanKursus'])->name('SimpanKursus');
 
     // Detail Kursus
-    Route::get('/detailkursus', [KursusPerushaanController::class, 'detailKursus'])->name('DetailKursus');
+    Route::get('/detailkursus/{id}', [KursusPerushaanController::class, 'detailKursus'])->name('DetailKursus');
 
     // Jadwal (semua)
     Route::get('/jadwal', [JadwalController::class, 'indexJadwal'])->name('JadwalPerusahaan');
