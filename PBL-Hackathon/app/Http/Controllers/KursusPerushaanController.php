@@ -90,8 +90,28 @@ class KursusPerushaanController extends Controller
         return redirect()->route('KursusPerusahaan')->with('success', 'Kursus berhasil ditambahkan.');
     }
 
-    public function detailKursus()
+    public function detailKursus($id)
     {
-        return view('Perusahaan.DetailKursus');
+        // Ambil kursus dengan relasi kategori, pengguna, pendaftaran, dan jadwal kursus
+        $kursus = Kursus::with([
+            'kategori',
+            'pengguna',
+            'pendaftaran.pengguna',
+            'jadwalKursus'
+        ])->find($id);
+
+        if (!$kursus) {
+            abort(404, 'Kursus tidak ditemukan.');
+        }
+
+        if (Auth::check() && $kursus->pengguna_id !== Auth::user()->pengguna_id) {
+            return redirect()->back()->with('error', 'Anda tidak memiliki akses ke kursus ini.');
+        }
+
+        if (!Auth::check()) {
+            return redirect()->route('login')->with('error', 'Anda harus login terlebih dahulu.');
+        }
+
+        return view('Perusahaan.DetailKursus', compact('kursus'));
     }
 }

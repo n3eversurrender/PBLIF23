@@ -103,16 +103,20 @@ class CreatePenggunaPelatihPesertaTables extends Migration
 
 
         // Tabel kurikulum
-        Schema::create('kurikulum', function (Blueprint $table) {
-            $table->id('kurikulum_id');
+        Schema::create('jadwal_kursus', function (Blueprint $table) {
+            $table->id('jadwal_id');
             $table->unsignedBigInteger('kursus_id')->nullable();
-            $table->string('nama_topik');
-            $table->text('deskripsi');
-            $table->integer('durasi');
-            $table->string('materi')->nullable();
+
+            $table->string('sesi'); // misal: "Sesi 1"
+            $table->date('tanggal');
+            $table->time('jam_mulai');
+            $table->time('jam_selesai');
+            $table->string('lokasi');
+
             $table->foreign('kursus_id')->references('kursus_id')->on('kursus')->onDelete('cascade');
             $table->timestamps();
         });
+
 
         // Tabel pendaftaran
         Schema::create('pendaftaran', function (Blueprint $table) {

@@ -94,9 +94,15 @@
         <div class="bg-white shadow-lg flex items-center space-x-6 p-2 mb-4">
             <!-- Course Image -->
             <div class="relative flex-shrink-0 w-48 h-36 cursor-default rounded-lg overflow-hidden">
+                @if ($kursus->foto_kursus)
                 <img class="w-full h-full object-cover"
                     src="{{ asset('storage/' . $kursus->foto_kursus) }}"
                     alt="Course thumbnail">
+                @else
+                <img class="w-full h-full object-cover"
+                    src="{{ asset('image/Thumnnail.jpg') }}"
+                    alt="Course thumbnail">
+                @endif
                 <div class="absolute top-3 left-3 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
                     {{ $kursus->tingkat_kesulitan }}
                 </div>

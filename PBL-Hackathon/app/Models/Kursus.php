@@ -33,9 +33,9 @@ class Kursus extends Model
         return $this->belongsTo(Pengguna::class, 'pengguna_id', 'pengguna_id');
     }
 
-    public function kurikulum()
+    public function jadwalKursus()
     {
-        return $this->hasMany(Kurikulum::class, 'kursus_id');
+        return $this->hasMany(JadwalKursus::class, 'kursus_id', 'kursus_id');
     }
 
     public function pendaftaran()

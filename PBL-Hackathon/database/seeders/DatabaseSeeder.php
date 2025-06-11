@@ -20,7 +20,7 @@ class DatabaseSeeder extends Seeder
             PesertaSeeder::class,
             KategoriSeeder::class,
             KursusSeeder::class,
-            KurikulumSeeder::class,
+            JadwalKursusSeeder::class,
             PendaftaranSeeder::class,
             SertifikatSeeder::class,
             RatingPelatihSeeder::class,
