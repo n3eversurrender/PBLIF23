@@ -2,10 +2,15 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 use App\Models\Kursus;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Pengguna; // Pastikan model Pengguna diimpor jika diperlukan untuk Auth::user()
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Log;
+
 
 class KursusPerushaanController extends Controller
 {
@@ -35,7 +40,54 @@ class KursusPerushaanController extends Controller
 
     public function tambahKursus()
     {
-        return view('Perusahaan.TambahKursus');
+        $kategori = Kategori::all();
+        return view('Perusahaan.TambahKursus', compact('kategori'));
+    }
+
+    public function simpanKursus(Request $request)
+    {
+        Log::info('Masuk ke simpanKursus');
+
+        $validated = $request->validate([
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'mentor' => 'nullable|string',
+            'tingkat_kesulitan' => 'required',
+            'kategori_id' => 'required|exists:kategori,kategori_id',
+            'harga' => 'required|numeric',
+            'kapasitas' => 'required|integer',
+            'tgl_mulai' => 'required|date',
+            'tgl_selesai' => 'required|date|after_or_equal:tgl_mulai',
+            'lokasi' => 'required|string',
+            'foto_kursus' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        Log::info('Validasi berhasil', $validated);
+
+        $fotoPath = null;
+        if ($request->hasFile('foto_kursus')) {
+            $fotoPath = $request->file('foto_kursus')->store('kursus', 'public');
+            Log::info('Foto disimpan di: ' . $fotoPath);
+        }
+
+        $kursus = Kursus::create([
+            'pengguna_id' => auth()->user()->pengguna_id,
+            'kategori_id' => $validated['kategori_id'],
+            'judul' => $validated['judul'],
+            'deskripsi' => $validated['deskripsi'],
+            'lokasi' => $validated['lokasi'],
+            'harga' => $validated['harga'],
+            'tingkat_kesulitan' => $validated['tingkat_kesulitan'],
+            'kapasitas' => $validated['kapasitas'],
+            'tgl_mulai' => $validated['tgl_mulai'],
+            'tgl_selesai' => $validated['tgl_selesai'],
+            'status' => 'Tidak Aktif',
+            'foto_kursus' => $fotoPath,
+        ]);
+
+        Log::info('Kursus berhasil disimpan: ', $kursus->toArray());
+
+        return redirect()->route('KursusPerusahaan')->with('success', 'Kursus berhasil ditambahkan.');
     }
 
     public function detailKursus()
