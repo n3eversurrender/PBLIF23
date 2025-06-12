@@ -174,15 +174,21 @@ Route::middleware(['auth', PeranMiddleware::class . ':Perusahaan'])->group(funct
     // Kelola Galeri
     Route::get('/KelolaGaleri', [GaleriController::class, 'kelolaGaleri'])->name('KelolaGaleri');
 
-    // Kursus
+    // Menampilkan halaman daftar kursus
     Route::get('/kursus', [KursusPerushaanController::class, 'indexKursus'])->name('KursusPerusahaan');
 
-    // Tambah Kursus
+    // Menambah kursus baru
     Route::get('/tambahkursus', [KursusPerushaanController::class, 'tambahKursus'])->name('TambahKursus');
     Route::post('/tambahkursus', [KursusPerushaanController::class, 'simpanKursus'])->name('SimpanKursus');
 
-    // Detail Kursus
+    // Menampilkan detail kursus
     Route::get('/detailkursus/{id}', [KursusPerushaanController::class, 'detailKursus'])->name('DetailKursus');
+
+    // Menghapus kursus
+    Route::delete('/hapuskursus/{id}', [KursusPerushaanController::class, 'hapusKursus'])->name('HapusKursus');
+
+    // Update kursus (seperti mengupdate status)
+    Route::put('/kursus/{id}', [KursusPerushaanController::class, 'update'])->name('kursus.update');
 
     // Jadwal (semua)
     Route::get('/jadwal', [JadwalController::class, 'indexJadwal'])->name('JadwalPerusahaan');
