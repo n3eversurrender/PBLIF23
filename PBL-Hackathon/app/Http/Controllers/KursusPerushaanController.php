@@ -19,19 +19,18 @@ class KursusPerushaanController extends Controller
         // Pastikan pengguna sudah login
         if (Auth::check()) {
             // Dapatkan ID pengguna yang sedang login
-            // Asumsi Auth::id() mengembalikan primary key dari model Pengguna Anda.
-            // Jika primary key tabel 'pengguna' adalah 'pengguna_id' dan Anda menggunakan fitur autentikasi default Laravel,
-            // maka Auth::id() sudah sesuai. Jika tidak, Anda mungkin perlu Auth::user()->pengguna_id.
             $penggunaId = Auth::id();
 
             // Ambil data kursus yang dimiliki oleh pengguna yang sedang login
-            // Lakukan eager loading relasi 'kategori' dan 'pendaftaran'
             $kursus = Kursus::where('pengguna_id', $penggunaId)
                 ->with('kategori', 'pendaftaran') // Eager load relasi kategori dan pendaftaran
                 ->get();
 
-            // Kirim data kursus ke view
-            return view('Perusahaan.Kursus', compact('kursus'));
+            // Ambil data kategori untuk digunakan di dropdown edit
+            $kategori = Kategori::all();
+
+            // Kirim data kursus dan kategori ke view
+            return view('Perusahaan.Kursus', compact('kursus', 'kategori'));
         } else {
             // Jika pengguna belum login, arahkan kembali ke halaman login atau tampilkan pesan error
             return redirect()->route('login')->with('error', 'Anda harus login untuk melihat kursus Anda.');
@@ -113,5 +112,64 @@ class KursusPerushaanController extends Controller
         }
 
         return view('Perusahaan.DetailKursus', compact('kursus'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        // Validasi input
+        $validated = $request->validate([
+            'kategori_id' => 'required|exists:kategori,kategori_id',
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'required|string',
+            'lokasi' => 'required|string',
+            'harga' => 'required|numeric',
+            'tingkat_kesulitan' => 'required',
+            'kapasitas' => 'required|integer',
+            'tgl_mulai' => 'required|date',
+            'tgl_selesai' => 'required|date|after_or_equal:tgl_mulai',
+            'foto_kursus' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ]);
+
+        // Cari kursus berdasarkan ID
+        $kursus = Kursus::findOrFail($id);
+
+        // Ambil semua kategori
+        $kategori = Kategori::all();
+
+        // Update kolom-kolom yang diinginkan (menghindari pengubahan pengguna_id, status, rating)
+        $kursus->kategori_id = $validated['kategori_id'];
+        $kursus->judul = $validated['judul'];
+        $kursus->deskripsi = $validated['deskripsi'];
+        $kursus->lokasi = $validated['lokasi'];
+        $kursus->harga = $validated['harga'];
+        $kursus->tingkat_kesulitan = $validated['tingkat_kesulitan'];
+        $kursus->kapasitas = $validated['kapasitas'];
+        $kursus->tgl_mulai = $validated['tgl_mulai'];
+        $kursus->tgl_selesai = $validated['tgl_selesai'];
+
+        // Jika ada foto kursus yang diupload, update foto
+        if ($request->hasFile('foto_kursus')) {
+            $fotoPath = $request->file('foto_kursus')->store('kursus', 'public');
+            $kursus->foto_kursus = $fotoPath;
+        }
+
+        // Simpan perubahan
+        $kursus->save();
+
+        // Redirect ke halaman daftar kursus dengan pesan sukses
+        return redirect()->route('KursusPerusahaan')->with('success', 'Kursus berhasil diperbarui');
+    }
+
+
+    public function hapusKursus($id)
+    {
+        // Cari kursus berdasarkan ID
+        $kursus = Kursus::findOrFail($id);  // Mengambil kursus berdasarkan ID
+
+        // Hapus kursus
+        $kursus->delete();
+
+        // Redirect ke halaman daftar kursus setelah berhasil dihapus
+        return redirect()->route('KursusPerusahaan')->with('success', 'Kursus berhasil dihapus');
     }
 }
