@@ -107,10 +107,10 @@ class CreatePenggunaPelatihPesertaTables extends Migration
             $table->id('jadwal_id');
             $table->unsignedBigInteger('kursus_id')->nullable();
 
-            $table->string('sesi'); // misal: "Sesi 1"
+            $table->string('sesi'); 
             $table->date('tanggal');
-            $table->time('jam_mulai');
-            $table->time('jam_selesai');
+            $table->string('jam_mulai');
+            $table->string('jam_selesai');
             $table->string('lokasi');
 
             $table->foreign('kursus_id')->references('kursus_id')->on('kursus')->onDelete('cascade');
