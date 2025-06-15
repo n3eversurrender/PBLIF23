@@ -59,19 +59,19 @@ class LoginPenggunaController extends Controller
     public function logoutPeserta()
     {
         Auth::logout();
-        return redirect('/Masuk')->with('success', 'Logout berhasil!');
+        return redirect('/Home')->with('success', 'Logout berhasil!');
     }
 
-    public function logoutPelatih()
+    public function logoutPerusahaan()
     {
         Auth::logout();
-        return redirect('/Masuk')->with('success', 'Logout berhasil!');
+        return redirect('/Home')->with('success', 'Logout berhasil!');
     }
 
     public function logoutAdmin()
     {
         Auth::logout();
-        return redirect('/Masuk');
+        return redirect('/Home')->with('success', 'Logout berhasil!');
     }
 
     public function handleLoginGoogle()

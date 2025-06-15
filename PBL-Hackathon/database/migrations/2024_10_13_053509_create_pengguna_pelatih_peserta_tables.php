@@ -31,17 +31,49 @@ class CreatePenggunaPelatihPesertaTables extends Migration
             $table->timestamps();
         });
 
-        // Tabel pelatih
-        Schema::create('pelatih', function (Blueprint $table) {
-            $table->id('pelatih_id');
-            $table->unsignedBigInteger('pengguna_id')->nullable();
-            $table->integer('tahun_pengalaman')->nullable();
-            $table->integer('bulan_pengalaman')->nullable();
-            $table->string('nama_spesialisasi')->nullable();
-            $table->string('file_sertifikasi')->nullable();
+        // Tabel Perusahaa
+        Schema::create('perusahaan', function (Blueprint $table) {
+            $table->id('perusahaan_id');
+            $table->unsignedBigInteger('pengguna_id');  // FK ke pengguna (peran = Perusahaan)
+
+            // Informasi umum spesifik
+            $table->text('deskripsi')->nullable();
+            $table->text('visi')->nullable();
+            $table->text('misi')->nullable();
+            $table->text('layanan')->nullable();  // Bisa JSON/text untuk daftar service
+
+            // Informasi legal
+            $table->string('npwp')->nullable();
+            $table->string('akta_pendirian')->nullable();
+            $table->string('izin_operasional')->nullable();
+            $table->string('sertifikasi_bnsp')->nullable();
+
+            // File dokumen pendukung (opsional)
+            $table->string('file_npwp')->nullable();
+            $table->string('file_akta_pendirian')->nullable();
+            $table->string('file_izin_operasional')->nullable();
+            $table->string('file_sertifikasi_bnsp')->nullable();
+
             $table->timestamps();
+
             $table->foreign('pengguna_id')->references('pengguna_id')->on('pengguna')->onDelete('cascade');
         });
+
+        Schema::create('rating_perusahaan', function (Blueprint $table) {
+            $table->id('rating_perusahaan_id');
+
+            $table->unsignedBigInteger('pemberi_id'); // pengguna yang memberi rating (misal peserta)
+            $table->unsignedBigInteger('perusahaan_id'); // perusahaan yang dinilai
+
+            $table->float('rating');
+            $table->text('komentar')->nullable();
+
+            $table->foreign('pemberi_id')->references('pengguna_id')->on('pengguna')->onDelete('cascade');
+            $table->foreign('perusahaan_id')->references('perusahaan_id')->on('perusahaan')->onDelete('cascade');
+
+            $table->timestamps();
+        });
+
 
         // Tabel peserta
         Schema::create('peserta', function (Blueprint $table) {
@@ -102,12 +134,12 @@ class CreatePenggunaPelatihPesertaTables extends Migration
         });
 
 
-        // Tabel kurikulum
+        // Tabel jadwal
         Schema::create('jadwal_kursus', function (Blueprint $table) {
             $table->id('jadwal_id');
             $table->unsignedBigInteger('kursus_id')->nullable();
 
-            $table->string('sesi'); 
+            $table->string('sesi');
             $table->date('tanggal');
             $table->string('jam_mulai');
             $table->string('jam_selesai');
@@ -158,17 +190,6 @@ class CreatePenggunaPelatihPesertaTables extends Migration
             $table->date('tanggal_terbit');
             $table->foreign('pendaftaran_id')->references('pendaftaran_id')->on('pendaftaran')->onDelete('cascade')->nullable();
             $table->foreign('kursus_id')->references('kursus_id')->on('kursus')->onDelete('cascade');
-            $table->timestamps();
-        });
-
-        Schema::create('rating_pelatih', function (Blueprint $table) {
-            $table->id('rating_pelatih_id');
-            $table->unsignedBigInteger('pemberi_id'); // Kolom untuk pemberi penilaian
-            $table->unsignedBigInteger('pengguna_id'); // Kolom untuk penerima penilaian
-            $table->float('rating');
-            $table->text('komentar')->nullable();
-            $table->foreign('pemberi_id')->references('pengguna_id')->on('pengguna')->onDelete('cascade');
-            $table->foreign('pengguna_id')->references('pengguna_id')->on('pengguna')->onDelete('cascade');
             $table->timestamps();
         });
 

@@ -1,16 +1,8 @@
-@extends('layouts.mainNavPerusahaan')
+@extends('layouts.mainPerusahaan')
 
-@vite(['resources/js/home.js'])
-@vite(['resources/css/berandaperusahaan.css'])
-@section('MainNavPerusahaan')
+@section('MainPerusahaan')
 
-<main class="sm:mx-10 mx-5 mt-16">
-    <div class="flex items-center space-x-4  pt-8">
-        <h1 class="text-3xl font-bold uppercase">Profil <span>PT. SkillMaju</span></h1>
-        <div class="flex-1 border-t border-2 border-gray-300"></div>
-    </div>
-    <p class="mb-8 mx-2 text-gray-600">Kelola identitas dan informasi perusahaan Anda</p>
-    <!-- Profil perusahaan -->
+<main> <!-- Profil perusahaan -->
     <section class="px-5">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-2xl font-semibold text-gray-800">Informasi Umum</h2>
@@ -19,17 +11,19 @@
             </a>
         </div>
         <div class="sm:grid lg:grid-cols-4 sm:grid-cols-3 gap-4">
-            <div class=" sm:col-span-1">
-                <img src="{{ asset('image/12.webp') }}" class="rounded-full aspect-square object-cover" />
+            <div class="sm:col-span-1">
+                <img
+                    src="{{ $user->foto_profil ? asset('storage/' . $pengguna->foto_profil) 
+                            : asset('image/Thumnnail.jpg') }}"
+                    class="rounded-full aspect-square object-cover" />
             </div>
+
+
             <div class="lg:col-span-3 sm:col-span-2 px-2 lg:px-6 mt-5 sm:mt-0 text-sm sm:text-base">
                 <div class="mb-3">
                     <label class="font-bold text-gray-900 uppercase">Deskripsi:</label>
                     <p class="text-gray-700">
-                        Established in 2004, PT. DUA UTAMA JAYA committed to deliver customer satisfaction. With our extensive experiences in related industries, we execute projects professionally based on standard and your specification.mus eget est sit amet, condimentum hendrerit erat. In porta quis odio eget mollis.
-                    </p>
-                    <p class="text-gray-700">
-                        DUJ’s scopes are  in two business areas:
+                        {{ $perusahaan->deskripsi ?? '-' }}
                     </p>
                 </div>
 
@@ -44,28 +38,24 @@
                 <div class="mb-3">
                     <label class="font-bold text-gray-900">SERVICES:</label>
                     <ul class="text-gray-700">
-                        <li>- Inspection and Testing (For welder qualification test) </li>
-                        <li>- Manpower Supply</li>
-                        <li>- Welding Works (structural & piping)</li>
-                        <li>- Process WPS Procedure</li>
-                        <li>- Rental Equipment</li>
+                        <li>{{ $perusahaan->layanan ?? '-' }} </li>
                     </ul>
                 </div>
 
                 <div class="mb-3">
                     <label class="font-bold text-gray-900">VISION</label>
-                    <p class="text-gray-700">Having contributions in developing human resources and to developing professional skillfull labor according to the Republic Indonesia Government’s program. PT. DUA UTAMA JAYA as a strategic option to works and as a bridge to reach the career successfully in the future.</p>
+                    <p class="text-gray-700">{{ $perusahaan->visi ?? '-' }}</p>
                 </div>
 
                 <div class="mb-3">
                     <label class="font-bold text-gray-900">MISION</label>
-                    <p class="text-gray-700">To be the right partner in competitive business environment and to fulfill mutual benefit.</p>
+                    <p class="text-gray-700">{{ $perusahaan->misi ?? '-' }}</p>
                 </div>
 
                 <div>
-                    <p class="font-semibold">Email : <span class="font-normal text-gray-700">info@teknikmaju.co.id</span></p>
-                    <p class="font-semibold">No Telepon : <span class="font-normal text-gray-700">(021) 1234-5678</span></p>
-                    <p class="font-semibold">Address : <span class="font-normal text-gray-700">Comp. Green Town Warehouse No. 1, Jalan Yos Sudarso, Bengkong, Bengkong Laut, Kec. Bengkong, Kota Batam, Kepulauan Riau 29457</span></p>
+                    <p class="font-semibold">Email : <span class="font-normal text-gray-700">{{ $user->email ?? '-' }}</span></p>
+                    <p class="font-semibold">No Telepon : <span class="font-normal text-gray-700">{{ $user->no_telepon ?? '-' }}</span></p>
+                    <p class="font-semibold">Alamat : <span class="font-normal text-gray-700">{{ $user->alamat ?? '-' }}</span></p>
                 </div>
             </div>
         </div>
@@ -77,26 +67,58 @@
         <div class="bg-white rounded-xl shadow-md p-6 mt-6">
             <h2 class="text-xl font-semibold text-gray-800 mb-4">📄 Informasi Legal</h2>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <div class="border-t pt-2">
-                    <p class="text-sm text-gray-500 font-semibold">NPWP</p>
-                    <p class="text-lg text-gray-800">01.234.567.8-912.345</p>
+
+                <div class="border-t pt-2 flex justify-between items-center">
+                    <div>
+                        <p class="text-sm text-gray-500 font-semibold">NPWP</p>
+                        <p class="text-lg text-gray-800">{{ $perusahaan->npwp ?? '-' }}</p>
+                    </div>
+                    @if($perusahaan->file_npwp)
+                    <a href="{{ asset('storage/'.$perusahaan->file_npwp) }}" target="_blank" class="text-blue-500 text-sm flex items-center gap-1">
+                        <i class="fas fa-file-pdf"></i> Lihat
+                    </a>
+                    @endif
                 </div>
-                <div class="border-t pt-2">
-                    <p class="text-sm text-gray-500 font-semibold">Akta Pendirian</p>
-                    <p class="text-lg text-gray-800">No. 123/XYZ/2010</p>
+
+                <div class="border-t pt-2 flex justify-between items-center">
+                    <div>
+                        <p class="text-sm text-gray-500 font-semibold">Akta Pendirian</p>
+                        <p class="text-lg text-gray-800">{{ $perusahaan->akta_pendirian ?? '-' }}</p>
+                    </div>
+                    @if($perusahaan->file_akta_pendirian)
+                    <a href="{{ asset('storage/'.$perusahaan->file_akta_pendirian) }}" target="_blank" class="text-blue-500 text-sm flex items-center gap-1">
+                        <i class="fas fa-file-pdf"></i> Lihat
+                    </a>
+                    @endif
                 </div>
-                <div class="border-t pt-2">
-                    <p class="text-sm text-gray-500 font-semibold">Izin Operasional</p>
-                    <p class="text-lg text-gray-800">No. 456/DIKTI/2011</p>
+
+                <div class="border-t pt-2 flex justify-between items-center">
+                    <div>
+                        <p class="text-sm text-gray-500 font-semibold">Izin Operasional</p>
+                        <p class="text-lg text-gray-800">{{ $perusahaan->izin_operasional ?? '-' }}</p>
+                    </div>
+                    @if($perusahaan->file_izin_operasional)
+                    <a href="{{ asset('storage/'.$perusahaan->file_izin_operasional) }}" target="_blank" class="text-blue-500 text-sm flex items-center gap-1">
+                        <i class="fas fa-file-pdf"></i> Lihat
+                    </a>
+                    @endif
                 </div>
-                <div class="border-t pt-2">
-                    <p class="text-sm text-gray-500 font-semibold">Sertifikasi BNSP</p>
-                    <p class="text-lg text-gray-800">No. 789/BNSP/2015</p>
+
+                <div class="border-t pt-2 flex justify-between items-center">
+                    <div>
+                        <p class="text-sm text-gray-500 font-semibold">Sertifikasi BNSP</p>
+                        <p class="text-lg text-gray-800">{{ $perusahaan->sertifikasi_bnsp ?? '-' }}</p>
+                    </div>
+                    @if($perusahaan->file_sertifikasi_bnsp)
+                    <a href="{{ asset('storage/'.$perusahaan->file_sertifikasi_bnsp) }}" target="_blank" class="text-blue-500 text-sm flex items-center gap-1">
+                        <i class="fas fa-file-pdf"></i> Lihat
+                    </a>
+                    @endif
                 </div>
+
             </div>
         </div>
     </section>
-
 
     <!-- galeri perusahaan -->
     <section class="pb-20 mt-16">

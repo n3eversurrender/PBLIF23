@@ -151,7 +151,7 @@ Route::middleware(['auth', PeranMiddleware::class . ':Peserta'])->group(function
 
 
 Route::middleware(['auth', PeranMiddleware::class . ':Perusahaan'])->group(function () {
-    Route::post('/logoutPelatih', [LoginPenggunaController::class, 'logoutPelatih'])->name('logoutPelatih');
+    Route::post('/logoutPerusahaan', [LoginPenggunaController::class, 'logoutPerusahaan'])->name('logoutPerusahaan');
 
     //NEW
     Route::get('/statistik', [PerusahaanController::class, 'statistikPerusahaan'])->name('StatistikPerusahaan');
@@ -186,17 +186,13 @@ Route::middleware(['auth', PeranMiddleware::class . ':Perusahaan'])->group(funct
     // Route untuk menampilkan jadwal kursus
     Route::get('/jadwal', [JadwalController::class, 'indexJadwal'])->name('JadwalPerusahaan');
     Route::get('/kelolajadwal/{kursus_id}', [JadwalController::class, 'kelolaJadwal'])->name('KelolaJadwal');
-    Route::get('/tambahjadwal', [JadwalController::class, 'tambahJadwal'])->name('TambahJadwal');
     Route::post('/kelolajadwal/update/{jadwal_id}', [JadwalController::class, 'updateJadwal'])->name('KelolaJadwal.update');
     Route::delete('/kelolajadwal/hapus/{jadwal_id}', [JadwalController::class, 'hapusJadwal'])->name('KelolaJadwal.hapus');
-    // Route untuk simpan jadwal baru (dari modal)
     Route::post('/kelolajadwal/simpan', [JadwalController::class, 'simpanJadwal'])->name('KelolaJadwal.simpan');
 
 
     // Ulasan
     Route::get('/ulasan', [UlasanController::class, 'indexUlasan'])->name('UlasanPerusahaan');
-
-    // Detail Ulasan
     Route::get('/detailulasan/{kursus_id}', [UlasanController::class, 'detailUlasan'])->name('DetailUlasan');
 });
 
