@@ -1,11 +1,11 @@
-@extends('layouts.mainNavPerusahaan')
+@extends('layouts.mainPerusahaan')
 
-@section('MainNavPerusahaan')
+@section('MainPerusahaan')
 @vite(['resources/js/richtext.js'])
 <!-- Quill CSS -->
 <link href="https://cdn.quilljs.com/1.3.6/quill.snow.css" rel="stylesheet">
 
-<main class="sm:mx-10 mx-5 mt-16">
+<main>
     <!-- Breadcrumb -->
     <div class="flex items-center space-x-2 text-sm text-gray-500 pt-4">
         <a href="/ProfilPerusahaan" class="hover:text-blue-600 transition">Profil</a>

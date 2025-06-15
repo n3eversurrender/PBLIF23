@@ -27,9 +27,9 @@ class Pengguna extends Authenticatable
         'kata_sandi',
     ];
 
-    public function pelatih()
+    public function perusahaan()
     {
-        return $this->hasOne(Pelatih::class, 'pengguna_id');
+        return $this->hasOne(Perusahaan::class, 'pengguna_id');
     }
 
     public function peserta()

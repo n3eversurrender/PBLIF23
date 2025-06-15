@@ -61,10 +61,21 @@
                 </li>
 
                 <li>
-                    <a href="/Masuk" class="{{ request()->is('') ? 'text-ButtonBase font-bold' : 'text-black' }} flex items-center p-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-700 group">
-                        <i class="fas fa-sign-out-alt"></i>
-                        <span class="ms-3">Keluar</span>
+                    <a href="{{ route('ProfilPerusahaan') }}"
+                        class="{{ request()->is('ProfilPerusahaan') ? 'text-ButtonBase font-bold' : 'text-black' }} flex items-center p-2 rounded-lg hover:bg-gray-300 dark:hover:bg-gray-700 group">
+                        <i class="fas fa-solid fa-building"></i>
+                        <span class="ms-3">Profil Perusahaan</span>
                     </a>
+                </li>
+
+                <li>
+                    <form method="POST" action="{{ route('logoutPerusahaan') }}" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group">
+                        @csrf
+                        <button type="submit" class="flex items-center">
+                            <i class="fas fa-sign-out-alt"></i>
+                            <span class="ms-3">Sign Out</span>
+                        </button>
+                    </form>
                 </li>
             </ul>
         </div>
@@ -145,5 +156,13 @@
             Dapatkan bantuan dengan menghubungi admin
         </div>
     </div>
+
+    <script>
+        document.querySelector('.sign-out-btn').addEventListener('click', function(event) {
+            if (!confirm('Apakah Anda yakin ingin keluar?')) {
+                event.preventDefault(); // Mencegah logout jika pengguna membatalkan
+            }
+        });
+    </script>
 
 </body>
