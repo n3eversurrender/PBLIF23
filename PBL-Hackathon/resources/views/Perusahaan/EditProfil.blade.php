@@ -15,78 +15,145 @@
         <span class="text-blue-600 font-medium">Edit Profil</span>
     </div>
 
-    <form class="mt-10 space-y-10">
+    <form class="mt-10 space-y-10" action="{{ route('UpdateProfilPerusahaan') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        @method('PUT')
+
         <!-- Header with avatar -->
         <div class="flex justify-center">
             <div class="text-center">
-                <img src="{{ asset('image/12.webp') }}" alt="Profile Image" class="w-44 h-44 rounded-full mb-4 object-cover mx-auto shadow-md">
-                <p class="font-bold text-lg">PT. SkillMaju</p>
-                <p class="text-gray-600 text-xs">info@teknikmaju.co.id</p>
+                <img src="{{ $user->foto_profil ? asset('storage/' . $user->foto_profil) : asset('image/Thumnnail.jpg') }}"
+                    alt="Profile Image" class="w-44 h-44 rounded-full mb-4 object-cover mx-auto shadow-md">
+                <p class="font-bold text-lg">{{ $user->nama ?? '-' }}</p>
+                <p class="text-gray-600 text-xs">{{ $user->email ?? '-' }}</p>
             </div>
         </div>
 
-        <!-- Form fields -->
-        <div class="flex items-center justify-center">
-            <div class="max-w-3xl w-full p-8 bg-white rounded-xl shadow-md dark:bg-gray-800 space-y-6">
+        <div class="max-w-4xl mx-auto space-y-8">
+
+            <!-- Informasi Umum -->
+            <div class="p-8 bg-white rounded-xl shadow-md dark:bg-gray-800 space-y-6">
+                <h2 class="text-xl font-semibold text-gray-800">📄 Informasi Umum</h2>
+
+                <!-- Foto Profil -->
                 <div>
                     <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Foto Profil</label>
-                    <input type="file"
-                        class="bg-gray-50 border border-Border text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" accept="image/jpeg, image/png, image/gif, image/svg+xml" />
-                    <i class="fas fa-eye absolute right-3 top-12 transform -translate-y-1/2 cursor-pointer"
-                        id="togglePassword"></i>
+                    <input type="file" name="foto_profil"
+                        class="bg-gray-50 border border-Border text-gray-900 text-sm rounded-lg block w-full dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
+                        accept="image/jpeg, image/png, image/gif, image/svg+xml">
                 </div>
+
                 <div class="grid sm:grid-cols-2 gap-6">
-                    <!-- Nama -->
                     <div>
                         <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Nama Perusahaan</label>
-                        <input type="text"
-                            class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 transition"
+                        <input type="text" name="nama" value="{{ $user->nama ?? '' }}"
+                            class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
                             placeholder="Contoh: PT. Sukses Makmur">
                     </div>
                     <div>
                         <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Nomor Telepon</label>
-                        <input type="tel"
-                            class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 transition"
+                        <input type="tel" name="no_telepon" value="{{ $user->no_telepon ?? '' }}"
+                            class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
                             placeholder="Contoh: 0812xxxxxxx">
                     </div>
                 </div>
-                <!-- Alamat -->
-                <div class="mt-6">
+
+                <div>
                     <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Alamat</label>
-                    <textarea
-                        class="border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300 transition"
-                        placeholder="Contoh: Jl. Industri No. 1, Batam, Kepulauan Riau"></textarea>
+                    <textarea name="alamat"
+                        class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
+                        placeholder="Contoh: Jl. Industri No. 1, Batam, Kepulauan Riau">{{ $user->alamat ?? '' }}</textarea>
                 </div>
 
-                <!-- Deskripsi -->
                 <div>
-                    <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Informasi Umum</label>
+                    <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Deskripsi</label>
+                    <textarea name="deskripsi"
+                        class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
+                        placeholder="Tuliskan deskripsi perusahaan">{{ $perusahaan->deskripsi ?? '' }}</textarea>
+                </div>
+
+                <div>
+                    <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Layanan</label>
+                    <input type="text" name="layanan" value="{{ $perusahaan->layanan ?? '' }}"
+                        class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
+                        placeholder="Contoh: Welding Service, Fabrication">
+                </div>
+
+                <div class="grid sm:grid-cols-2 gap-6">
                     <div>
-                        <div id="toolbar-deskripsi" class="mb-2">
-                            <span class="ql-formats">
-                                <button class="ql-bold"></button>
-                                <button class="ql-italic"></button>
-                                <button class="ql-underline"></button>
-                            </span>
-                            <span class="ql-formats">
-                                <button class="ql-list" value="ordered"></button>
-                                <button class="ql-list" value="bullet"></button>
-                            </span>
-                        </div>
-                        <div id="editor-deskripsi" class="bg-white h-60 border border-gray-300 rounded p-3 overflow-y-auto"></div>
+                        <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Visi</label>
+                        <textarea name="visi"
+                            class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
+                            placeholder="Tuliskan visi perusahaan">{{ $perusahaan->visi ?? '' }}</textarea>
+                    </div>
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Misi</label>
+                        <textarea name="misi"
+                            class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
+                            placeholder="Tuliskan misi perusahaan">{{ $perusahaan->misi ?? '' }}</textarea>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <!-- Button -->
-        <div class="flex justify-center">
-            <button type="submit"
-                class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-2 focus:outline-none transition duration-300">
-                Simpan
-            </button>
+            <!-- Informasi Legal -->
+            <div class="p-8 bg-white rounded-xl shadow-md dark:bg-gray-800 space-y-6">
+                <h2 class="text-xl font-semibold text-gray-800">📄 Informasi Legal</h2>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">NPWP</label>
+                        <input type="text" name="npwp" value="{{ $perusahaan->npwp ?? '' }}"
+                            class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
+                        <label class="block mt-2 text-sm font-bold text-gray-900 dark:text-white">File NPWP (PDF)</label>
+                        <input type="file" name="file_npwp"
+                            class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"
+                            accept="application/pdf">
+                    </div>
+
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Akta Pendirian</label>
+                        <input type="text" name="akta_pendirian" value="{{ $perusahaan->akta_pendirian ?? '' }}"
+                            class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
+                        <label class="block mt-2 text-sm font-bold text-gray-900 dark:text-white">File Akta (PDF)</label>
+                        <input type="file" name="file_akta_pendirian"
+                            class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"
+                            accept="application/pdf">
+                    </div>
+
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Izin Operasional</label>
+                        <input type="text" name="izin_operasional" value="{{ $perusahaan->izin_operasional ?? '' }}"
+                            class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
+                        <label class="block mt-2 text-sm font-bold text-gray-900 dark:text-white">File Izin (PDF)</label>
+                        <input type="file" name="file_izin_operasional"
+                            class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"
+                            accept="application/pdf">
+                    </div>
+
+                    <div>
+                        <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Sertifikasi BNSP</label>
+                        <input type="text" name="sertifikasi_bnsp" value="{{ $perusahaan->sertifikasi_bnsp ?? '' }}"
+                            class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300">
+                        <label class="block mt-2 text-sm font-bold text-gray-900 dark:text-white">File Sertifikasi (PDF)</label>
+                        <input type="file" name="file_sertifikasi_bnsp"
+                            class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"
+                            accept="application/pdf">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit -->
+            <div class="flex justify-center">
+                <button type="submit"
+                    class="text-white bg-blue-600 hover:bg-blue-700 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-10 py-2">
+                    Simpan
+                </button>
+            </div>
+
         </div>
     </form>
+
+
+
 </main>
 <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 

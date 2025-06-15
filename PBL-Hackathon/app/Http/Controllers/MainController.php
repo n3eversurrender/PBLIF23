@@ -32,19 +32,9 @@ class MainController extends Controller
 
     public function Home()
     {
-        // Ambil maksimal 3 data dari tabel 'umpan_balik'
-        $data = UmpanBalik::paginate(3);
-
-        // Ambil data pelatih dengan rata-rata rating tertinggi
-        $dataPelatih = Pengguna::where('peran', 'Pelatih')
-            ->withAvg('ratingsPelatih', 'rating') // Menghitung rata-rata rating menggunakan relasi
-            ->orderBy('ratings_pelatih_avg_rating', 'desc') // Urutkan berdasarkan rata-rata rating tertinggi
-            ->take(5)
-            ->get();
-
-        // Kirim data ke view
-        return view('guest.Home', compact('data', 'dataPelatih'));
+        return view('guest.Home');
     }
+
 
     public function daftarKursus(Request $request)
     {

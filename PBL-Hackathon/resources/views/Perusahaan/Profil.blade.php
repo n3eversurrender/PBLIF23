@@ -5,15 +5,15 @@
 <main> <!-- Profil perusahaan -->
     <section class="px-5">
         <div class="flex justify-between items-center mb-4">
-            <h2 class="text-2xl font-semibold text-gray-800">Informasi Umum</h2>
-            <a href="/EditProfil" class="text-blue-500 hover:text-blue-700 flex items-center gap-1">
+            <h2 class="text-2xl font-semibold text-gray-800">📄 Informasi Umum</h2>
+            <a href="{{ route('EditProfilPerusahaan') }}" class="text-blue-500 hover:text-blue-700 flex items-center gap-1">
                 <i class="fas fa-edit"></i> Edit Profil
             </a>
         </div>
         <div class="sm:grid lg:grid-cols-4 sm:grid-cols-3 gap-4">
             <div class="sm:col-span-1">
                 <img
-                    src="{{ $user->foto_profil ? asset('storage/' . $pengguna->foto_profil) 
+                    src="{{ $user->foto_profil ? asset('storage/' . $user->foto_profil) 
                             : asset('image/Thumnnail.jpg') }}"
                     class="rounded-full aspect-square object-cover" />
             </div>
@@ -25,14 +25,6 @@
                     <p class="text-gray-700">
                         {{ $perusahaan->deskripsi ?? '-' }}
                     </p>
-                </div>
-
-                <div class="mb-3">
-                    <label class="font-bold text-gray-900">EDUCATION:</label>
-                    <ul class="text-gray-700">
-                        <li>- Provision of the welding institute (TWI) Training (Courses and Certification)</li>
-                        <li>- DUTC Training</li>
-                    </ul>
                 </div>
 
                 <div class="mb-3">
