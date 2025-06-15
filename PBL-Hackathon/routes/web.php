@@ -167,9 +167,8 @@ Route::middleware(['auth', PeranMiddleware::class . ':Perusahaan'])->group(funct
 
     // Profil Perusahaan
     Route::get('/ProfilPerusahaan', [ProfilPerusahaanController::class, 'profilPerusahaan'])->name('ProfilPerusahaan');
-
-    // Edit Profil Perusahaan
     Route::get('/EditProfil', [ProfilPerusahaanController::class, 'editProfilPerusahaan'])->name('EditProfilPerusahaan');
+    Route::put('/UpdateProfil', [ProfilPerusahaanController::class, 'updateProfil'])->name('UpdateProfilPerusahaan');
 
     // Kelola Galeri
     Route::get('/KelolaGaleri', [GaleriController::class, 'kelolaGaleri'])->name('KelolaGaleri');
