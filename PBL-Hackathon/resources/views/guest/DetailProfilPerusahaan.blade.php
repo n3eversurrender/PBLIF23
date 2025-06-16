@@ -5,55 +5,43 @@
 
 <main class="mt-16 mx-10">
     <section class="pt-8">
-        <h1 class="font-bold text-2xl text-center mb-10 uppercase">PT. Skill Maju</h1>
+        <h1 class="font-bold text-2xl text-center mb-10 uppercase">{{ $user->nama ?? '-' }}</h1>
         <div class="sm:grid lg:grid-cols-4 sm:grid-cols-3 gap-4">
             <div class=" sm:col-span-1">
-                <img src="{{ asset('image/12.webp') }}" class="rounded-full aspect-square object-cover" />
+                <img
+                    src="{{ $user->foto_profil ? asset('storage/' . $user->foto_profil) 
+                            : asset('image/Thumnnail.jpg') }}"
+                    class="rounded-full aspect-square object-cover" />
             </div>
             <div class="lg:col-span-3 sm:col-span-2 px-2 lg:px-6 mt-5 sm:mt-0 text-sm sm:text-base">
                 <div class="mb-3">
                     <label class="font-bold text-gray-900 uppercase">Deskripsi:</label>
                     <p class="text-gray-700">
-                        Established in 2004, PT. DUA UTAMA JAYA committed to deliver customer satisfaction. With our extensive experiences in related industries, we execute projects professionally based on standard and your specification.mus eget est sit amet, condimentum hendrerit erat. In porta quis odio eget mollis.
+                        {{ $perusahaan->deskripsi ?? '-' }}
                     </p>
-                    <p class="text-gray-700">
-                        DUJ’s scopes are  in two business areas:
-                    </p>
-                </div>
-
-                <div class="mb-3">
-                    <label class="font-bold text-gray-900">EDUCATION:</label>
-                    <ul class="text-gray-700">
-                        <li>- Provision of the welding institute (TWI) Training (Courses and Certification)</li>
-                        <li>- DUTC Training</li>
-                    </ul>
                 </div>
 
                 <div class="mb-3">
                     <label class="font-bold text-gray-900">SERVICES:</label>
                     <ul class="text-gray-700">
-                        <li>- Inspection and Testing (For welder qualification test) </li>
-                        <li>- Manpower Supply</li>
-                        <li>- Welding Works (structural & piping)</li>
-                        <li>- Process WPS Procedure</li>
-                        <li>- Rental Equipment</li>
+                        <li>{{ $perusahaan->layanan ?? '-' }} </li>
                     </ul>
                 </div>
 
                 <div class="mb-3">
                     <label class="font-bold text-gray-900">VISION</label>
-                    <p class="text-gray-700">Having contributions in developing human resources and to developing professional skillfull labor according to the Republic Indonesia Government’s program. PT. DUA UTAMA JAYA as a strategic option to works and as a bridge to reach the career successfully in the future.</p>
+                    <p class="text-gray-700">{{ $perusahaan->visi ?? '-' }}</p>
                 </div>
 
                 <div class="mb-3">
                     <label class="font-bold text-gray-900">MISION</label>
-                    <p class="text-gray-700">To be the right partner in competitive business environment and to fulfill mutual benefit.</p>
+                    <p class="text-gray-700">{{ $perusahaan->misi ?? '-' }}</p>
                 </div>
 
                 <div>
-                    <p class="font-semibold">Email : <span class="font-normal text-gray-700">info@teknikmaju.co.id</span></p>
-                    <p class="font-semibold">No Telepon : <span class="font-normal text-gray-700">(021) 1234-5678</span></p>
-                    <p class="font-semibold">Address : <span class="font-normal text-gray-700">Comp. Green Town Warehouse No. 1, Jalan Yos Sudarso, Bengkong, Bengkong Laut, Kec. Bengkong, Kota Batam, Kepulauan Riau 29457</span></p>
+                    <p class="font-semibold">Email : <span class="font-normal text-gray-700">{{ $user->email ?? '-' }}</span></p>
+                    <p class="font-semibold">No Telepon : <span class="font-normal text-gray-700">{{ $user->no_telepon ?? '-' }}</span></p>
+                    <p class="font-semibold">Alamat : <span class="font-normal text-gray-700">{{ $user->alamat ?? '-' }}</span></p>
                 </div>
             </div>
         </div>
@@ -65,19 +53,19 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
                 <div class="border-t pt-2">
                     <p class="text-sm text-gray-500 font-semibold">NPWP</p>
-                    <p class="text-lg text-gray-800">01.234.567.8-912.345</p>
+                    <p class="text-lg text-gray-800">{{ $perusahaan->npwp ?? '-' }}</p>
                 </div>
                 <div class="border-t pt-2">
                     <p class="text-sm text-gray-500 font-semibold">Akta Pendirian</p>
-                    <p class="text-lg text-gray-800">No. 123/XYZ/2010</p>
+                    <p class="text-lg text-gray-800">{{ $perusahaan->akta_pendirian ?? '-' }}</p>
                 </div>
                 <div class="border-t pt-2">
                     <p class="text-sm text-gray-500 font-semibold">Izin Operasional</p>
-                    <p class="text-lg text-gray-800">No. 456/DIKTI/2011</p>
+                    <p class="text-lg text-gray-800">{{ $perusahaan->izin_operasional ?? '-' }}</p>
                 </div>
                 <div class="border-t pt-2">
                     <p class="text-sm text-gray-500 font-semibold">Sertifikasi BNSP</p>
-                    <p class="text-lg text-gray-800">No. 789/BNSP/2015</p>
+                    <p class="text-lg text-gray-800">{{ $perusahaan->sertifikasi_bnsp ?? '-' }}</p>
                 </div>
             </div>
         </div>
@@ -93,196 +81,65 @@
                     </div>
                     <!-- Grid Container -->
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Card 1 -->
+                        @foreach ($kursus as $k)
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-                            <!-- Course Image -->
                             <div class="relative cursor-default">
-                                <img class="w-full h-44 sm:h-36 lg:h-44 object-cover" src="https://images.unsplash.com/photo-1542626991-cbc4e32524cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Course thumbnail">
+                                <img class="w-full h-44 sm:h-36 lg:h-44 object-cover"
+                                    src="{{ $k->foto_kursus ? asset('storage/' . $k->foto_kursus) : asset('image/Thumnnail.jpg') }}"
+                                    alt="Thumbnail {{ $k->judul }}">
                                 <div class="absolute top-3 left-3 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
-                                    Lanjutan
+                                    {{ ucfirst($k->tingkat_kesulitan) ?? 'Umum' }}
                                 </div>
-                                <!-- <div class="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm text-gray-800 text-xs font-bold px-2 py-1 rounded-full flex items-center">
-                                    <i class="fas fa-clock text-xs mr-1 text-emerald-500"></i> 12 Hours
-                                </div> -->
                             </div>
 
-                            <!-- Course Content -->
                             <div class="p-6">
                                 <div class="flex justify-between items-start mb-2 cursor-default">
-                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">Pengelasan</span>
+                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                                        {{ $k->kategori->nama_kategori ?? 'Tanpa Kategori' }}
+                                    </span>
                                     <div class="flex items-center">
                                         <i class="fas fa-star text-yellow-400 text-sm"></i>
-                                        <span class="text-gray-700 text-sm font-medium ml-1">4.9</span>
-                                        <span class="text-gray-400 text-sm ml-1">(128)</span>
+                                        <span class="text-gray-700 text-sm font-medium ml-1">
+                                            {{ number_format($k->average_rating ?? 0, 1) }}
+                                        </span>
+                                        <span class="text-gray-400 text-sm ml-1">
+                                            ({{ $k->rating_kursus_count ?? 0 }})
+                                        </span>
                                     </div>
                                 </div>
 
                                 <div class="w-full text-left">
-                                    <a href="#" class="lg:text-lg text-md font-bold text-gray-800 mb-1 line-clamp-2 text-left hover:text-HoverGlow active:text-ButtonBase">
-                                        Advanced React Patterns and Modern JavaScript Techniques
+                                    <a href="{{ route('DetailKursus', $k->kursus_id) }}"
+                                        class="lg:text-lg text-md font-bold text-gray-800 mb-1 line-clamp-2 text-left hover:text-HoverGlow active:text-ButtonBase">
+                                        {{ $k->judul }}
                                     </a>
-                                    <p class="text-gray-500 text-xs mb-4 line-clamp-2 text-left cursor-default">Master React hooks, context API, and advanced state management to </p>
+                                    <p class="text-gray-500 text-xs mb-4 line-clamp-2 text-left cursor-default">
+                                        {{ Str::limit(strip_tags($k->deskripsi), 60) }}
+                                    </p>
                                 </div>
-
 
                                 <div class="flex items-center justify-between cursor-default">
                                     <div class="flex items-center">
-                                        <img class="w-8 h-8 rounded-full" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Instructor">
+                                        <img class="w-8 h-8 rounded-full"
+                                            src="{{ $k->foto_pengajar ? asset('storage/' . $k->foto_pengajar) : asset('image/Thumnnail.jpg') }}"
+                                            alt="Instruktur">
                                         <div class="ml-2">
-                                            <p class="lg:text-sm text-xs font-medium text-gray-700">Sarah Johnson</p>
-                                            <p class="text-xs text-gray-500">Senior Developer</p>
+                                            <p class="lg:text-sm text-xs font-medium text-gray-700">{{ $k->pengguna->nama ?? 'Instruktur' }}</p>
+                                            <p class="text-[6px] sm:text-[10px] lg:text-[11px] text-gray-500">Instruktur</p>
                                         </div>
                                     </div>
 
                                     <div class="text-right">
-                                        <p class="text-ButtonBase font-bold text-base lg:text-lg">Rp. 6.000.000</p>
+                                        <p class="text-ButtonBase font-bold text-base lg:text-lg">
+                                            Rp. {{ number_format($k->harga, 0, ',', '.') }}
+                                        </p>
                                     </div>
                                 </div>
                             </div>
-
-                            <!-- Course Footer -->
-                            <!-- <div class="text-right px-6 py-4 bg-gray-50 border-t border-gray-100">
-                                <div class="flex space-x-2">
-                                    <span class="text-xs text-gray-500 flex items-center">
-                                        <i class="fas fa-users mr-1"></i> 245 Students
-                                    </span>
-                                    <span class="text-xs text-gray-500 flex items-center">
-                                        <i class="fas fa-book mr-1"></i> 15 Lessons
-                                    </span>
-                                </div>
-                                <button class="bg-ButtonBase hover:bg-HoverGlow text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300 text-sm">
-                                    Lihat Detail
-                                </button>
-                            </div> -->
                         </div>
-
-                        <!-- Card 2 -->
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-                            <!-- Course Image -->
-                            <div class="relative cursor-default">
-                                <img class="w-full h-44 sm:h-36 lg:h-44 object-cover" src="https://images.unsplash.com/photo-1542626991-cbc4e32524cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Course thumbnail">
-                                <div class="absolute top-3 left-3 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
-                                    Lanjutan
-                                </div>
-                                <!-- <div class="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm text-gray-800 text-xs font-bold px-2 py-1 rounded-full flex items-center">
-                                    <i class="fas fa-clock text-xs mr-1 text-emerald-500"></i> 12 Hours
-                                </div> -->
-                            </div>
-
-                            <!-- Course Content -->
-                            <div class="p-6">
-                                <div class="flex justify-between items-start mb-2 cursor-default">
-                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">Pengelasan</span>
-                                    <div class="flex items-center">
-                                        <i class="fas fa-star text-yellow-400 text-sm"></i>
-                                        <span class="text-gray-700 text-sm font-medium ml-1">4.9</span>
-                                        <span class="text-gray-400 text-sm ml-1">(128)</span>
-                                    </div>
-                                </div>
-
-                                <div class="w-full text-left">
-                                    <a href="#" class="lg:text-lg text-md font-bold text-gray-800 mb-1 line-clamp-2 text-left hover:text-HoverGlow active:text-ButtonBase">
-                                        Advanced React Patterns and Modern JavaScript Techniques
-                                    </a>
-                                    <p class="text-gray-500 text-xs mb-4 line-clamp-2 text-left cursor-default">Master React hooks, context API, and advanced state management to </p>
-                                </div>
-
-
-                                <div class="flex items-center justify-between cursor-default">
-                                    <div class="flex items-center">
-                                        <img class="w-8 h-8 rounded-full" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Instructor">
-                                        <div class="ml-2">
-                                            <p class="lg:text-sm text-xs font-medium text-gray-700">Sarah Johnson</p>
-                                            <p class="text-xs text-gray-500">Senior Developer</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-right">
-                                        <p class="text-ButtonBase font-bold text-base lg:text-lg">Rp. 6.000.000</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Course Footer -->
-                            <!-- <div class="text-right px-6 py-4 bg-gray-50 border-t border-gray-100">
-                                <div class="flex space-x-2">
-                                    <span class="text-xs text-gray-500 flex items-center">
-                                        <i class="fas fa-users mr-1"></i> 245 Students
-                                    </span>
-                                    <span class="text-xs text-gray-500 flex items-center">
-                                        <i class="fas fa-book mr-1"></i> 15 Lessons
-                                    </span>
-                                </div>
-                                <button class="bg-ButtonBase hover:bg-HoverGlow text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300 text-sm">
-                                    Lihat Detail
-                                </button>
-                            </div> -->
-                        </div>
-
-                        <!-- Card 3 -->
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-                            <!-- Course Image -->
-                            <div class="relative cursor-default">
-                                <img class="w-full h-44 sm:h-36 lg:h-44 object-cover" src="https://images.unsplash.com/photo-1542626991-cbc4e32524cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Course thumbnail">
-                                <div class="absolute top-3 left-3 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
-                                    Lanjutan
-                                </div>
-                                <!-- <div class="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm text-gray-800 text-xs font-bold px-2 py-1 rounded-full flex items-center">
-                                    <i class="fas fa-clock text-xs mr-1 text-emerald-500"></i> 12 Hours
-                                </div> -->
-                            </div>
-
-                            <!-- Course Content -->
-                            <div class="p-6">
-                                <div class="flex justify-between items-start mb-2 cursor-default">
-                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">Pengelasan</span>
-                                    <div class="flex items-center">
-                                        <i class="fas fa-star text-yellow-400 text-sm"></i>
-                                        <span class="text-gray-700 text-sm font-medium ml-1">4.9</span>
-                                        <span class="text-gray-400 text-sm ml-1">(128)</span>
-                                    </div>
-                                </div>
-
-                                <div class="w-full text-left">
-                                    <a href="#" class="lg:text-lg text-md font-bold text-gray-800 mb-1 line-clamp-2 text-left hover:text-HoverGlow active:text-ButtonBase">
-                                        Advanced React Patterns and Modern JavaScript Techniques
-                                    </a>
-                                    <p class="text-gray-500 text-xs mb-4 line-clamp-2 text-left cursor-default">Master React hooks, context API, and advanced state management to </p>
-                                </div>
-
-
-                                <div class="flex items-center justify-between cursor-default">
-                                    <div class="flex items-center">
-                                        <img class="w-8 h-8 rounded-full" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Instructor">
-                                        <div class="ml-2">
-                                            <p class="lg:text-sm text-xs font-medium text-gray-700">Sarah Johnson</p>
-                                            <p class="text-xs text-gray-500">Senior Developer</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-right">
-                                        <p class="text-ButtonBase font-bold text-base lg:text-lg">Rp. 6.000.000</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Course Footer -->
-                            <!-- <div class="text-right px-6 py-4 bg-gray-50 border-t border-gray-100">
-                                <div class="flex space-x-2">
-                                    <span class="text-xs text-gray-500 flex items-center">
-                                        <i class="fas fa-users mr-1"></i> 245 Students
-                                    </span>
-                                    <span class="text-xs text-gray-500 flex items-center">
-                                        <i class="fas fa-book mr-1"></i> 15 Lessons
-                                    </span>
-                                </div>
-                                <button class="bg-ButtonBase hover:bg-HoverGlow text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300 text-sm">
-                                    Lihat Detail
-                                </button>
-                            </div> -->
-                        </div>
-
+                        @endforeach
                     </div>
+
                 </div>
             </div>
         </div>
@@ -394,29 +251,43 @@
                 <!-- Header -->
                 <div class="md:mb-8 mb-2">
                     <h1 class="text-xl md:text-3xl font-bold text-primary mb-2">Beri Ulasan</h1>
-                    <p class="text-gray-600 text-xs md:text-sm">Bagikan pengalaman Anda mengikuti</p>
-                    <p class="font-semibold text-xs md:text-sm">Workshop React Mastery</p>
+                    <p class="text-gray-600 text-xs md:text-sm">Bagikan pengalaman Anda untuk perushaan ini</p>
                 </div>
 
                 <!-- Review Form -->
                 <div class="shadow-sm">
                     <!-- Course Info -->
                     <div class="flex items-start mb-2 p-4 bg-gray-50 rounded-lg">
-                        <img src="{{ asset('image/SKILLB.png') }}" alt="Thumbnail Kursus" class="md:w-20 md:h-20 w-10 h-10 rounded-full object-cover mr-4">
+                        <img src="{{ $user->foto_profil ? asset('storage/' . $user->foto_profil) 
+                            : asset('image/Thumnnail.jpg') }}" alt="Thumbnail Kursus" class="md:w-20 md:h-20 w-10 h-10 rounded-full object-cover mr-4">
                         <div>
-                            <h3 class="font-bold text-base md:text-lg">PT. Skill Maju</h3>
+                            <h3 class="font-bold text-base md:text-lg">{{ $user->nama ?? '-' }}</h3>
                             <div class="mt-1 flex items-center text-amber-400">
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star"></i>
-                                <i class="fas fa-star-half-alt"></i>
-                                <span class="text-gray-600 ml-2 text-xs md:text-sm">4.3 (128 ulasan)</span>
+                                @php
+                                $avg = number_format($perusahaan->average_rating ?? 0, 1);
+                                $count = $perusahaan->rating_perusahaan_count ?? 0;
+                                @endphp
+
+                                @for ($i = 1; $i <= 5; $i++)
+                                    @if ($perusahaan->average_rating >= $i)
+                                    <i class="fas fa-star"></i>
+                                    @elseif ($perusahaan->average_rating >= $i - 0.5)
+                                    <i class="fas fa-star-half-alt"></i>
+                                    @else
+                                    <i class="far fa-star"></i>
+                                    @endif
+                                    @endfor
+
+                                    <span class="text-gray-600 ml-2 text-xs md:text-sm">
+                                        {{ $avg }} ({{ $count }} ulasan)
+                                    </span>
                             </div>
                         </div>
                     </div>
 
-                    <form>
+                    @if(!$hasReviewed)
+                    <form action="{{ route('ratingPerusahaan.store', $perusahaan->perusahaan_id) }}" method="POST">
+                        @csrf
                         <!-- Rating Section -->
                         <div class="mb-6">
                             <label class="block text-gray-700 font-medium mb-3 text-sm md:text-xs">
@@ -446,7 +317,9 @@
                                 class="w-full px-4 py-3 border border-gray-300 placeholder:text-xs md:placeholder:text-sm rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent"
                                 placeholder="Ceritakan pengalaman Anda ..."
                                 required></textarea>
-                            <p class="text-right text-xs md:text-sm text-gray-500 mt-1"><span id="char-count">0</span>/500 karakter</p>
+                            <p class="text-right text-xs md:text-sm text-gray-500 mt-1">
+                                <span id="char-count">0</span>/500 karakter
+                            </p>
                         </div>
 
                         <!-- Submit Button -->
@@ -454,6 +327,11 @@
                             Kirim Ulasan
                         </button>
                     </form>
+                    @else
+                    <div class="text-green-600 font-semibold text-center mt-4">
+                        Anda sudah memberikan ulasan untuk perusahaan ini. Terima kasih! 🙏
+                    </div>
+                    @endif
                 </div>
 
                 <!-- Review Guidelines -->
@@ -473,70 +351,39 @@
     </section>
 
     <section class="pb-10">
-        <div class="grid grid-cols-4">
-            <!-- Scenario 4: Already reviewed -->
-            <div class="bg-gray-50 md:p-4 p-2 rounded-lg text-xs md:text-sm text-center">
-                <div class="flex flex-col items-center text-amber-400 mb-2">
-                    <div class="flex space-x-1">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <span class="text-gray-700 mt-1">4.5/5</span>
-                </div>
-                <p class="font-medium italic">"Materinya bagus dan instruktur sangat komunikatif."</p>
-                <p class="text-sm text-gray-500 mt-1">Ulasan diberikan pada 30 Agustus 2023</p>
-            </div>
-            <!-- Scenario 4: Already reviewed -->
-            <div class="bg-gray-50 md:p-4 p-2 rounded-lg text-xs md:text-sm text-center">
-                <div class="flex flex-col items-center text-amber-400 mb-2">
-                    <div class="flex space-x-1">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <span class="text-gray-700 mt-1">4.5/5</span>
-                </div>
-                <p class="font-medium italic">"Materinya bagus dan instruktur sangat komunikatif."</p>
-                <p class="text-sm text-gray-500 mt-1">Ulasan diberikan pada 30 Agustus 2023</p>
-            </div>
-            <!-- Scenario 4: Already reviewed -->
-            <div class="bg-gray-50 md:p-4 p-2 rounded-lg text-xs md:text-sm text-center">
-                <div class="flex flex-col items-center text-amber-400 mb-2">
-                    <div class="flex space-x-1">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <span class="text-gray-700 mt-1">4.5/5</span>
-                </div>
-                <p class="font-medium italic">"Materinya bagus dan instruktur sangat komunikatif."</p>
-                <p class="text-sm text-gray-500 mt-1">Ulasan diberikan pada 30 Agustus 2023</p>
-            </div>
-            <!-- Scenario 4: Already reviewed -->
-            <div class="bg-gray-50 md:p-4 p-2 rounded-lg text-xs md:text-sm text-center">
-                <div class="flex flex-col items-center text-amber-400 mb-2">
-                    <div class="flex space-x-1">
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star"></i>
-                        <i class="fas fa-star-half-alt"></i>
-                    </div>
-                    <span class="text-gray-700 mt-1">4.5/5</span>
-                </div>
-                <p class="font-medium italic">"Materinya bagus dan instruktur sangat komunikatif."</p>
-                <p class="text-sm text-gray-500 mt-1">Ulasan diberikan pada 30 Agustus 2023</p>
-            </div>
+        <div class="mb-4 text-sm text-gray-600">
+            Menampilkan {{ $ratingPerusahaan->count() }} ulasan dari total {{ $perusahaan->rating_perusahaan_count }} ulasan
         </div>
 
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+            @forelse ($ratingPerusahaan as $r)
+            <div class="bg-gray-50 md:p-4 p-2 rounded-lg text-xs md:text-sm text-center">
+                <div class="flex flex-col items-center text-amber-400 mb-2">
+                    <div class="flex space-x-1">
+                        @for ($i = 1; $i <= 5; $i++)
+                            @if ($r->rating >= $i)
+                            <i class="fas fa-star"></i>
+                            @elseif ($r->rating >= $i - 0.5)
+                            <i class="fas fa-star-half-alt"></i>
+                            @else
+                            <i class="far fa-star"></i>
+                            @endif
+                            @endfor
+                    </div>
+                    <span class="text-gray-700 mt-1">{{ number_format($r->rating, 1) }}/5</span>
+                </div>
+                <p class="font-medium italic">"{{ $r->komentar }}"</p>
+                <p class="text-sm text-gray-500 mt-1">
+                    Ulasan dari {{ $r->pemberi->nama ?? 'Anonim' }} pada {{ $r->created_at->format('d M Y') }}
+                </p>
+            </div>
+            @empty
+            <div class="col-span-4 text-center text-gray-500">Belum ada ulasan untuk perusahaan ini.</div>
+            @endforelse
+        </div>
     </section>
+
+
 </main>
 
 <script>
@@ -596,7 +443,7 @@
     for (let i = 1; i <= 5; i++) {
         const star = document.createElement('div');
         star.className = 'text-3xl cursor-pointer text-gray-300 hover:text-amber-400';
-        star.innerHTML = '<i class="far fa-star" data-value="' + i + '"></i>';
+        star.innerHTML = `<i class="far fa-star" data-value="${i}"></i>`;
         star.addEventListener('click', function() {
             const value = this.querySelector('i').getAttribute('data-value');
             ratingInput.value = value;

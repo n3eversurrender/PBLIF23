@@ -13,8 +13,9 @@ class RatingPerusahaan extends Model
     protected $primaryKey = 'rating_perusahaan_id';
 
     protected $fillable = [
-        'pemberi_id',
         'perusahaan_id',
+        'pemberi_id',
+        'ip_address',
         'rating',
         'komentar',
     ];

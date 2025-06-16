@@ -109,7 +109,8 @@ Route::post('/process-payment', [PaymentController::class, 'processPayment'])->n
 Route::post('/payment/update-status', [PaymentController::class, 'updatePaymentStatus'])->name('updatePaymentStatus');
 Route::post('/umpan-balik', [UmpanBalikController::class, 'store'])->name('umpan_balik.store');
 Route::post('/rekomendasi', [RekomendasiController::class, 'getRecommendation'])->name('rekomendasi');
-
+Route::get('/detailProfil/{id}', [GuestController::class, 'detailProfilPerusahaan'])->name('DetailProfilPerusahaan');
+Route::post('/rating-perusahaan/{perusahaan}', [GuestController::class, 'store'])->name('ratingPerusahaan.store');
 
 
 Route::post('/Masuk', [LoginPenggunaController::class, 'login'])->name('login');
@@ -159,8 +160,6 @@ Route::middleware(['auth', PeranMiddleware::class . ':Perusahaan'])->group(funct
     // Beranda Perusahaan
     Route::get('/BerandaPerusahaan', [PerusahaanController::class, 'berandaPerusahaan'])->name('BerandaPerusahaan');
 
-    // Detail Profil perusahaan (guest)
-    Route::get('/detailProfil', [GuestController::class, 'detailProfilPerusahaan'])->name('DetailProfilPerusahaan');
 
     // Landing Page
     Route::get('/LandingPage', [LandingPageController::class, 'landingPage'])->name('LandingPagePerusahaan');
