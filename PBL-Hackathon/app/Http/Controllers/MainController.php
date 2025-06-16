@@ -49,41 +49,40 @@ class MainController extends Controller
 
     public function daftarKursus(Request $request)
     {
-        $kategori_id = $request->input('kategori_id'); // Ambil kategori yang dipilih
-        $tingkat_kesulitan = $request->input('tingkat_kesulitan'); // Ambil tingkat kesulitan yang dipilih
+        $kategori_id = $request->input('kategori_id');
+        $tingkat_kesulitan = $request->input('tingkat_kesulitan');
 
-        // Query dasar untuk mengambil kursus
-        $query = Kursus::with(['kategori', 'ratingKursus']) // Pastikan nama relasi sesuai
-            ->withAvg('ratingKursus as average_rating', 'rating') // Ambil rata-rata rating
-            ->where('status', 'Aktif'); // Filter berdasarkan status
+        $query = Kursus::with(['kategori', 'ratingKursus'])
+            ->withAvg('ratingKursus as average_rating', 'rating')
+            ->where('status', 'Aktif');
 
-        // Filter berdasarkan kategori jika ada
         if ($kategori_id) {
             $query->where('kategori_id', $kategori_id);
         }
 
-        // Filter berdasarkan tingkat kesulitan jika ada dan tidak default "-"
         if ($tingkat_kesulitan && $tingkat_kesulitan !== '-') {
             $query->where('tingkat_kesulitan', $tingkat_kesulitan);
         }
 
-        // Paginate hasil query
         $kursus = $query->paginate(9);
 
-        // Ambil daftar tingkat kesulitan unik dari data kursus yang ada
         $uniqueTingkatKesulitan = Kursus::select('tingkat_kesulitan')
-            ->whereIn('kursus_id', $kursus->pluck('kursus_id')) // Hanya ambil tingkat kesulitan yang relevan dengan kursus yang dipilih
+            ->whereIn('kursus_id', $kursus->pluck('kursus_id'))
             ->distinct()
             ->get();
 
-        // Ambil data kategori untuk ditampilkan di filter
         $kategori = Kategori::all();
 
-        // Kirim data ke view
+        // Ambil pengguna dengan peran Perusahaan
+        $perusahaan = Pengguna::where('peran', 'Perusahaan')
+            ->limit(8)
+            ->get();
+
         return view('guest.DaftarKursus', [
             'kursus' => $kursus,
             'kategori' => $kategori,
             'uniqueTingkatKesulitan' => $uniqueTingkatKesulitan,
+            'perusahaan' => $perusahaan, // kirim ke view
         ]);
     }
 

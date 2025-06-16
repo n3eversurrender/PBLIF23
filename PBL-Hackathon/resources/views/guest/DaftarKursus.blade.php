@@ -21,39 +21,18 @@
 <div class="mt-10 mx-10">
     <h1 class="text-2xl font-bold">Perusahaan Penyedia Jasa</h1>
     <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 mt-8 mx-4 justify-items-center text-center">
-        <a href="/detailProfil" class="mt-2 hover:opacity-75 transition duration-500">
-            <img src="{{ asset('image/SKILLB.png') }}" alt="" class="h-20 w-20 rounded-full" />
-            <label for="" class="font-semibold mt-2">PT.A Lorem</label>
+        @foreach($perusahaan as $p)
+        <a href="/detailProfil/{{ $p->pengguna_id }}" class="mt-2 hover:opacity-75 transition duration-500">
+            <div class="flex flex-col items-center">
+                <img src="{{ $p->foto_profil ? asset('storage/' . $p->foto_profil) : asset('image/thumnnail.jpg') }}"
+                    alt="Foto {{ $p->nama }}" class="h-20 w-20 rounded-full" />
+                <span class="font-semibold mt-2">{{ $p->nama }}</span>
+            </div>
         </a>
-        <a href="/detailProfil" class="mt-2 hover:opacity-75 transition duration-500">
-            <img src="{{ asset('image/SKILLB.png') }}" alt="" class="h-20 w-20 rounded-full" />
-            <label for="" class="font-semibold mt-2">PT.A Lorem</label>
-        </a>
-        <a href="/detailProfil" class="mt-2 hover:opacity-75 transition duration-500">
-            <img src="{{ asset('image/SKILLB.png') }}" alt="" class="h-20 w-20 rounded-full" />
-            <label for="" class="font-semibold mt-2">PT.A Lorem</label>
-        </a>
-        <a href="/detailProfil" class="mt-2 hover:opacity-75 transition duration-500">
-            <img src="{{ asset('image/SKILLB.png') }}" alt="" class="h-20 w-20 rounded-full" />
-            <label for="" class="font-semibold mt-2">PT.A Lorem</label>
-        </a>
-        <a href="/detailProfil" class="mt-2 hover:opacity-75 transition duration-500">
-            <img src="{{ asset('image/SKILLB.png') }}" alt="" class="h-20 w-20 rounded-full" />
-            <label for="" class="font-semibold mt-2">PT.A Lorem</label>
-        </a>
-        <a href="/detailProfil" class="mt-2 hover:opacity-75 transition duration-500">
-            <img src="{{ asset('image/SKILLB.png') }}" alt="" class="h-20 w-20 rounded-full" />
-            <label for="" class="font-semibold mt-2">PT.A Lorem</label>
-        </a>
-        <a href="/detailProfil" class="mt-2 hover:opacity-75 transition duration-500">
-            <img src="{{ asset('image/SKILLB.png') }}" alt="" class="h-20 w-20 rounded-full" />
-            <label for="" class="font-semibold mt-2">PT.A Lorem</label>
-        </a>
-        <a href="/detailProfil" class="mt-2 hover:opacity-75 transition duration-500">
-            <img src="{{ asset('image/SKILLB.png') }}" alt="" class="h-20 w-20 rounded-full" />
-            <label for="" class="font-semibold mt-2">PT.A Lorem</label>
-        </a>
+        @endforeach
     </div>
+
+
 
     <div class="flex flex-col items-center mt-5">
         <div class="inline-flex mt-2 xs:mt-0">
@@ -401,7 +380,7 @@
                 </div>
                 @endforeach
             </div> -->
-          
+
     </section>
 
 

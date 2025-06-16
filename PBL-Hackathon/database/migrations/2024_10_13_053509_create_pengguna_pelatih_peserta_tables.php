@@ -62,18 +62,22 @@ class CreatePenggunaPelatihPesertaTables extends Migration
         Schema::create('rating_perusahaan', function (Blueprint $table) {
             $table->id('rating_perusahaan_id');
 
-            $table->unsignedBigInteger('pemberi_id'); // pengguna yang memberi rating (misal peserta)
+            $table->unsignedBigInteger('pemberi_id')->nullable(); // pengguna yang memberi rating (misal peserta)
             $table->unsignedBigInteger('perusahaan_id'); // perusahaan yang dinilai
 
             $table->float('rating');
             $table->text('komentar')->nullable();
+            $table->string('ip_address')->nullable(); // untuk simpan IP reviewer
 
             $table->foreign('pemberi_id')->references('pengguna_id')->on('pengguna')->onDelete('cascade');
             $table->foreign('perusahaan_id')->references('perusahaan_id')->on('perusahaan')->onDelete('cascade');
 
+            // UNIQUE untuk mencegah double review
+            $table->unique(['perusahaan_id', 'pemberi_id'], 'unique_review_user');
+            $table->unique(['perusahaan_id', 'ip_address'], 'unique_review_ip');
+
             $table->timestamps();
         });
-
 
         // Tabel peserta
         Schema::create('peserta', function (Blueprint $table) {
