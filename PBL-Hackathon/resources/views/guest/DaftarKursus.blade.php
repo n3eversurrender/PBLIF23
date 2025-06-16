@@ -297,8 +297,8 @@
                                     <div class="flex items-center">
                                         <img class="w-5 h-5 rounded-full" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Instructor">
                                         <div class="ml-2">
-                                            <p class="text-[7px] sm:text-[11px] lg:text-xs font-medium text-gray-700">Sarah Johnson</p>
-                                            <p class="text-[6px] sm:text-[10px] lg:text-[11px] text-gray-500">Senior Developer</p>
+                                            <p class="text-[7px] sm:text-[11px] lg:text-xs font-medium text-gray-700">{{ $item->pengguna->nama }}</p>
+                                            <p class="text-[6px] sm:text-[10px] lg:text-[11px] text-gray-500">Instruktur</p>
                                         </div>
                                     </div>
 
