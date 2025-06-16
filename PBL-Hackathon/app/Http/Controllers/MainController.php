@@ -32,8 +32,19 @@ class MainController extends Controller
 
     public function Home()
     {
-        return view('guest.Home');
+        // Ambil kursus terpopuler: paling banyak pendaftar + rating bagus
+        $kursus = \App\Models\Kursus::with(['kategori', 'pengguna'])
+            ->withCount('pendaftaran')                // Hitung jumlah pendaftar
+            ->withAvg('ratingKursus', 'rating')       // Hitung rata-rata rating
+            ->where('status', 'Aktif')
+            ->orderByDesc('pendaftaran_count')        // Prioritas banyak pendaftar
+            ->orderByDesc('rating_kursus_avg_rating') // Lalu rating
+            ->limit(4)
+            ->get();
+
+        return view('guest.Home', compact('kursus'));
     }
+
 
 
     public function daftarKursus(Request $request)

@@ -36,7 +36,7 @@
                     </div> -->
 
                     <!-- Menampilkan menu berdasarkan peran -->
-                    @if($user->peran === 'Pelatih')
+                    @if($user->peran === 'Perusahaan')
                     <!-- Menu untuk Pelatih -->
                     <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                         <span class="sr-only">Open user menu</span>
@@ -50,13 +50,10 @@
                         </div>
                         <ul class="py-2" aria-labelledby="user-menu-button">
                             <li>
-                                <a href="{{ route('DashboardPelatih') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Dashboard Pelatih</a>
+                                <a href="{{ route('StatistikPerusahaan') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Kelola Kursus</a>
                             </li>
                             <li>
-                                <a href="{{ route('PengaturanPelatih') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">Pengaturan Pelatih</a>
-                            </li>
-                            <li>
-                                <form action="{{ route('logoutPelatih') }}" method="POST">
+                                <form action="{{ route('logoutPerusahaan') }}" method="POST">
                                     @csrf
                                     <button type="submit" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white">
                                         Keluar
@@ -151,8 +148,9 @@
                             </a>
                         </li>
 
-                        {{-- PROFIL & RIWAYAT (hanya jika login) --}}
+                        {{-- PROFIL & RIWAYAT (hanya jika login dan bukan Perusahaan) --}}
                         @auth
+                        @if(auth()->user()->peran !== 'Perusahaan')
                         <li>
                             <a href="/Profil"
                                 class="{{ request()->is('Profil') ? 'text-blue-600 font-bold' : 'text-gray-500' }} block py-2 px-3 rounded md:p-0 hover:text-black transition duration-700">
@@ -165,37 +163,12 @@
                                 Riwayat
                             </a>
                         </li>
+                        @endif
                         @endauth
 
                     </ul>
                 </div>
 
-
-
-
-
-                <!-- <div class="items-center absolute top-14 sm:top-0 right-0 z-10 sm:relative justify-between hidden sm:w-full md:flex md:w-auto md:order-1" id="navbar-default">
-                    <ul class="flex flex-col font-medium text-sm p-4 md:p-0 mt-4 border border-gray-100 rounded-lg bg-gray-50 md:space-x-8 rtl:space-x-reverse md:flex-row md:mt-0 md:border-0 md:bg-transparent dark:bg-transparent md:dark:bg-transparent dark:border-gray-700">
-                        <li>
-                            <a href="/Home"
-                                class="{{ request()->is('Home') ? ' text-blue-600 font-bold' : 'text-gray-500' }} block py-2 px-3 rounded md:border-0 md:p-0 hover:text-black transition duration-700">
-                                Beranda
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/TentangKami"
-                                class="{{ request()->is('TentangKami') ? ' text-blue-600 font-bold' : 'text-gray-500' }} block py-2 px-3 rounded md:border-0 md:p-0 hover:text-black transition duration-700">
-                                Tentang Kami
-                            </a>
-                        </li>
-                        <li>
-                            <a href="/DaftarKursus"
-                                class="{{ request()->is('DaftarKursus') ? ' text-blue-600 font-bold' : 'text-gray-500' }} block py-2 px-3 rounded md:border-0 md:p-0 hover:text-black transition duration-700">
-                                Jelajahi
-                            </a>
-                        </li>
-                    </ul>
-                </div> -->
             </div>
         </div>
     </nav>

@@ -24,7 +24,7 @@
     <aside id="logo-sidebar" class="fixed top-0 left-0 z-40 w-64 h-screen transition-transform -translate-x-full sm:translate-x-0" aria-label="Sidebar">
         <div class="h-full px-3 py-4 border overflow-y-auto bg-gray-50 dark:bg-gray-800">
             <div class="flex justify-center">
-                <a href="/BerandaPerusahaan">
+                <a href="/Home">
                     <img src="{{ asset('image/SKILLB.png') }}" class="w-20 h-20 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" alt="SkillBridge Logo" />
                 </a>
             </div>
