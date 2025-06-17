@@ -48,6 +48,38 @@
                     <p class="font-semibold">Email : <span class="font-normal text-gray-700">{{ $user->email ?? '-' }}</span></p>
                     <p class="font-semibold">No Telepon : <span class="font-normal text-gray-700">{{ $user->no_telepon ?? '-' }}</span></p>
                     <p class="font-semibold">Alamat : <span class="font-normal text-gray-700">{{ $user->alamat ?? '-' }}</span></p>
+                    <p class="font-semibold">Status Verifikasi:
+                        <span class="font-normal text-gray-700">
+                            {{ $user->status_verifikasi ?? 'Belum Diverifikasi' }}
+                        </span>
+                    </p>
+
+                    @if ($user->status_verifikasi === 'Sudah Diverifikasi')
+                    <p class="text-green-600 text-sm mt-1">
+                        Akun Anda sudah diverifikasi. Terima kasih!
+                    </p>
+
+                    @elseif ($user->status_verifikasi === 'Ditolak')
+                    <p class="text-red-600 text-sm mt-1">
+                        Permintaan verifikasi Anda ditolak. Silakan perbaiki data dan kirim ulang permintaan.
+                    </p>
+                    <form action="{{ route('Perusahaan.kirimVerifikasi') }}" method="POST" class="mt-2">
+                        @csrf
+                        <button type="submit"
+                            class="inline-flex items-center bg-blue-600 text-white text-sm font-medium py-2 px-4 rounded-lg hover:bg-blue-700">
+                            <i class="fas fa-paper-plane mr-2"></i> Kirim Ulang Permintaan Verifikasi
+                        </button>
+                    </form>
+
+                    @else
+                    <form action="{{ route('Perusahaan.kirimVerifikasi') }}" method="POST" class="mt-2">
+                        @csrf
+                        <button type="submit"
+                            class="inline-flex items-center bg-blue-600 text-white text-sm font-medium py-2 px-4 rounded-lg hover:bg-blue-700">
+                            <i class="fas fa-paper-plane mr-2"></i> Kirim Permintaan Verifikasi
+                        </button>
+                    </form>
+                    @endif
                 </div>
             </div>
         </div>
@@ -63,21 +95,22 @@
                 <div class="border-t pt-2 flex justify-between items-center">
                     <div>
                         <p class="text-sm text-gray-500 font-semibold">NPWP</p>
-                        <p class="text-lg text-gray-800">{{ $perusahaan->npwp ?? '-' }}</p>
+                        <p class="text-lg text-gray-800">{{ $perusahaan ? ($perusahaan->npwp ?? '-') : '-' }}</p>
                     </div>
-                    @if($perusahaan->file_npwp)
+                    @if($perusahaan && $perusahaan->file_npwp)
                     <a href="{{ asset('storage/'.$perusahaan->file_npwp) }}" target="_blank" class="text-blue-500 text-sm flex items-center gap-1">
                         <i class="fas fa-file-pdf"></i> Lihat
                     </a>
                     @endif
                 </div>
 
+
                 <div class="border-t pt-2 flex justify-between items-center">
                     <div>
                         <p class="text-sm text-gray-500 font-semibold">Akta Pendirian</p>
-                        <p class="text-lg text-gray-800">{{ $perusahaan->akta_pendirian ?? '-' }}</p>
+                        <p class="text-lg text-gray-800">{{ $perusahaan ? ($perusahaan->akta_pendirian ?? '-') : '-' }}</p>
                     </div>
-                    @if($perusahaan->file_akta_pendirian)
+                    @if($perusahaan && $perusahaan->file_akta_pendirian)
                     <a href="{{ asset('storage/'.$perusahaan->file_akta_pendirian) }}" target="_blank" class="text-blue-500 text-sm flex items-center gap-1">
                         <i class="fas fa-file-pdf"></i> Lihat
                     </a>
@@ -87,9 +120,9 @@
                 <div class="border-t pt-2 flex justify-between items-center">
                     <div>
                         <p class="text-sm text-gray-500 font-semibold">Izin Operasional</p>
-                        <p class="text-lg text-gray-800">{{ $perusahaan->izin_operasional ?? '-' }}</p>
+                        <p class="text-lg text-gray-800">{{ $perusahaan ? ($perusahaan->izin_operasional ?? '-') : '-' }}</p>
                     </div>
-                    @if($perusahaan->file_izin_operasional)
+                    @if($perusahaan && $perusahaan->file_izin_operasional)
                     <a href="{{ asset('storage/'.$perusahaan->file_izin_operasional) }}" target="_blank" class="text-blue-500 text-sm flex items-center gap-1">
                         <i class="fas fa-file-pdf"></i> Lihat
                     </a>
@@ -99,14 +132,15 @@
                 <div class="border-t pt-2 flex justify-between items-center">
                     <div>
                         <p class="text-sm text-gray-500 font-semibold">Sertifikasi BNSP</p>
-                        <p class="text-lg text-gray-800">{{ $perusahaan->sertifikasi_bnsp ?? '-' }}</p>
+                        <p class="text-lg text-gray-800">{{ $perusahaan ? ($perusahaan->sertifikasi_bnsp ?? '-') : '-' }}</p>
                     </div>
-                    @if($perusahaan->file_sertifikasi_bnsp)
+                    @if($perusahaan && $perusahaan->file_sertifikasi_bnsp)
                     <a href="{{ asset('storage/'.$perusahaan->file_sertifikasi_bnsp) }}" target="_blank" class="text-blue-500 text-sm flex items-center gap-1">
                         <i class="fas fa-file-pdf"></i> Lihat
                     </a>
                     @endif
                 </div>
+
 
             </div>
         </div>

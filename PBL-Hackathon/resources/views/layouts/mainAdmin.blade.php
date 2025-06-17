@@ -68,9 +68,9 @@
                             </a>
                         </li>
                         <li>
-                            <a href="/DataPelatih" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group">
+                            <a href="/DataPerusahaan" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group">
                                 <i class="fas fa-user-tie"></i>
-                                <span class="ms-3">Data Pelatih</span>
+                                <span class="ms-3">Data Perusahaan</span>
                             </a>
                         </li>
                     </ul>
@@ -128,12 +128,12 @@
                     </ul>
                 </li>
 
-                <li>
+                <!-- <li>
                     <a href="/DataSertifikat" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group">
                         <i class="fas fa-certificate"></i>
                         <span class="flex-1 ms-3 whitespace-nowrap">Data Sertifikat</span>
                     </a>
-                </li>
+                </li> -->
 
                 <li>
                     <a href="/DataUmpanBalik" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-300 dark:hover:bg-gray-700 group">

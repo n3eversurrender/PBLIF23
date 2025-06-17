@@ -9,9 +9,28 @@
     <div class="max-w-6xl mx-auto">
         <h2 class="text-2xl font-bold text-gray-800 mb-4">Kelola Kursus</h2>
         <div class="text-right mb-4">
-            <a href="/tambahkursus" class="font-semibold bg-ButtonBase hover:bg-HoverGlow transition duration-700 py-2.5 px-5 rounded-lg text-white"><i class="fa-solid fa-plus me-3"></i>Tambah Kursus</a>
+            @if ($user->status_verifikasi === 'Sudah Diverifikasi')
+            <a href="/tambahkursus" class="font-semibold bg-ButtonBase hover:bg-HoverGlow transition duration-700 py-2.5 px-5 rounded-lg text-white">
+                <i class="fa-solid fa-plus me-3"></i>Tambah Kursus
+            </a>
+            @else
+            <button disabled class="font-semibold bg-gray-400 cursor-not-allowed py-2.5 px-5 rounded-lg text-white">
+                <i class="fa-solid fa-plus me-3"></i>Tambah Kursus (Verifikasi Diperlukan)
+            </button>
+            @endif
+
         </div>
 
+        @if ($kursus->isEmpty() && $user->status_verifikasi !== 'Sudah Diverifikasi')
+        <div class="text-center py-10 bg-yellow-50 border border-yellow-300 rounded-lg text-yellow-700">
+            <p class="font-medium mb-2">Belum ada data kursus.</p>
+            <p>Silakan lengkapi <a href="{{ route('ProfilPerusahaan') }}" class="text-blue-600 underline">Profil Perusahaan</a> Anda terlebih dahulu sebelum menambah kursus.</p>
+        </div>
+        @elseif ($kursus->isEmpty() && $user->status_verifikasi === 'Sudah Diverifikasi')
+        <div class="text-center py-10 text-gray-500">
+            <p class="font-medium">Belum ada kursus yang ditambahkan. Silakan klik tombol <strong>Tambah Kursus</strong> untuk memulai.</p>
+        </div>
+        @else
         <div class="overflow-x-auto">
             <table class="min-w-full divide-y divide-gray-200 text-sm">
                 <thead class="bg-gray-50">
@@ -176,10 +195,8 @@
                 </tbody>
             </table>
         </div>
-
-
-
-
+        @endif
+    </div>
 </main>
 <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 

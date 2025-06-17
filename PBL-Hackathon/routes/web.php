@@ -45,6 +45,7 @@ use App\Http\Controllers\UmpanBalikController;
 use App\Http\Middleware\PeranMiddleware;
 use App\Http\Controllers\SkillMatchingController;
 use App\Http\Controllers\BerandaTraineeController;
+use App\Http\Controllers\DataPerusahaanController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\RiwayatController;
 use App\Http\Controllers\DetailRiwayatController;
@@ -168,6 +169,9 @@ Route::middleware(['auth', PeranMiddleware::class . ':Perusahaan'])->group(funct
     Route::get('/ProfilPerusahaan', [ProfilPerusahaanController::class, 'profilPerusahaan'])->name('ProfilPerusahaan');
     Route::get('/EditProfil', [ProfilPerusahaanController::class, 'editProfilPerusahaan'])->name('EditProfilPerusahaan');
     Route::put('/UpdateProfil', [ProfilPerusahaanController::class, 'updateProfil'])->name('UpdateProfilPerusahaan');
+    Route::post('/perusahaan/kirim-verifikasi', [ProfilPerusahaanController::class, 'kirimVerifikasi'])->name('Perusahaan.kirimVerifikasi');
+
+
 
     // Kelola Galeri
     Route::get('/KelolaGaleri', [GaleriController::class, 'kelolaGaleri'])->name('KelolaGaleri');
@@ -214,12 +218,13 @@ Route::middleware(['auth', PeranMiddleware::class . ':Admin'])->group(function (
     Route::delete('/kursus/{kursus_id}', [DataKursusController::class, 'destroy'])->name('kursus.destroy');
 
     Route::get('/DataPeserta', [DataPesertaController::class, 'dataPeserta'])->name('DataPeserta');
-    Route::get('/DataPelatih', [DataPelatihController::class, 'dataPelatih'])->name('DataPelatih');
-    Route::delete('/pengguna/{id}', [DataPelatihController::class, 'destroy'])->name('pengguna.destroy');
+    Route::get('/DataPerusahaan', [DataPerusahaanController::class, 'dataPerusahaan'])->name('DataPerusahaan');
+    Route::patch('/admin/verifikasi/konfirmasi/{pengguna_id}/{status}', [DataPerusahaanController::class, 'konfirmasiVerifikasi'])->name('admin.verifikasi.konfirmasi');
+    Route::delete('/pengguna/{id}', [DataPerusahaanController::class, 'destroy'])->name('pengguna.destroy');
 
+    Route::get('/TambahPerusahaan', [DataPerusahaanController::class, 'tambahPerusahaan'])->name('TambahPerusahaan');
+    Route::post('/Perusahaan/store', [DataPerusahaanController::class, 'storePerusahaan'])->name('Perusahaan.store');
 
-    Route::put('/pelatih/{pengguna_id}/status', [DataPelatihController::class, 'update'])->name('Pelatih.updateStatus');
-    Route::patch('/admin/verifikasi/{verifikasi_id}/{status}', [DataPelatihController::class, 'konfirmasiVerifikasi'])->name('admin.verifikasi.konfirmasi');
 
     Route::get('/DataRiwayatTransaksi', [DataRiwayatTransaksiController::class, 'dataRiwayatTransaksi'])->name('dataRiwayatTransaksi');
     Route::delete('/pembayaran/{pembayaran_id}', [DataRiwayatTransaksiController::class, 'destroy'])->name('pembayaran.destroy');

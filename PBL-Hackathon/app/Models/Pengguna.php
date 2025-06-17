@@ -21,7 +21,8 @@ class Pengguna extends Authenticatable
         'jenis_kelamin',
         'kata_sandi',
         'foto_profil',
-        'peran'
+        'peran',
+        'status_verifikasi'
     ];
     protected $hidden = [
         'kata_sandi',

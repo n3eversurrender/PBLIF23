@@ -9,20 +9,6 @@
             <div class="flex items-center">
                 <div class="flex justify-center items-center">
                     <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1">Pengguna Aplikasi</h5>
-                    <svg data-popover-target="chart-info" data-popover-placement="bottom" class="w-3.5 h-3.5 text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white cursor-pointer ms-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
-                        <path d="M10 .5a9.5 9.5 0 1 0 9.5 9.5A9.51 9.51 0 0 0 10 .5Zm0 16a1.5 1.5 0 1 1 0-3 1.5 1.5 0 0 1 0 3Zm1-5.034V12a1 1 0 0 1-2 0v-1.418a1 1 0 0 1 1.038-.999 1.436 1.436 0 0 0 1.488-1.441 1.501 1.501 0 1 0-3-.116.986.986 0 0 1-1.037.961 1 1 0 0 1-.96-1.037A3.5 3.5 0 1 1 11 11.466Z" />
-                    </svg>
-                    <div data-popover id="chart-info" role="tooltip" class="absolute z-10 invisible inline-block text-sm text-gray-500 transition-opacity duration-300 bg-white border border-gray-200 rounded-lg shadow-sm opacity-0 w-72 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-400">
-                        <div class="p-3 space-y-2">
-                            <!-- Judul Popover -->
-                            <h3 class="font-semibold text-gray-900 dark:text-white">Informasi Pengguna Aplikasi</h3>
-                            <!-- Konten Popover -->
-                            <p>Laporan ini membantu memantau pertumbuhan jumlah pengguna aplikasi. Tren pertumbuhan yang stabil atau meningkat menunjukkan keberhasilan dalam menarik lebih banyak pengguna.</p>
-                            <h3 class="font-semibold text-gray-900 dark:text-white">Perhitungan</h3>
-                            <p>Jumlah pengguna dihitung berdasarkan data aktivitas pengguna secara kumulatif. Setiap periode menunjukkan total pengguna hingga periode tersebut, termasuk pengguna baru yang bergabung.</p>
-                        </div>
-                        <div data-popper-arrow></div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -37,12 +23,12 @@
                     <dd class="text-orange-600 dark:text-orange-300 text-xs font-medium">Total Pengguna</dd>
                 </dl>
 
-                <!-- Total Pelatih -->
+                <!-- Total Perusahaan -->
                 <dl class="bg-teal-50 dark:bg-gray-600 rounded-lg flex flex-col items-center justify-center h-[78px]">
                     <dt class="w-8 h-8 rounded-full bg-teal-100 dark:bg-gray-500 text-teal-600 dark:text-teal-300 text-sm font-medium flex items-center justify-center mb-1">
                         {{ $totalPelatih }}
                     </dt>
-                    <dd class="text-teal-600 dark:text-teal-300 text-xs font-medium">Total Pelatih</dd>
+                    <dd class="text-teal-600 dark:text-teal-300 text-xs font-medium">Total Perusahaan</dd>
                 </dl>
 
                 <!-- Total Peserta -->
@@ -55,11 +41,12 @@
             </div>
         </div>
     </div>
+
     <div class="max-w-sm w-full bg-white rounded-lg shadow dark:bg-gray-800 p-4 md:p-6">
         <div class="flex justify-between mb-3">
             <div class="flex items-center">
                 <div class="flex justify-center items-center">
-                    <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1">Verifikasi Pelatih</h5>
+                    <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1">Verifikasi Perusahaan</h5>
                 </div>
             </div>
         </div>
@@ -97,7 +84,7 @@
         <div class="flex justify-between mb-3">
             <div class="flex items-center">
                 <div class="flex justify-between items-center">
-                    <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1">Pelatih Aktif</h5>
+                    <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1">Perusahaan Aktif</h5>
                     <h5 class="text-xl font-bold leading-none text-gray-900 dark:text-white pe-1 ml-8">Peserta Aktif</h5>
                 </div>
             </div>
@@ -105,7 +92,7 @@
 
         <div class="bg-gray-50 dark:bg-gray-700 p-3 rounded-lg">
             <div class="grid grid-cols-4 gap-3 mb-2">
-                <!-- Pelatih Aktif -->
+                <!-- Perusahaan Aktif -->
                 <dl class="bg-green-50 dark:bg-gray-600 rounded-lg flex flex-col items-center justify-center h-[78px]">
                     <dt class="w-8 h-8 rounded-full bg-green-100 dark:bg-gray-500 text-green-600 dark:text-green-300 text-sm font-medium flex items-center justify-center mb-1">
                         {{ $totalPelatihAktif }}
@@ -113,7 +100,7 @@
                     <dd class="text-green-600 dark:text-green-300 text-xs font-medium">Aktif</dd>
                 </dl>
 
-                <!-- Pelatih Tidak Aktif -->
+                <!-- Perusahaan Tidak Aktif -->
                 <dl class="bg-red-50 dark:bg-gray-600 rounded-lg flex flex-col items-center justify-center h-[78px]">
                     <dt class="w-8 h-8 rounded-full bg-red-100 dark:bg-gray-500 text-red-600 dark:text-red-300 text-sm font-medium flex items-center justify-center mb-1">
                         {{ $totalPelatihTidakAktif }}
@@ -139,7 +126,6 @@
             </div>
         </div>
     </div>
-
 </div>
 
 

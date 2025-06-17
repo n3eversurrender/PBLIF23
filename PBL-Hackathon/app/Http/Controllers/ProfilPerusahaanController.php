@@ -34,7 +34,7 @@ class ProfilPerusahaanController extends Controller
         // Jika kamu sudah set relasi di model
         return view('perusahaan.editProfil', compact('user', 'perusahaan'));
     }
-    
+
     public function updateProfil(Request $request)
     {
         $user = auth()->user(); // User yang sedang login
@@ -101,5 +101,22 @@ class ProfilPerusahaanController extends Controller
         $perusahaan->save();
 
         return redirect()->route('ProfilPerusahaan')->with('success', 'Profil berhasil diperbarui.');
+    }
+
+    public function kirimVerifikasi()
+    {
+        $user = Auth::user();
+
+        if ($user->status_verifikasi === 'Sudah Diverifikasi') {
+            return redirect()->back()->with('info', 'Akun Anda sudah diverifikasi.');
+        }
+
+        // Update status verifikasi
+        $user->status_verifikasi = 'Belum Diverifikasi';
+        $user->save();
+
+        // Tambahkan logic notifikasi admin / log / dsb jika diperlukan
+
+        return redirect()->back()->with('success', 'Permintaan verifikasi berhasil dikirim. Mohon tunggu persetujuan admin.');
     }
 }

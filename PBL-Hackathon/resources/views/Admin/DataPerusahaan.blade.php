@@ -3,7 +3,13 @@
 @section('MainAdmin')
 
 <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
-    <div class="flex items-center justify-end flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
+    <div class="flex items-center justify-between flex-column flex-wrap md:flex-row space-y-4 md:space-y-0 pb-4 bg-white dark:bg-gray-900">
+        <div>
+            <a href="{{ route('TambahPerusahaan') }}" class="flex items-center px-4 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                <i class="fas fa-plus mr-2"></i>
+                Tambah Perusahaan
+            </a>
+        </div>
         <div class="relative">
             <div class="absolute inset-y-0 rtl:inset-r-0 start-0 flex items-center ps-3 pointer-events-none">
                 <svg class="w-4 h-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 20">
@@ -43,40 +49,34 @@
                     </a>
                 </td>
                 <td class="px-6 py-4">
-                    @if($pengguna->status == 'Aktif')
+                    @if($pengguna->status_verifikasi == 'Sudah Diverifikasi')
                     <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
                         <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
-                        Aktif
+                        Sudah Diverifikasi
                     </span>
-                    @elseif($pengguna->status == 'Tidak Aktif')
+                    @elseif($pengguna->status_verifikasi == 'Ditolak')
                     <span class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
                         <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
-                        Tidak Aktif
+                        Ditolak
                     </span>
                     @else
-                    <span class="inline-flex items-center bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-gray-900 dark:text-gray-300">
-                        <span class="w-2 h-2 me-1 bg-gray-500 rounded-full"></span>
-                        No Status
+                    <span class="inline-flex items-center bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">
+                        <span class="w-2 h-2 me-1 bg-yellow-500 rounded-full"></span>
+                        Belum Diverifikasi
                     </span>
                     @endif
                 </td>
+
                 <td class="px-6 py-4">
-                    @if($pengguna->verifikasi)
-                    @if($pengguna->verifikasi->status_verifikasi == 'Disetujui')
-                    <span class="text-green-500 font-medium">Sudah Diverifikasi</span>
-                    @elseif($pengguna->verifikasi->status_verifikasi == 'Ditolak')
-                    <span class="text-red-500 font-medium">Ditolak</span>
-                    @else
                     <div class="flex items-center space-x-4">
-                        <form action="{{ route('admin.verifikasi.konfirmasi', ['verifikasi_id' => $pengguna->verifikasi->verifikasi_id, 'status' => 'Disetujui']) }}" method="POST">
+                        <form action="{{ route('admin.verifikasi.konfirmasi', ['pengguna_id' => $pengguna->pengguna_id, 'status' => 'Sudah Diverifikasi']) }}" method="POST">
                             @csrf
                             @method('PATCH')
                             <button type="submit" class="text-green-500 hover:text-green-700">
                                 <i class="fas fa-check-circle text-xl"></i>
                             </button>
                         </form>
-
-                        <form action="{{ route('admin.verifikasi.konfirmasi', ['verifikasi_id' => $pengguna->verifikasi->verifikasi_id, 'status' => 'Ditolak']) }}" method="POST">
+                        <form action="{{ route('admin.verifikasi.konfirmasi', ['pengguna_id' => $pengguna->pengguna_id, 'status' => 'Ditolak']) }}" method="POST">
                             @csrf
                             @method('PATCH')
                             <button type="submit" class="text-red-500 hover:text-red-700">
@@ -84,63 +84,18 @@
                             </button>
                         </form>
                     </div>
-                    @endif
-                    @else
-                    <span class="text-gray-500 text-sm italic">Belum mengajukan</span>
-                    @endif
                 </td>
+
                 <td class="px-6 py-4">
                     <button type="button" data-modal-target="my_modal_view_{{ $pengguna->pengguna_id }}" data-modal-toggle="my_modal_view_{{ $pengguna->pengguna_id }}" class="font-medium text-green-600 dark:text-green-500 hover:text-green-700 dark:hover:text-green-400 my-1 mr-2">
                         <i class="fas fa-eye"></i> Lihat
                     </button>
-                    <button type="button" data-modal-target="my_modal_edit_{{ $pengguna->pengguna_id }}" data-modal-toggle="my_modal_edit_{{ $pengguna->pengguna_id }}" class="font-medium text-blue-600 dark:text-blue-500 hover:text-blue-700 dark:hover:text-blue-400 my-1 mr-2">
-                        <i class="fas fa-edit"></i> Edit
-                    </button>
+
                     <button type="button" data-modal-target="my_modal_delete_{{ $pengguna->pengguna_id }}" data-modal-toggle="my_modal_delete_{{ $pengguna->pengguna_id }}" class="font-medium text-red-600 dark:text-red-500 hover:text-red-700 dark:hover:text-red-400">
                         <i class="fas fa-trash"></i> Hapus
                     </button>
                 </td>
             </tr>
-
-            <!-- Modal Edit Status -->
-            <div id="my_modal_edit_{{ $pengguna->pengguna_id }}" tabindex="-1" aria-hidden="true" class="hidden overflow-y-auto overflow-x-hidden fixed top-0 right-0 left-0 z-50 justify-center items-center w-full md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                <div class="relative p-4 w-full max-w-md max-h-full">
-                    <div class="relative bg-white rounded-lg shadow dark:bg-gray-700">
-                        <div class="flex items-center justify-between p-4 md:p-5 border-b rounded-t dark:border-gray-600">
-                            <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-                                Edit Status Pelatih
-                            </h3>
-                            <button type="button" class="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ms-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="my_modal_edit_{{ $pengguna->pengguna_id }}">
-                                <svg class="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                </svg>
-                                <span class="sr-only">Tutup modal</span>
-                            </button>
-                        </div>
-                        <form action="{{ route('Pelatih.updateStatus', $pengguna->pengguna_id) }}" method="POST">
-                            @csrf
-                            @method('PUT')
-                            <div class="p-4 md:p-5 bg-white dark:bg-gray-800 rounded-lg shadow-lg space-y-4 mb-3">
-                                <div class="mb-4">
-                                    <label for="status" class="text-sm font-medium text-gray-700 dark:text-gray-300">Status</label>
-                                    <select name="status" id="status" class="block w-full border-gray-300 dark:border-gray-600 rounded-md shadow-sm focus:ring-blue-500 dark:bg-gray-700 dark:text-gray-300" required>
-                                        <option value="Aktif" {{ $pengguna->status == 'Aktif' ? 'selected' : '' }}>Aktif</option>
-                                        <option value="Tidak Aktif" {{ $pengguna->status == 'Tidak Aktif' ? 'selected' : '' }}>Tidak Aktif</option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="flex justify-end p-3 bg-gray-100 dark:bg-gray-700 rounded-b ">
-                                <button type="submit" class="text-white bg-blue-600 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 font-medium rounded-lg text-sm inline-flex items-center px-5 py-2.5 text-center">
-                                    Simpan
-                                </button>
-                                <button data-modal-hide="my_modal_edit_{{ $pengguna->pengguna_id }}" type="button" class="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-blue-700 dark:bg-gray-800 dark:text-gray-400 dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:text-white">
-                                    Batal
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
 
             <!-- sweet alert -->
             @if (session('success'))

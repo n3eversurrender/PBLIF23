@@ -129,8 +129,8 @@ class PenggunaSeeder extends Seeder
                 'jenis_kelamin' => $faker->randomElement(['Laki-laki', 'Perempuan']),
                 'kata_sandi' => bcrypt('password'),
                 'foto_profil' => null,
-                'peran' => $faker->randomElement(['Peserta', 'Perusahaan']),
-                'status_verifikasi' => $faker->randomElement(['Belum Diverifikasi', 'Sudah Diverifikasi', 'Ditolak']),
+                'peran' => $faker->randomElement(['Peserta']),
+                'status_verifikasi' => $faker->randomElement(['Sudah Diverifikasi']),
                 'created_at' => now(),
                 'updated_at' => now()
             ];
