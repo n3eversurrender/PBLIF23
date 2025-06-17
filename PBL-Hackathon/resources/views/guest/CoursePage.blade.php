@@ -95,9 +95,9 @@
         @endif
       </form>
       @endif
-      @elseif(Auth::user()->peran === 'Pelatih')
+      @elseif(Auth::user()->peran === 'Perusahaan')
       <div class="mt-4">
-        <p class="text-gray-500 text-sm">Kamu Adalah Seorang <strong>Pelatih</strong></p>
+        <p class="text-gray-500 text-sm">Kamu Adalah Seorang <strong>Perusahaan</strong></p>
       </div>
       @endif
       @else
@@ -113,7 +113,6 @@
     <div class="lg:py-6 py-4 text-sm lg:text-lg text-gray-500">
       <P>KURSUS DITERBITKAN OLEH <b>{{ $kursus->pengguna ? $kursus->pengguna->nama : 'Nama Tidak Ditemukan' }}</b></P>
       <p class="text-sm">{{ $kursus->deskripsi }}</p>
-      <p class="text-base mt-2 font-semibold">Mentor : <span>Niati</span></p>
     </div>
     <!-- course modul -->
     <div class="w-full max-w-4xl mx-auto rounded-lg">
@@ -130,94 +129,34 @@
           </tr>
         </thead>
         <tbody class="divide-y divide-gray-200 text-[10px] sm:text-sm">
-          <!-- Sesi 1 -->
+          @forelse($kursus->jadwalKursus as $jadwal)
           <tr class="hover:bg-gray-50 transition">
-            <td class="py-4 px-4 font-medium">Sesi 1</td>
+            <td class="py-4 px-4 font-medium">{{ $jadwal->sesi }}</td>
             <td class="py-4 px-4">
               <div class="flex items-center">
-                15 Agustus 2023
+                {{ \Carbon\Carbon::parse($jadwal->tanggal)->format('d M Y') }}
               </div>
             </td>
             <td class="py-4 px-4">
               <div class="flex items-center">
-                09:00 - 12:00 WIB
+                {{ \Carbon\Carbon::parse($jadwal->jam_mulai)->format('g:i A') }} - {{ \Carbon\Carbon::parse($jadwal->jam_selesai)->format('g:i A') }}
               </div>
             </td>
             <td class="py-4 px-4">
               <div class="flex items-center">
-                Gedung A, Lantai 3
+                {{ $jadwal->lokasi }}
               </div>
             </td>
-
           </tr>
-
-          <!-- Sesi 2 -->
-          <tr class="hover:bg-gray-50 transition">
-            <td class="py-4 px-4 font-medium">Sesi 2</td>
-            <td class="py-4 px-4">
-              <div class="flex items-center">
-                17 Agustus 2023
-              </div>
-            </td>
-            <td class="py-4 px-4">
-              <div class="flex items-center">
-                13:00 - 16:00 WIB
-              </div>
-            </td>
-            <td class="py-4 px-4">
-              <div class="flex items-center">
-                Gedung A, Lantai 3
-              </div>
-            </td>
-
+          @empty
+          <tr>
+            <td colspan="4" class="text-center text-gray-500 py-4">Belum ada jadwal untuk kursus ini.</td>
           </tr>
-
-
+          @endforelse
         </tbody>
       </table>
 
-      <!-- kurikulum lama hapus aja -->
-      <!-- <div class="border-b border-gray-200 ">
-        <div id="accordion-collapse" class="mt-5">
-          @if($kursus->kurikulum->isEmpty()) 
-          <p class="text-center text-gray-500 dark:text-gray-400">Tidak ada modul yang tersedia.</p>
-          @else
-          @foreach($kursus->kurikulum as $kurikulum) 
-          <h2 id="accordion-collapse-heading-{{ $kurikulum->kurikulum_id }}">
-            <button type="button" class="flex items-center justify-between w-full p-5 font-medium rtl:text-right text-gray-500 border border-gray-200 focus:ring-4 focus:ring-gray-200 dark:focus:ring-gray-800 dark:border-gray-700 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 gap-3" data-accordion-target="#accordion-collapse-body-{{ $kurikulum->kurikulum_id }}" aria-expanded="false" aria-controls="accordion-collapse-body-{{ $kurikulum->kurikulum_id }}">
-              <span class="text-left">{{ $kurikulum->nama_topik }}</span>
-              <i id="lock-icon-closed-{{ $kurikulum->kurikulum_id }}" class="fas fa-lock text-gray-500 dark:text-gray-400"></i>
-            </button>
-          </h2>
-          <div id="accordion-collapse-body-{{ $kurikulum->kurikulum_id }}" class="hidden" aria-labelledby="accordion-collapse-heading-{{ $kurikulum->kurikulum_id }}">
-            <div class="p-5 border border-b-0 border-gray-200 dark:border-gray-700 dark:bg-gray-900">
-              <div class="flex flex-col md:flex-row items-start gap-4">
-              
-                @if($kurikulum->materi)
-                <div class="mt-4 md:mt-0 flex-shrink-0">
-                  <iframe width="560" height="315" src="{{ $kurikulum->materi }}"
-                    title="YouTube video player" frameborder="0"
-                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-                    allowfullscreen>
-                  </iframe>
-                </div>
-                @else
-                <div class="mt-4 text-gray-500 dark:text-gray-400 flex-shrink-0">
-                  Video tidak tersedia
-                </div>
-                @endif
 
-                
-                <div class="flex-1">
-                  <p>{{ $kurikulum->deskripsi }}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-          @endforeach
-          @endif
-        </div>
-      </div> -->
 
 
       <style>
@@ -229,122 +168,117 @@
 </section>
 
 
-<!-- review start -->
-<div class="mt-16 py-14 bg-gray-100">
-  <div class="flex flex-wrap justify-center gap-3 h-auto">
-    <!-- Loop through the limited ratings for this kursus -->
-    @foreach ($ratings as $rating)
-    <article class="w-72 h-72 px-10 py-5 mb-2 bg-white rounded-lg shadow-md">
+<section class="mx-4 sm:mx-8 lg:mx-16 my-12">
+  <div class="mb-4 text-sm text-gray-600 text-center">
+    Menampilkan {{ $ratings->count() }} ulasan dari total {{ $kursus->ratingKursus()->count() }}
+    ulasan
+  </div>
 
-      <!-- User info section -->
-      <div class="flex items-center mb-4">
-        <img class="w-10 h-10 me-4 rounded-full" src="{{ asset('image/9203764.png') }}" alt="">
-        <div class="font-medium dark:text-white text-xs sm:text-sm">
-          <h4 class="h-5 overflow-hidden">{{ $rating->pengguna->nama }}</h4>
-          <p>
-            <time datetime="2014-08-16 19:00" class="block text-sm text-gray-500 dark:text-gray-400">
-              Joined on {{ optional($rating->pengguna->created_at)->format('F Y') ?? 'Date not available' }}
-            </time>
-          </p>
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+    @forelse ($ratings as $rating)
+    <div class="bg-gray-50 md:p-4 p-2 rounded-lg text-xs md:text-sm text-center">
+      <div class="flex flex-col items-center text-amber-400 mb-2">
+        <div class="flex space-x-1">
+          @for ($i = 1; $i <= 5; $i++)
+            @if ($rating->rating >= $i)
+            <i class="fas fa-star"></i>
+            @elseif ($rating->rating >= $i - 0.5)
+            <i class="fas fa-star-half-alt"></i>
+            @else
+            <i class="far fa-star"></i>
+            @endif
+            @endfor
         </div>
+        <span class="text-gray-700 mt-1">{{ number_format($rating->rating, 1) }}/5</span>
       </div>
-
-      <!-- Rating stars -->
-      <div class="flex items-center mb-1 space-x-1 rtl:space-x-reverse">
-        <svg class="w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 576 512">
-          <path fill="#FFD43B" d="M316.9 18C311.6 7 300.4 0 288.1 0s-23.4 7-28.8 18L195 150.3 51.4 171.5c-12 1.8-22 10.2-25.7 21.7s-.7 24.2 7.9 32.7L137.8 329 113.2 474.7c-2 12 3 24.2 12.9 31.3s23 8 33.8 2.3l128.3-68.5 128.3 68.5c10.8 5.7 23.9 4.9 33.8-2.3s14.9-19.3 12.9-31.3L438.5 329 542.7 225.9c8.6-8.5 11.7-21.2 7.9-32.7s-13.7-19.9-25.7-21.7L381.2 150.3 316.9 18z" />
-        </svg>
-        <p class="text-xs">{{ $rating->rating }} <span class="ml-2 text-xs  text-TeksSecond">Rate</span></p>
-      </div>
-
-      <!-- Comment section -->
-      <p class="my-3 text-TeksSecond dark:text-gray-400 text-xs sm:text-sm">
-        {{ $rating->komentar ?? 'No comment provided.' }}
+      <p class="font-medium italic">"{{ $rating->komentar ?? 'Tidak ada komentar.' }}"</p>
+      <p class="text-sm text-gray-500 mt-1">
+        Ulasan dari {{ $rating->pengguna->nama ?? 'Anonim' }} pada {{ $rating->created_at->format('d M Y') }}
       </p>
-    </article>
-    @endforeach
-  </div>
-
-  <!-- Menampilkan pagination -->
-  <div class="flex flex-col items-center">
-    <span class="text-sm text-gray-700 dark:text-gray-400">
-      Showing
-      <span class="font-semibold text-gray-900 dark:text-white">{{ $ratings->firstItem() }}</span>
-      to
-      <span class="font-semibold text-gray-900 dark:text-white">{{ $ratings->lastItem() }}</span>
-      of
-      <span class="font-semibold text-gray-900 dark:text-white">{{ $ratings->total() }}</span>
-      Entries
-    </span>
-
-    <!-- Pagination controls -->
-    <div class="inline-flex mt-2 xs:mt-0">
-      <!-- Prev Button -->
-      @if ($ratings->onFirstPage())
-      <button class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-500 cursor-not-allowed rounded-s">
-        <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
-        </svg>
-        Prev
-      </button>
-      @else
-      <a href="{{ $ratings->previousPageUrl() }}" class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 rounded-s hover:bg-gray-900">
-        <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
-        </svg>
-        Prev
-      </a>
-      @endif
-
-      <!-- Next Button -->
-      @if ($ratings->hasMorePages())
-      <a href="{{ $ratings->nextPageUrl() }}" class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 rounded-e hover:bg-gray-900">
-        Next
-        <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-        </svg>
-      </a>
-      @else
-      <button class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-500 cursor-not-allowed rounded-e">
-        Next
-        <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-          <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-        </svg>
-      </button>
-      @endif
     </div>
+    @empty
+    <div class="col-span-4 text-center text-gray-500">Belum ada ulasan untuk kursus ini.</div>
+    @endforelse
   </div>
-</div>
+</section>
 
 
 <!-- review end -->
 
-<!-- cards featured courses -->
-<section class=" mx-4 sm:mx-8 lg:mx-16 sm:my-24 my-12">
-  <h1 class="font-bold text-xl sm:text-3xl mb-3 sm:mb-6">Kursus Unggulan</h1>
-  <!-- Cards Start -->
-  <div class="mb-4 grid gap-4 sm:grid-cols-2 md:mb-8 lg:grid-cols-4">
-    @foreach ($relatedCourses as $related)
-    <div class="rounded-lg border border-gray-200 bg-gray-100 p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-      <div class="object-cover aspect-video">
-        <img class="w-full rounded-lg h-full aspect-video object-cover" src="{{ $related->foto_kursus ? asset('storage/' . $related->foto_kursus) : asset('image/Thumnnail.jpg') }}" alt="{{ $related->judul }}" />
-      </div>
+<section class="p-3">
+  <div class="sm:mb-0 my-3">
+    <div class="bg-gwhite text-center py-4">
+      <div class="px-3 sm:px-10 pt-5 pb-20">
+        <div class="text-left ps-2 sm:ps-5">
+          <h2 class="my-2 font-bold text-xl sm:text-3xl text-slate-950">Kursus Unggulan</h2>
+          <p class="mb-5 text-gray-700">Tingkatkan kemampuan dengan kursus pilihan terbaik untuk Anda.</p>
+        </div>
+        <!-- Grid Container -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          @foreach ($relatedCourses as $k)
+          <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+            <div class="relative cursor-default">
+              <img class="w-full h-36 sm:h-36 lg:h-40 xl:h-44 object-cover"
+                src="{{ $k->foto_kursus ? asset('storage/' . $k->foto_kursus) : asset('image/Thumnnail.jpg') }}"
+                alt="Thumbnail {{ $k->judul }}">
+              <div class="absolute top-3 left-3 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                {{ ucfirst($k->tingkat_kesulitan) ?? 'Umum' }}
+              </div>
+            </div>
 
-      <!-- Penjelasan -->
-      <div class="pt-2 cursor-default">
-        <p class="text-lg h-11 overflow-hidden font-bold leading-tight text-gray-900 my-2 text-balance">
-          {{ $related->judul }}
-        </p>
-        <p class="text-sm h-24 overflow-hidden pt-2 mb-3 text-TeksSecond">
-          {{ Str::limit($related->deskripsi, 100) }}
-        </p>
-        <a href="/CoursePage/{{ $related->kursus_id }}" class="bg-ButtonBase hover:bg-HoverGlow transition duration-700 text-xs sm:text-sm text-white  p-2 rounded-lg w-full text-center block">Dapatkan sekarang</a>
+            <div class="p-4 xl:p-6">
+              <div class="flex justify-between items-start mb-2 cursor-default">
+                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">
+                  {{ $k->kategori->nama_kategori ?? 'Tanpa Kategori' }}
+                </span>
+                <div class="flex items-center">
+                  <i class="fas fa-star text-yellow-400 text-sm"></i>
+                  <span class="text-gray-700 text-sm font-medium ml-1">
+                    {{ number_format($k->rating_kursus_avg_rating ?? 0, 1) }}
+                  </span>
+                  <span class="text-gray-400 text-sm ml-1">
+                    ({{ $k->rating_kursus_count ?? 0 }})
+                  </span>
+
+                </div>
+              </div>
+
+              <div class="w-full text-left">
+                <a href="/CoursePage/{{ $k->kursus_id }}"
+                  class="lg:text-lg text-md font-bold text-gray-800 mb-1 line-clamp-2 text-left hover:text-HoverGlow active:text-ButtonBase">
+                  {{ $k->judul }}
+                </a>
+                <p class="text-gray-500 text-xs mb-4 line-clamp-2 text-left cursor-default">
+                  {{ Str::limit(strip_tags($k->deskripsi), 60) }}
+                </p>
+              </div>
+
+              <div class="flex items-center justify-between cursor-default">
+                <div class="flex items-center">
+                  <img class="w-8 h-8 rounded-full"
+                    src="{{ $k->foto_pengajar ? asset('storage/' . $k->foto_pengajar) : asset('image/Thumnnail.jpg') }}"
+                    alt="Instruktur">
+                  <div class="ml-2">
+                    <p class="lg:text-sm text-xs font-medium text-gray-700">{{ $k->pengguna->nama ?? 'Instruktur' }}</p>
+                    <p class="text-[6px] sm:text-[10px] lg:text-[11px] text-gray-500">Instruktur</p>
+                  </div>
+                </div>
+
+                <div class="text-right">
+                  <p class="text-ButtonBase font-bold text-base lg:text-lg">
+                    Rp. {{ number_format($k->harga, 0, ',', '.') }}
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          @endforeach
+        </div>
       </div>
     </div>
-    @endforeach
   </div>
-
 </section>
+
 
 <script src="https://cdn.jsdelivr.net/npm/flowbite@1.4.1/dist/flowbite.min.js"></script>
 

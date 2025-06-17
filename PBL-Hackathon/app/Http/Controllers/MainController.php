@@ -93,18 +93,21 @@ class MainController extends Controller
 
     public function coursePage($id)
     {
-        // Fetch kursus berdasarkan ID dengan relasi kurikulum dan rating
-        $kursus = Kursus::with(['kurikulum', 'ratingKursus.pengguna'])
+        $kursus = Kursus::with(['jadwalKursus', 'pengguna', 'ratingKursus.pengguna'])
             ->findOrFail($id);
 
-        // Ambil rating yang diacak secara acak dari database dan lakukan pagination
-        $ratings = $kursus->ratingKursus()->inRandomOrder()->paginate(4); // Mengacak rating dan melakukan pagination
+        $ratings = $kursus->ratingKursus()->inRandomOrder()->take(4)->get();
 
-        // Ambil kursus terkait secara acak
-        $relatedCourses = Kursus::inRandomOrder()->take(4)->get();
+        $relatedCourses = Kursus::withAvg('ratingKursus', 'rating')
+            ->withCount('ratingKursus')
+            ->inRandomOrder()
+            ->take(4)
+            ->get();
 
         return view('guest.CoursePage', compact('kursus', 'relatedCourses', 'ratings'));
     }
+
+
 
     public function paymentPage($id)
     {
@@ -166,7 +169,7 @@ class MainController extends Controller
             'pengguna_id' => auth()->id(),
             'kursus_id' => $validated['kursus_id'],
             'tgl_pendaftaran' => now(),
-            'status_pendaftaran' => 'Menunggu', // Default status
+            'status_pendaftaran' => 'Aktif', // Default status
         ]);
 
         // Redirect dengan pesan sukses

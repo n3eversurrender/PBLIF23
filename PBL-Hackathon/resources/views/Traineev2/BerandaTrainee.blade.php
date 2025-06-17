@@ -240,8 +240,9 @@
                             <!-- Course Image -->
                             <div class="relative cursor-default">
                                 <img class="w-full h-36 object-cover"
-                                    src="{{ $item->thumbnail ?? 'https://via.placeholder.com/400x200' }}"
-                                    alt="Course thumbnail">
+                                    src="{{ $item->foto_kursus ? asset('storage/' . $item->foto_kursus) : asset('image/Thumnnail.jpg') }}"
+                                    alt="Thumbnail {{ $item->judul }}">
+
                                 <div class="absolute top-3 left-3 text-white text-xs font-semibold px-2 py-1 rounded-full
                                 @if($item->tingkat_kesulitan == 'Pemula') bg-green-500
                                 @elseif($item->tingkat_kesulitan == 'Menengah') bg-yellow-500
