@@ -18,24 +18,24 @@ class KursusPerushaanController extends Controller
     {
         // Pastikan pengguna sudah login
         if (Auth::check()) {
-            // Dapatkan ID pengguna yang sedang login
-            $penggunaId = Auth::id();
+            // Dapatkan user yang sedang login
+            $user = Auth::user();
 
-            // Ambil data kursus yang dimiliki oleh pengguna yang sedang login
-            $kursus = Kursus::where('pengguna_id', $penggunaId)
-                ->with('kategori', 'pendaftaran') // Eager load relasi kategori dan pendaftaran
+            // Ambil data kursus yang dimiliki oleh pengguna
+            $kursus = Kursus::where('pengguna_id', $user->pengguna_id)
+                ->with('kategori', 'pendaftaran') // Eager load relasi
                 ->get();
 
-            // Ambil data kategori untuk digunakan di dropdown edit
+            // Ambil data kategori untuk edit
             $kategori = Kategori::all();
 
-            // Kirim data kursus dan kategori ke view
-            return view('Perusahaan.Kursus', compact('kursus', 'kategori'));
+            // Kirim data ke view
+            return view('Perusahaan.Kursus', compact('kursus', 'kategori', 'user'));
         } else {
-            // Jika pengguna belum login, arahkan kembali ke halaman login atau tampilkan pesan error
             return redirect()->route('login')->with('error', 'Anda harus login untuk melihat kursus Anda.');
         }
     }
+
 
     public function tambahKursus()
     {

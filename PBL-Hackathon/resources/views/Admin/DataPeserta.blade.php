@@ -20,7 +20,6 @@
                 <th scope="col" class="px-6 py-3 text-center">No</th>
                 <th scope="col" class="px-6 py-3">Name</th>
                 <th scope="col" class="px-6 py-3">No Telepon</th>
-                <th scope="col" class="px-6 py-3">Peran</th>
                 <th scope="col" class="px-6 py-3">Status</th>
                 <th scope="col" class="px-6 py-3">Action</th>
             </tr>
@@ -43,25 +42,25 @@
                         {{ $pengguna->no_telepon }}
                     </a>
                 </td>
-                <td class="px-6 py-4">{{ $pengguna->peran }}</td>
                 <td class="px-6 py-4">
-                    @if($pengguna->status == 'Aktif')
+                    @if($pengguna->status_verifikasi == 'Sudah Diverifikasi')
                     <span class="inline-flex items-center bg-green-100 text-green-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-green-900 dark:text-green-300">
                         <span class="w-2 h-2 me-1 bg-green-500 rounded-full"></span>
                         Aktif
                     </span>
-                    @elseif($pengguna->status == 'Tidak Aktif')
+                    @elseif($pengguna->status_verifikasi == 'Ditolak')
                     <span class="inline-flex items-center bg-red-100 text-red-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-red-900 dark:text-red-300">
                         <span class="w-2 h-2 me-1 bg-red-500 rounded-full"></span>
                         Tidak Aktif
                     </span>
                     @else
-                    <span class="inline-flex items-center bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-gray-900 dark:text-gray-300">
-                        <span class="w-2 h-2 me-1 bg-gray-500 rounded-full"></span>
-                        No Status
+                    <span class="inline-flex items-center bg-yellow-100 text-yellow-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-yellow-900 dark:text-yellow-300">
+                        <span class="w-2 h-2 me-1 bg-yellow-500 rounded-full"></span>
+                        Tidak Aktif
                     </span>
                     @endif
                 </td>
+
                 <td class="px-6 py-4">
                     <button type="button" data-modal-target="my_modal_view_{{ $pengguna->pengguna_id }}" data-modal-toggle="my_modal_view_{{ $pengguna->pengguna_id }}" class="font-medium text-green-600 dark:text-green-500 hover:text-green-700 dark:hover:text-green-400 my-1 mr-2">
                         <i class="fas fa-eye"></i> Lihat
