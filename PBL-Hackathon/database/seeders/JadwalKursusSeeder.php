@@ -12,17 +12,24 @@ class JadwalKursusSeeder extends Seeder
     {
         $faker = Faker::create();
 
-        foreach (range(1, 10) as $i) {
-            DB::table('jadwal_kursus')->insert([
-                'kursus_id' => $faker->numberBetween(1, 10),
-                'sesi' => "Sesi " . $i,
-                'tanggal' => $faker->date(),
-                'jam_mulai' => '09:00:00',
-                'jam_selesai' => '12:00:00',
-                'lokasi' => $faker->address,
-                'created_at' => now(),
-                'updated_at' => now(),
-            ]);
+        // Loop untuk kursus ID 1 hingga 50
+        foreach (range(1, 50) as $kursus_id) {
+            // Tentukan jumlah sesi antara 4 hingga 10
+            $jumlah_sesi = rand(4, 10);
+
+            // Loop untuk menambah sesi pada kursus tertentu
+            foreach (range(1, $jumlah_sesi) as $sesi) {
+                DB::table('jadwal_kursus')->insert([
+                    'kursus_id' => $kursus_id,  // ID kursus
+                    'sesi' => "Sesi " . $sesi,  // Nama sesi (Sesi 1, Sesi 2, dst)
+                    'tanggal' => $faker->date(), // Tanggal sesi acak
+                    'jam_mulai' => '09:00:00',  // Jam mulai tetap (bisa diubah sesuai kebutuhan)
+                    'jam_selesai' => '12:00:00', // Jam selesai tetap (bisa diubah sesuai kebutuhan)
+                    'lokasi' => $faker->address, // Lokasi sesi acak
+                    'created_at' => now(), // Waktu dibuat
+                    'updated_at' => now(), // Waktu diperbarui
+                ]);
+            }
         }
     }
 }

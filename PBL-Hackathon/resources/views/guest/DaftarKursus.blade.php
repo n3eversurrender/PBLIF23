@@ -223,8 +223,8 @@
                     <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
                         <!-- Course Image -->
                         <div class="relative cursor-default">
-                            <img class="w-full h-36 object-cover" src="{{ $item->foto_kursus ? asset('storage/' . $item->foto_kursus) : asset('image/Thumnnail.jpg') }}"
-                                alt="{{ $item->judul }}">
+                            <img class="w-full h-36 object-cover" src="{{ asset('storage/' . $item->foto_kursus) }}" alt="{{ $item->judul }}">
+
                             <div class="absolute top-3 left-3 text-white">
                                 <p class="text-sm
                                         @if($item->tingkat_kesulitan == 'Pemula') text-green-200 bg-green-700 px-2 py-1 rounded-full text-xs
@@ -246,8 +246,8 @@
                                 <span class="text-blue-800 text-[10px] sm:text-xs font-medium py-0.5 rounded me-2">{{ json_decode($item->kategori)->nama_kategori }}</span>
                                 <div class="flex items-center">
                                     <i class="fas fa-star text-yellow-400 text-sm"></i>
-                                    <span class="text-gray-700 text-[10px] sm:text-xs font-medium ml-1">{{ number_format($item->average_rating, 1) ?? 'Belum Ada Rating' }}</span>
-                                    <span class="text-gray-400 text-[10px] sm:text-xs ml-1">(128)</span>
+                                    <span class="text-gray-700 text-[10px] sm:text-xs font-medium ml-1"> {{ number_format($item->average_rating, 1) ?? 'Belum Ada Rating' }}</span>
+                                    <span class="text-gray-400 text-[10px] sm:text-xs ml-1">({{ $item->total_ratings }})</span>
                                 </div>
                             </div>
 

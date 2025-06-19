@@ -239,9 +239,7 @@
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
                             <!-- Course Image -->
                             <div class="relative cursor-default">
-                                <img class="w-full h-36 object-cover"
-                                    src="{{ $item->foto_kursus ? asset('storage/' . $item->foto_kursus) : asset('image/Thumnnail.jpg') }}"
-                                    alt="Thumbnail {{ $item->judul }}">
+                            <img class="w-full h-36 object-cover" src="{{ asset('storage/' . $item->foto_kursus) }}" alt="{{ $item->judul }}">
 
                                 <div class="absolute top-3 left-3 text-white text-xs font-semibold px-2 py-1 rounded-full
                                 @if($item->tingkat_kesulitan == 'Pemula') bg-green-500
@@ -271,9 +269,8 @@
                                 </div>
 
                                 <div class="w-full text-left">
-                                    <a href="#"
-                                        class="hover:text-HoverGlow active:text-ButtonBase text-md font-bold text-gray-800 mb-1 line-clamp-2 text-left">
-                                        {{ $item->judul_kursus }}
+                                    <a href="/CoursePage/{{ $item->kursus_id }}" class="hover:text-HoverGlow active:text-ButtonBase text-sm sm:text-md font-bold text-gray-800 mb-1 line-clamp-2 text-left">
+                                        {{ $item->judul }}
                                     </a>
                                     <p class="cursor-default text-gray-500 text-xs mb-4 line-clamp-2 text-left">
                                         {{ Str::limit($item->deskripsi, 80) }}
