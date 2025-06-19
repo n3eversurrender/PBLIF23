@@ -27,22 +27,24 @@ def nilai_harga(harga):
         return 0.25
 
 def nilai_rating(rating):
-    if rating >= 9:
+    if rating >= 4.5:
         return 1
-    elif rating >= 7:
+    elif rating >= 4.0:
         return 0.75
-    elif rating >= 5:
+    elif rating >= 3.0:
         return 0.50
     else:
         return 0.25
 
-def nilai_pengalaman(pengalaman):
-    if pengalaman > 10:
+def nilai_rating_perusahaan(rating):
+    if rating >= 4.5:
         return 1
-    elif pengalaman >= 5:
+    elif rating >= 4.0:
         return 0.75
-    else:
+    elif rating >= 3.0:
         return 0.50
+    else:
+        return 0.25
 
 def nilai_tingkat_kesulitan(tingkat):
     if tingkat == 'Pemula':
@@ -73,83 +75,88 @@ def hitung_nilai_total(row, weights):
     return (
         nilai_harga(row['harga']) * weights[0] +
         nilai_rating(row['avg_rating']) * weights[1] +
-        nilai_pengalaman(row['pengalaman_total_pelatih']) * weights[2] +
+        nilai_rating_perusahaan(row['avg_rating_perusahaan']) * weights[2] +
         nilai_tingkat_kesulitan(row['tingkat_kesulitan']) * weights[3] +
         nilai_lokasi(row['lokasi']) * weights[4]
     )
 
 @app.route('/')
 def index():
-    return "Selamat datang di API Rekomendasi!"
+    return "Selamat datang di API Rekomendasi Kursus!"
 
 @app.route('/rekomendasi', methods=['POST'])
 def rekomendasi():
-    # Ambil input dari request
     data = request.json
 
-    # Validasi dan konversi tipe data
     try:
         harga_maks = float(data['harga_maks'])
         rating_min = float(data['rating_min'])
-        pengalaman_min = int(data['pengalaman_min'])
+        rating_perusahaan_min = float(data.get('rating_perusahaan_min', 4.0))  # default 4.0
         tingkat_kesulitan = str(data['tingkat_kesulitan'])
         lokasi = str(data['lokasi'])
     except (ValueError, KeyError, TypeError):
         return jsonify({'message': 'Input data tidak valid'}), 400
 
-    # Bobot Kriteria
-    weights = np.array([30, 20, 25, 10, 15]) / 100
+    # Bobot kriteria
+    weights = np.array([30, 25, 25, 10, 10]) / 100
 
-    # Query untuk mendapatkan data kursus
+    # Query data
     query = """
-    SELECT kursus.*, 
-           COALESCE(AVG(rating_kursus.rating), 0) AS avg_rating,
-           pelatih.tahun_pengalaman AS pelatih_tahun_pengalaman,
-           pelatih.bulan_pengalaman AS pelatih_bulan_pengalaman,
-           (pelatih.tahun_pengalaman + pelatih.bulan_pengalaman / 12) AS pengalaman_total_pelatih
-    FROM kursus
-    LEFT JOIN rating_kursus ON kursus.kursus_id = rating_kursus.kursus_id
-    LEFT JOIN pelatih ON kursus.pengguna_id = pelatih.pengguna_id
-    GROUP BY kursus.kursus_id
+    SELECT 
+        k.*,
+        COALESCE(AVG(rk.rating), 0) AS avg_rating,
+        COALESCE(rp.avg_rating_perusahaan, 0) AS avg_rating_perusahaan
+    FROM kursus k
+    LEFT JOIN rating_kursus rk ON k.kursus_id = rk.kursus_id
+    LEFT JOIN (
+        SELECT p.perusahaan_id, AVG(rpr.rating) AS avg_rating_perusahaan
+        FROM perusahaan p
+        LEFT JOIN rating_perusahaan rpr ON p.perusahaan_id = rpr.perusahaan_id
+        GROUP BY p.perusahaan_id
+    ) AS rp ON rp.perusahaan_id = (
+        SELECT perusahaan.perusahaan_id 
+        FROM perusahaan 
+        WHERE perusahaan.pengguna_id = k.pengguna_id 
+        LIMIT 1
+    )
+    GROUP BY k.kursus_id
     """
+
     df = pd.read_sql(query, engine)
 
-    # Pastikan kolom memiliki tipe data yang benar
-    df['harga'] = pd.to_numeric(df['harga'], errors='coerce')
-    df['avg_rating'] = pd.to_numeric(df['avg_rating'], errors='coerce')
-    df['pengalaman_total_pelatih'] = pd.to_numeric(df['pengalaman_total_pelatih'], errors='coerce')
-
-    # Isi nilai NaN atau NaT dengan nilai default
+    # Isi NaN
     df.fillna({
         'harga': 0,
         'avg_rating': 0,
-        'pengalaman_total_pelatih': 0,
+        'avg_rating_perusahaan': 0,
         'tingkat_kesulitan': 'Pemula',
         'lokasi': ''
     }, inplace=True)
 
-    datetime_columns = df.select_dtypes(include=['datetime']).columns
-    df[datetime_columns] = df[datetime_columns].fillna("").astype(str)
-
-
-    # Hitung skor total untuk kursus
+    # Hitung skor
     df['Skor_Total'] = df.apply(hitung_nilai_total, weights=weights, axis=1).round(2)
 
-    # Hitung skor input pengguna
+    # Skor input user
     skor_input = (
         nilai_harga(harga_maks) * weights[0] +
         nilai_rating(rating_min) * weights[1] +
-        nilai_pengalaman(pengalaman_min) * weights[2] +
+        nilai_rating_perusahaan(rating_perusahaan_min) * weights[2] +
         nilai_tingkat_kesulitan(tingkat_kesulitan) * weights[3] +
         nilai_lokasi(lokasi) * weights[4]
     )
 
-    # Hitung selisih skor
+    # Selisih
     df['Selisih_Skor'] = (df['Skor_Total'] - skor_input).abs().round(2)
 
-    # Urutkan berdasarkan selisih skor
+    # Sort dan pilih
     df_sorted = df.sort_values(by='Selisih_Skor')
-    rekomendasi = df_sorted.head(5).round({'avg_rating': 1, 'pengalaman_total_pelatih': 1, 'harga': 0, 'Skor_Total': 2, 'Selisih_Skor': 2}).to_dict(orient='records')
+    rekomendasi = df_sorted.head(5).round({
+        'avg_rating': 1,
+        'avg_rating_perusahaan': 1,
+        'harga': 0,
+        'Skor_Total': 2,
+        'Selisih_Skor': 2
+    }).to_dict(orient='records')
 
     return jsonify({
         'message': 'Berikut adalah kursus dengan skor total terdekat berdasarkan input Anda:',
@@ -159,3 +166,4 @@ def rekomendasi():
 
 if __name__ == '__main__':
     app.run(debug=True, port=9999)
+
