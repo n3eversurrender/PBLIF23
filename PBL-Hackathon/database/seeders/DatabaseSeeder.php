@@ -22,7 +22,6 @@ class DatabaseSeeder extends Seeder
             KursusSeeder::class,
             JadwalKursusSeeder::class,
             PendaftaranSeeder::class,
-            SertifikatSeeder::class,
             RatingPerusahaanSeeder::class,
             RatingKursusSeeder::class,
             UmpanBalikSeeder::class,

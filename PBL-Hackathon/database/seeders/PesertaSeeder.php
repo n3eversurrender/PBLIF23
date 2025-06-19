@@ -12,12 +12,15 @@ class PesertaSeeder extends Seeder
     {
         $faker = Faker::create();
 
+        // Daftar status, pendidikan, bidang, dan kemampuan
         $statusOptions = ['Mahasiswa', 'Pekerja', 'Dosen', 'Lainnya'];
         $pendidikanOptions = ['SD', 'SMP', 'SMA', 'D3', 'S1', 'S2', 'S3'];
         $bidangOptions = ['Welding', 'Fitting', 'PLC', 'Automation', 'HVAC', 'Electrical'];
         $kemampuanOptions = ['AutoCAD', 'SolidWorks', 'CNC', 'Python', 'MATLAB', 'MS Project'];
 
-        foreach (range(1, 10) as $index) {
+        // Loop untuk membuat 300 data peserta dengan ID dari 13 sampai 312
+        foreach (range(13, 312) as $index) {
+            // Pilih beberapa bidang minat secara acak
             $minatBidang = $faker->randomElements($bidangOptions, rand(1, 3));
 
             // Membuat bidang_saat_ini berupa array object
@@ -30,7 +33,7 @@ class PesertaSeeder extends Seeder
             })->toArray();
 
             DB::table('peserta')->insert([
-                'pengguna_id'        => $faker->numberBetween(1, 10),
+                'pengguna_id'        => $index,  // Pengguna ID dimulai dari 13 hingga 312
                 'status'             => $faker->randomElement($statusOptions),
                 'pendidikan'         => $faker->randomElement($pendidikanOptions),
                 'minat_bidang'       => json_encode($minatBidang),

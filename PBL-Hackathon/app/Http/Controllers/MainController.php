@@ -52,8 +52,10 @@ class MainController extends Controller
         $kategori_id = $request->input('kategori_id');
         $tingkat_kesulitan = $request->input('tingkat_kesulitan');
 
+        // Query untuk mendapatkan kursus dengan total rating dan total jumlah rating
         $query = Kursus::with(['kategori', 'ratingKursus'])
-            ->withAvg('ratingKursus as average_rating', 'rating')
+            ->withCount('ratingKursus as total_ratings')  // Menghitung jumlah rating
+            ->withSum('ratingKursus as total_rating_sum', 'rating')  // Jumlah total rating
             ->where('status', 'Aktif');
 
         if ($kategori_id) {
@@ -64,27 +66,47 @@ class MainController extends Controller
             $query->where('tingkat_kesulitan', $tingkat_kesulitan);
         }
 
+        // Ambil semua data kursus
         $kursus = $query->paginate(9);
 
+        // Mengambil tingkat kesulitan yang unik dari kursus yang ditemukan
         $uniqueTingkatKesulitan = Kursus::select('tingkat_kesulitan')
             ->whereIn('kursus_id', $kursus->pluck('kursus_id'))
             ->distinct()
             ->get();
 
+        // Menghitung total rating yang terbatasi
+        foreach ($kursus as $item) {
+            $totalRatings = $item->total_ratings;
+            $totalRatingSum = $item->total_rating_sum;
+
+            // Menghitung rata-rata rating
+            $averageRating = $totalRatingSum / $totalRatings;
+
+            // Normalisasi hasil rata-rata agar berada dalam rentang 1-5
+            $normalizedRating = max(1, min(5, $averageRating));
+
+            // Simpan rating yang sudah dinormalisasi
+            $item->average_rating = round($normalizedRating, 1);
+        }
+
+        // Ambil kategori untuk filter
         $kategori = Kategori::all();
 
         // Ambil pengguna dengan peran Perusahaan
         $perusahaan = Pengguna::where('peran', 'Perusahaan')
-            ->limit(8)
+            ->limit(10)
             ->get();
 
         return view('guest.DaftarKursus', [
             'kursus' => $kursus,
             'kategori' => $kategori,
             'uniqueTingkatKesulitan' => $uniqueTingkatKesulitan,
-            'perusahaan' => $perusahaan, // kirim ke view
+            'perusahaan' => $perusahaan,
         ]);
     }
+
+
 
     public function tentangKami()
     {
