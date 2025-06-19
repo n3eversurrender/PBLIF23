@@ -157,7 +157,7 @@
                             <!-- STEP 1 -->
                             <div x-show="step === 1" x-transition>
                                 <p class="mb-2 font-medium text-sm text-gray-700">💬 Berapa harga maksimum kursus yang Anda inginkan?</p>
-                                <input type="number" name="harga_maks" class="mt-1 w-full rounded border-gray-300" placeholder="Contoh: 500000">
+                                <input type="number" name="harga_maks" class="mt-1 w-full rounded border-gray-300" placeholder="Contoh: 5000000">
                                 @error('harga_maks') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
                                 <div class="flex justify-end mt-2">
                                     <button type="button" @click="step++" class="bg-indigo-600 text-white rounded px-4 py-1 hover:bg-indigo-700">Lanjut</button>
@@ -166,7 +166,7 @@
 
                             <!-- STEP 2 -->
                             <div x-show="step === 2" x-transition>
-                                <p class="mb-2 font-medium text-sm text-gray-700">💬 Berapa rating minimum yang Anda harapkan?</p>
+                                <p class="mb-2 font-medium text-sm text-gray-700">💬 Berapa rating minimum kursus yang Anda harapkan? (Skala 5)</p>
                                 <input type="number" step="0.1" name="rating_min" class="mt-1 w-full rounded border-gray-300" placeholder="Contoh: 4.5">
                                 @error('rating_min') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
                                 <div class="flex justify-between mt-2">
@@ -177,9 +177,9 @@
 
                             <!-- STEP 3 -->
                             <div x-show="step === 3" x-transition>
-                                <p class="mb-2 font-medium text-sm text-gray-700">💬 Berapa tahun pengalaman minimum pelatih?</p>
-                                <input type="number" name="pengalaman_min" class="mt-1 w-full rounded border-gray-300" placeholder="Contoh: 2">
-                                @error('pengalaman_min') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
+                                <p class="mb-2 font-medium text-sm text-gray-700">💬 Berapa rating minimum perusahaan yang Anda harapkan? (Skala 5)</p>
+                                <input type="number" step="0.1" name="rating_perusahaan_min" class="mt-1 w-full rounded border-gray-300" placeholder="Contoh: 4.2">
+                                @error('rating_perusahaan_min') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
                                 <div class="flex justify-between mt-2">
                                     <button type="button" @click="step--" class="text-gray-500">Kembali</button>
                                     <button type="button" @click="step++" class="bg-indigo-600 text-white rounded px-4 py-1 hover:bg-indigo-700">Lanjut</button>
@@ -196,7 +196,7 @@
                                 </select>
                                 @error('tingkat_kesulitan') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
 
-                                <input type="text" name="lokasi" class="mt-3 w-full rounded border-gray-300" placeholder="Contoh: Jakarta">
+                                <input type="text" name="lokasi" class="mt-3 w-full rounded border-gray-300" placeholder="Contoh: Batam Center">
                                 @error('lokasi') <span class="text-sm text-red-500">{{ $message }}</span> @enderror
 
                                 <div class="flex justify-between mt-4">
@@ -209,6 +209,7 @@
                     </div>
                 </div>
             </section>
+
 
         </div>
 
