@@ -18,46 +18,39 @@
             <i class="fas fa-star text-yellow-400 text-sm me-1"></i>
             {{ round($ulasan->avg('rating'), 1) }}
             | Total Ulasan:
-            {{ $ulasan->count() }}
+            {{ $total }}
         </p>
     </div>
 
-    <button id="btn-analisa"
-        class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 transition mb-4 inline-flex items-center">
-        <svg id="spinner" class="hidden animate-spin mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-            <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-            <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-        </svg>
-        <span id="btn-text">Analisa Kursus Ini</span>
-    </button>
-
-
-    <div id="hasil-analisa" class="hidden">
-        <div class="bg-white shadow rounded p-4 mb-4">
-            <h3 class="font-semibold text-lg mb-2">Distribusi Sentimen</h3>
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
-                <div>
-                    <p id="positif">Positif: 0%</p>
-                </div>
-                <div>
-                    <p id="negatif">Negatif: 0%</p>
-                </div>
-                <div>
-                    <p id="netral">Netral: 0%</p>
-                </div>
+    <!-- Distribusi Sentimen -->
+    <div class="bg-white shadow rounded p-4 mb-4">
+        <h3 class="font-semibold text-lg mb-2">Distribusi Sentimen</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-center">
+            <div>
+                <p><span class="text-green-600 font-medium">Positif:</span>
+                    <span class="text-green-700">{{ $distribusi['positif'] }}% ({{ $positif_count }}/{{ $total }})</span>
+                </p>
+            </div>
+            <div>
+                <p><span class="text-red-600 font-medium">Negatif:</span>
+                    <span class="text-red-700">{{ $distribusi['negatif'] }}% ({{ $negatif_count }}/{{ $total }})</span>
+                </p>
+            </div>
+            <div>
+                <p><span class="text-yellow-600 font-medium">Netral:</span>
+                    <span class="text-yellow-700">{{ $distribusi['netral'] }}% ({{ $netral_count }}/{{ $total }})</span>
+                </p>
             </div>
         </div>
 
-        <div class="bg-gray-100 p-3 rounded mb-3">
-            <p id="batasAman"><strong>Batas Aman:</strong> N/A</p>
-            <p id="predNegatif"><strong>Prediksi Negatif Saat Ini:</strong> N/A</p>
-        </div>
-
-        <div class="bg-green-100 p-3 rounded mb-3">
-            <p id="rekomendasiDSS"><strong>Rekomendasi DSS:</strong> -</p>
+        <div class="mt-4 bg-gray-50 p-3 rounded">
+            <p class="font-medium text-gray-700">Rekomendasi:
+                <span class="font-normal">{{ $rekomendasi }}</span>
+            </p>
         </div>
     </div>
 
+    <!-- Tabel Ulasan -->
     <table class="min-w-full divide-y divide-gray-200 text-sm">
         <thead class="bg-gray-50">
             <tr>
@@ -97,53 +90,5 @@
         </a>
     </div>
 </main>
-
-<button id="btn-analisa"
-    class="bg-blue-600 text-white px-4 py-2 rounded shadow hover:bg-blue-700 transition mb-4 inline-flex items-center">
-    <svg id="spinner" class="hidden animate-spin mr-2 h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8H4z"></path>
-    </svg>
-    <span id="btn-text">Analisa Kursus Ini</span>
-</button>
-
-<script>
-    const btn = document.getElementById('btn-analisa');
-    const spinner = document.getElementById('spinner');
-    const btnText = document.getElementById('btn-text');
-
-    btn.addEventListener('click', function() {
-        btn.disabled = true;
-        spinner.classList.remove('hidden');
-        btnText.innerText = "Sedang menganalisis...";
-
-        fetch("{{ route('ulasan.analisa', $kursus->kursus_id) }}", {
-                method: "POST",
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Content-Type': 'application/json'
-                }
-            })
-            .then(res => res.json())
-            .then(data => {
-                document.getElementById('hasil-analisa').classList.remove('hidden');
-                document.getElementById('positif').innerText = `Positif: ${((data.distribusi?.positif || 0) * 100).toFixed(1)}%`;
-                document.getElementById('negatif').innerText = `Negatif: ${((data.distribusi?.negatif || 0) * 100).toFixed(1)}%`;
-                document.getElementById('netral').innerText = `Netral: ${((data.distribusi?.netral || 0) * 100).toFixed(1)}%`;
-                document.getElementById('batasAman').innerHTML = `<strong>Batas Aman:</strong> ${data.batas_aman !== null ? data.batas_aman.toFixed(1) + '%' : 'N/A'}`;
-                document.getElementById('predNegatif').innerHTML = `<strong>Prediksi Negatif Saat Ini:</strong> ${data.pred_negatif !== null ? data.pred_negatif.toFixed(1) + '%' : 'N/A'}`;
-                document.getElementById('rekomendasiDSS').innerHTML = `<strong>Rekomendasi DSS:</strong> ${data.rekomendasi}`;
-            })
-            .catch(() => {
-                alert("Gagal mengambil data analisa. Silakan coba lagi.");
-            })
-            .finally(() => {
-                btn.disabled = false;
-                spinner.classList.add('hidden');
-                btnText.innerText = "Analisa Kursus Ini";
-            });
-    });
-</script>
-
 
 @endsection

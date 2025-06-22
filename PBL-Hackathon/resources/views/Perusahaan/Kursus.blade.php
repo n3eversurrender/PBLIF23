@@ -38,8 +38,8 @@
                         <th class="px-4 py-3 text-left font-semibold text-gray-600">No</th>
                         <th class="px-4 py-3 text-left font-semibold text-gray-600">Nama Kursus</th>
                         <th class="px-4 py-3 text-left font-semibold text-gray-600">Level</th>
-                        <th class="px-4 py-3 text-left font-semibold text-gray-600">Kategori</th>
-                        <th class="px-4 py-3 text-left font-semibold text-gray-600">Peserta</th> {{-- Mengganti "Kapasitas" jadi "Peserta" untuk menampilkan jumlah --}}
+                        <th class="px-4 py-3 text-left font-semibold text-gray-600">Kapasitas</th>
+                        <th class="px-4 py-3 text-left font-semibold text-gray-600">Peserta</th> 
                         <th class="px-4 py-3 text-left font-semibold text-gray-600">Status</th>
                         <th class="px-4 py-3 text-left font-semibold text-gray-600">Aksi</th>
                     </tr>
@@ -50,7 +50,7 @@
                         <td class="px-4 py-3">{{ $index + 1 }}</td>
                         <td class="px-4 py-3 font-medium text-gray-800">{{ $item->judul }}</td>
                         <td class="px-4 py-3 text-gray-600">{{ $item->tingkat_kesulitan }}</td>
-                        <td class="px-4 py-3 text-gray-600">{{ $item->kategori->nama_kategori ?? 'N/A' }}</td>
+                        <td class="px-4 py-3 text-gray-600">{{ $item->kapasitas}}</td>
                         <td class="px-4 py-3 text-gray-600">{{ $item->pendaftaran->count() }}</td>
                         <td class="px-4 py-3 text-gray-600">{{ $item->status }}</td>
                         <td class="px-4 py-3 space-x-2">

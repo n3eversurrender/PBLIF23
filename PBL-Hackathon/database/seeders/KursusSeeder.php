@@ -296,7 +296,7 @@ class KursusSeeder extends Seeder
                 'status' => 'Aktif',
                 'tgl_mulai' => now()->addDays(rand(1, 365)),  // Tanggal mulai acak
                 'tgl_selesai' => now()->addDays(rand(365, 730)),  // Tanggal selesai acak
-                'kapasitas' => rand(10, 30), // Kapasitas acak
+                'kapasitas' => rand(50, 100), // Kapasitas acak
                 'lokasi' => 'Batam ' . $this->generateLocation(), // Lokasi acak
                 // Set foto_kursus sesuai urutan: kursus1.jpg, kursus2.jpg, dst
                 'foto_kursus' => 'kursus/kursus' . ($index + 1) . '.jpg',

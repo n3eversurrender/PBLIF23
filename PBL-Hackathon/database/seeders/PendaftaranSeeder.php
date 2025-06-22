@@ -18,7 +18,7 @@ class PendaftaranSeeder extends Seeder
         // Loop untuk pengguna ID 3 sampai 312
         foreach (range(3, 312) as $pengguna_id) {
             // Pilih jumlah kursus yang akan diikuti oleh pengguna (antara 4 hingga 7 kursus)
-            $kursus_count = rand(4, 7);
+            $kursus_count = rand(2, 3);
 
             // Ambil kursus ID acak
             $kursus_ids = $faker->unique()->randomElements(range(1, 50), $kursus_count);

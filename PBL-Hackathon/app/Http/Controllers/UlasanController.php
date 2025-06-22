@@ -44,9 +44,9 @@ class UlasanController extends Controller
         }
     }
 
+
     public function detailUlasan($kursus_id)
     {
-        // Cari kursus + relasi ratingKursus + pengguna pemberi ulasan
         $kursus = Kursus::with('ratingKursus.pengguna')->find($kursus_id);
 
         if (!$kursus) {
@@ -62,45 +62,41 @@ class UlasanController extends Controller
         }
 
         $ulasan = $kursus->ratingKursus;
+        $total = $ulasan->count();
+        $positif_count = $ulasan->where('pred_label', 'positif')->count();
+        $negatif_count = $ulasan->where('pred_label', 'negatif')->count();
+        $netral_count = $ulasan->where('pred_label', 'netral')->count();
 
-        // Tidak memanggil Flask / DSS dulu
-        return view('Perusahaan.DetailUlasan', compact('kursus', 'ulasan'));
-    }
+        $distribusi = [
+            'positif' => $total > 0 ? round(($positif_count / $total) * 100) : 0,
+            'negatif' => $total > 0 ? round(($negatif_count / $total) * 100) : 0,
+            'netral' => $total > 0 ? round(($netral_count / $total) * 100) : 0,
+        ];
 
-    public function analisaDSS($kursus_id)
-    {
-        $kursus = Kursus::with('ratingKursus')->find($kursus_id);
-        if (!$kursus) {
-            return response()->json(['error' => 'Kursus tidak ditemukan.'], 404);
+        // LOG DEBUG
+        Log::info("Distribusi hitung", $distribusi);
+        Log::info("Jumlah positif: $positif_count, negatif: $negatif_count, netral: $netral_count, total: $total");
+
+        // Rekomendasi berdasar dominan
+        if ($distribusi['positif'] > $distribusi['negatif'] && $distribusi['positif'] > $distribusi['netral']) {
+            $rekomendasi = '✅ Layanan sangat baik, pertahankan kualitas!';
+        } elseif ($distribusi['negatif'] > $distribusi['positif'] && $distribusi['negatif'] > $distribusi['netral']) {
+            $rekomendasi = '🚨 Banyak komentar negatif, segera evaluasi layanan.';
+        } elseif ($distribusi['netral'] > $distribusi['positif'] && $distribusi['netral'] > $distribusi['negatif']) {
+            $rekomendasi = '⚠ Banyak komentar netral, pertimbangkan untuk meningkatkan daya tarik layanan.';
+        } else {
+            $rekomendasi = 'ℹ Layanan stabil. Lanjutkan monitoring rutin.';
         }
 
-        $ulasan = $kursus->ratingKursus;
-        $komentar = $ulasan->pluck('komentar')->filter(fn($val) => !empty(trim($val)))->toArray();
-
-        if (count($komentar) === 0) {
-            return response()->json([
-                'distribusi' => [],
-                'rekomendasi' => 'Tidak ada komentar untuk dianalisis.',
-                'batas_aman' => null,
-                'pred_negatif' => null,
-                'historis' => []
-            ]);
-        }
-
-        try {
-            $response = Http::timeout(10)->post('http://127.0.0.1:9999/predict-ulasan', [
-                'komentar' => $komentar
-            ]);
-
-            if ($response->successful()) {
-                return response()->json($response->json());
-            } else {
-                Log::warning("Flask API error: " . $response->status());
-                return response()->json(['error' => 'Analisa gagal, coba lagi.'], 500);
-            }
-        } catch (\Exception $e) {
-            Log::error("Flask API call failed: " . $e->getMessage());
-            return response()->json(['error' => 'Gagal memanggil analisa.'], 500);
-        }
+        return view('Perusahaan.DetailUlasan', compact(
+            'kursus',
+            'ulasan',
+            'distribusi',
+            'positif_count',
+            'negatif_count',
+            'netral_count',
+            'total',
+            'rekomendasi'
+        ));
     }
 }

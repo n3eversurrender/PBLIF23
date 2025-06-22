@@ -199,7 +199,7 @@ Route::middleware(['auth', PeranMiddleware::class . ':Perusahaan'])->group(funct
     Route::get('/ulasan', [UlasanController::class, 'indexUlasan'])->name('UlasanPerusahaan');
     Route::get('/detailulasan/{kursus_id}', [UlasanController::class, 'detailUlasan'])->name('DetailUlasan');
     Route::post('/ulasan/analisa/{kursus_id}', [UlasanController::class, 'analisaDSS'])->name('ulasan.analisa');
-
+    Route::get('/ulasan/analisa/{kursus_id}', [UlasanController::class, 'analisaDistribusi'])->name('ulasan.analisa');
 });
 
 // Route Admin
