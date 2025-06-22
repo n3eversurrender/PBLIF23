@@ -12,19 +12,21 @@ class ProfilPerusahaanController extends Controller
 {
     public function profilPerusahaan()
     {
-        // Ambil user yang sedang login
         $user = Auth::user();
 
-        // Pastikan hanya untuk user perusahaan
         if ($user->peran !== 'Perusahaan') {
             abort(403, 'Akses hanya untuk perusahaan');
         }
 
-        // Ambil data perusahaan dari relasi
-        $perusahaan = $user->perusahaan;
+        // Eager load perusahaan + foto_perusahaan
+        $perusahaan = $user->perusahaan()->with('fotoPerusahaan')->first();
 
-        return view('Perusahaan.Profil', compact('user', 'perusahaan'));
+        // Kalau tidak ada perusahaan, galeri = collection kosong
+        $galeri = $perusahaan ? $perusahaan->fotoPerusahaan()->paginate(4) : collect([]);
+
+        return view('Perusahaan.Profil', compact('user', 'perusahaan', 'galeri'));
     }
+
 
 
     public function editProfilPerusahaan()

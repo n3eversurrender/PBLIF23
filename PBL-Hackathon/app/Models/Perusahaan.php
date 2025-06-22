@@ -43,4 +43,9 @@ class Perusahaan extends Model
     {
         return $this->hasMany(RatingPerusahaan::class, 'perusahaan_id', 'perusahaan_id');
     }
+
+    public function fotoPerusahaan()
+    {
+        return $this->hasMany(\App\Models\FotoPerusahaan::class, 'perusahaan_id', 'perusahaan_id');
+    }
 }

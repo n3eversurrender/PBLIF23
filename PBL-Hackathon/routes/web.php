@@ -161,7 +161,7 @@ Route::middleware(['auth', PeranMiddleware::class . ':Perusahaan'])->group(funct
 
     // Beranda Perusahaan
     Route::get('/BerandaPerusahaan', [PerusahaanController::class, 'berandaPerusahaan'])->name('BerandaPerusahaan');
-    Route::get('/DashboardRating', [DashboardRatingPerusahaanController::class, 'dashboardRating'])->name('admin.dashboard.rating');
+    // Route::get('/DashboardRating', [DashboardRatingPerusahaanController::class, 'dashboardRating'])->name('admin.dashboard.rating');
 
 
     // Landing Page

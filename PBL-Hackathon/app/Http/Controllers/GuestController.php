@@ -19,7 +19,6 @@ class GuestController extends Controller
             ->first();
 
         if (!$perusahaan) {
-            // Kirim ke view dengan pesan khusus
             return view('guest.DetailProfilPerusahaanKosong');
         }
 
@@ -50,9 +49,11 @@ class GuestController extends Controller
                 ->exists();
         }
 
-        return view('guest.DetailProfilPerusahaan', compact('perusahaan', 'user', 'kursus', 'ratingPerusahaan', 'hasReviewed'));
-    }
+        // ✅ Tambahkan ambil galeri dengan pagination
+        $galeri = $perusahaan->fotoPerusahaan()->paginate(4);
 
+        return view('guest.DetailProfilPerusahaan', compact('perusahaan', 'user', 'kursus', 'ratingPerusahaan', 'hasReviewed', 'galeri'));
+    }
 
 
     public function store(Request $request, $perusahaanId)

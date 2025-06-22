@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
             RatingPerusahaanSeeder::class,
             RatingKursusSeeder::class,
             UmpanBalikSeeder::class,
+            FotoPerusahaanSeeder::class,
         ]);
     }
 }

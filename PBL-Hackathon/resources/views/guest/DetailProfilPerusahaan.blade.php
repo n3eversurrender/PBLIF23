@@ -147,85 +147,56 @@
 
     <section class="py-10">
         <h2 class="text-2xl font-semibold text-gray-800 mb-4">Galeri Perusahaan</h2>
-        <!-- Grid Galeri -->
+
         <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            <!-- Item 1 -->
+            @forelse($galeri as $foto)
             <div class="gallery-item group relative overflow-hidden rounded-xl shadow-md hover:shadow-lg transition duration-300 cursor-pointer">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-                    alt="Tim Perusahaan"
+                <img src="{{ asset('storage/' . $foto->file_path) }}" alt="Foto Perusahaan"
                     class="w-full h-64 object-cover transition duration-500 group-hover:scale-105">
                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4">
                     <div>
-                        <h3 class="text-white font-semibold text-lg">Kegiatan Team Building</h3>
-                        <p class="text-gray-200 text-sm mt-1">15 Januari 2023</p>
+                        <h3 class="text-white font-semibold text-lg">Foto Perusahaan</h3>
+                        <p class="text-gray-200 text-sm mt-1">{{ $foto->created_at->format('d M Y') }}</p>
                     </div>
                 </div>
                 <div class="absolute top-4 right-4 bg-white/90 rounded-full p-2 opacity-0 group-hover:opacity-100 transition duration-300">
                     <i class="fas fa-expand text-gray-800"></i>
                 </div>
             </div>
-
-            <!-- Item 2 -->
-            <div class="gallery-item group relative overflow-hidden rounded-xl shadow-md hover:shadow-lg transition duration-300 cursor-pointer">
-                <img src="https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-                    alt="Kantor Perusahaan"
-                    class="w-full h-64 object-cover transition duration-500 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4">
-                    <div>
-                        <h3 class="text-white font-semibold text-lg">Kantor Pusat</h3>
-                        <p class="text-gray-200 text-sm mt-1">Jakarta, Indonesia</p>
-                    </div>
-                </div>
-                <div class="absolute top-4 right-4 bg-white/90 rounded-full p-2 opacity-0 group-hover:opacity-100 transition duration-300">
-                    <i class="fas fa-expand text-gray-800"></i>
-                </div>
-            </div>
-
-            <!-- Item 3 -->
-            <div class="gallery-item group relative overflow-hidden rounded-xl shadow-md hover:shadow-lg transition duration-300 cursor-pointer">
-                <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-                    alt="Peluncuran Produk"
-                    class="w-full h-64 object-cover transition duration-500 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4">
-                    <div>
-                        <h3 class="text-white font-semibold text-lg">Peluncuran Produk Baru</h3>
-                        <p class="text-gray-200 text-sm mt-1">22 Maret 2023</p>
-                    </div>
-                </div>
-                <div class="absolute top-4 right-4 bg-white/90 rounded-full p-2 opacity-0 group-hover:opacity-100 transition duration-300">
-                    <i class="fas fa-expand text-gray-800"></i>
-                </div>
-            </div>
-
-            <!-- Item 4 -->
-            <div class="gallery-item group relative overflow-hidden rounded-xl shadow-md hover:shadow-lg transition duration-300 cursor-pointer">
-                <img src="https://images.unsplash.com/photo-1521791136064-7986c2920216?ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=80"
-                    alt="Pelatihan Karyawan"
-                    class="w-full h-64 object-cover transition duration-500 group-hover:scale-105">
-                <div class="absolute inset-0 bg-gradient-to-t from-black/70 to-transparent opacity-0 group-hover:opacity-100 transition duration-300 flex items-end p-4">
-                    <div>
-                        <h3 class="text-white font-semibold text-lg">Pelatihan Karyawan</h3>
-                        <p class="text-gray-200 text-sm mt-1">10 Februari 2023</p>
-                    </div>
-                </div>
-                <div class="absolute top-4 right-4 bg-white/90 rounded-full p-2 opacity-0 group-hover:opacity-100 transition duration-300">
-                    <i class="fas fa-expand text-gray-800"></i>
-                </div>
-            </div>
+            @empty
+            <p class="col-span-full text-center text-gray-500">Belum ada foto perusahaan.</p>
+            @endforelse
         </div>
 
-        <!-- Pagination -->
         <div class="mt-12 flex justify-center">
             <nav class="flex items-center space-x-2">
-                <button class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                @if ($galeri->onFirstPage())
+                <button disabled class="px-4 py-2 border border-gray-300 rounded-md text-gray-400 bg-gray-100 cursor-not-allowed">
                     <i class="fas fa-chevron-left"></i>
                 </button>
-                <button class="px-4 py-2 border border-blue-600 rounded-md text-white bg-blue-600">1</button>
-                <button class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50">2</button>
-                <button class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50">3</button>
-                <button class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
+                @else
+                <a href="{{ $galeri->previousPageUrl() }}" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                    <i class="fas fa-chevron-left"></i>
+                </a>
+                @endif
+
+                @for ($i = 1; $i <= $galeri->lastPage(); $i++)
+                    @if ($i == $galeri->currentPage())
+                    <span class="px-4 py-2 border border-blue-600 rounded-md text-white bg-blue-600">{{ $i }}</span>
+                    @else
+                    <a href="{{ $galeri->url($i) }}" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50">{{ $i }}</a>
+                    @endif
+                    @endfor
+
+                    @if ($galeri->hasMorePages())
+                    <a href="{{ $galeri->nextPageUrl() }}" class="px-4 py-2 border border-gray-300 rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                        <i class="fas fa-chevron-right"></i>
+                    </a>
+                    @else
+                    <button disabled class="px-4 py-2 border border-gray-300 rounded-md text-gray-400 bg-gray-100 cursor-not-allowed">
+                        <i class="fas fa-chevron-right"></i>
+                    </button>
+                    @endif
             </nav>
         </div>
         <!-- Modal -->
