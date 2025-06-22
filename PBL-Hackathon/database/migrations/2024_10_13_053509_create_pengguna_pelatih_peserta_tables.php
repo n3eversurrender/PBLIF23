@@ -59,6 +59,15 @@ class CreatePenggunaPelatihPesertaTables extends Migration
             $table->foreign('pengguna_id')->references('pengguna_id')->on('pengguna')->onDelete('cascade');
         });
 
+        Schema::create('foto_perusahaan', function (Blueprint $table) {
+            $table->id('foto_id');
+            $table->unsignedBigInteger('perusahaan_id');
+            $table->string('file_path');  
+            $table->timestamps();
+
+            $table->foreign('perusahaan_id')->references('perusahaan_id')->on('perusahaan')->onDelete('cascade');
+        });
+
         Schema::create('rating_perusahaan', function (Blueprint $table) {
             $table->id('rating_perusahaan_id');
 
@@ -67,6 +76,7 @@ class CreatePenggunaPelatihPesertaTables extends Migration
 
             $table->float('rating');
             $table->text('komentar')->nullable();
+            $table->text('pred_label')->nullable();
             $table->string('ip_address')->nullable(); // untuk simpan IP reviewer
 
             $table->foreign('pemberi_id')->references('pengguna_id')->on('pengguna')->onDelete('cascade');
@@ -132,6 +142,7 @@ class CreatePenggunaPelatihPesertaTables extends Migration
             $table->unsignedBigInteger('pengguna_id')->nullable();
             $table->float('rating')->nullable();
             $table->text('komentar')->nullable();
+            $table->text('pred_label')->nullable();
             $table->foreign('kursus_id')->references('kursus_id')->on('kursus')->onDelete('cascade');
             $table->foreign('pengguna_id')->references('pengguna_id')->on('pengguna')->onDelete('cascade');
             $table->timestamps();

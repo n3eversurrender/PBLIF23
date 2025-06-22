@@ -45,6 +45,7 @@ use App\Http\Controllers\UmpanBalikController;
 use App\Http\Middleware\PeranMiddleware;
 use App\Http\Controllers\SkillMatchingController;
 use App\Http\Controllers\BerandaTraineeController;
+use App\Http\Controllers\DashboardRatingPerusahaanController;
 use App\Http\Controllers\DataPerusahaanController;
 use App\Http\Controllers\ProfilController;
 use App\Http\Controllers\RiwayatController;
@@ -160,6 +161,7 @@ Route::middleware(['auth', PeranMiddleware::class . ':Perusahaan'])->group(funct
 
     // Beranda Perusahaan
     Route::get('/BerandaPerusahaan', [PerusahaanController::class, 'berandaPerusahaan'])->name('BerandaPerusahaan');
+    Route::get('/DashboardRating', [DashboardRatingPerusahaanController::class, 'dashboardRating'])->name('admin.dashboard.rating');
 
 
     // Landing Page
@@ -196,6 +198,8 @@ Route::middleware(['auth', PeranMiddleware::class . ':Perusahaan'])->group(funct
     // Ulasan
     Route::get('/ulasan', [UlasanController::class, 'indexUlasan'])->name('UlasanPerusahaan');
     Route::get('/detailulasan/{kursus_id}', [UlasanController::class, 'detailUlasan'])->name('DetailUlasan');
+    Route::post('/ulasan/analisa/{kursus_id}', [UlasanController::class, 'analisaDSS'])->name('ulasan.analisa');
+
 });
 
 // Route Admin

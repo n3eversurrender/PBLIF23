@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Kursus; // Import model Kursus
 use Illuminate\Support\Facades\Auth; // Import facade Auth
+use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log; // Import facade Log untuk logging error
 
 class UlasanController extends Controller
 {
@@ -44,25 +46,61 @@ class UlasanController extends Controller
 
     public function detailUlasan($kursus_id)
     {
-        // Cari kursus berdasarkan ID
-        $kursus = Kursus::with('ratingKursus.pengguna') // Eager load ulasan dan pengguna yang memberi ulasan
-            ->find($kursus_id);
+        // Cari kursus + relasi ratingKursus + pengguna pemberi ulasan
+        $kursus = Kursus::with('ratingKursus.pengguna')->find($kursus_id);
 
-        // Jika kursus tidak ditemukan, atau jika pengguna tidak memiliki kursus ini (jika Anda ingin membatasi akses)
         if (!$kursus) {
             abort(404, 'Kursus tidak ditemukan.');
         }
 
-        // Opsional: Batasi akses hanya untuk pemilik kursus
-        if (Auth::check() && $kursus->pengguna_id !== Auth::id()) {
-            return redirect()->back()->with('error', 'Anda tidak memiliki akses ke detail ulasan kursus ini.');
-        } elseif (!Auth::check()) {
+        if (!Auth::check()) {
             return redirect()->route('login')->with('error', 'Anda harus login untuk melihat detail ulasan.');
         }
 
-        // Ambil semua ulasan untuk kursus ini
+        if ($kursus->pengguna_id !== Auth::id()) {
+            return redirect()->back()->with('error', 'Anda tidak memiliki akses ke detail ulasan kursus ini.');
+        }
+
         $ulasan = $kursus->ratingKursus;
 
+        // Tidak memanggil Flask / DSS dulu
         return view('Perusahaan.DetailUlasan', compact('kursus', 'ulasan'));
+    }
+
+    public function analisaDSS($kursus_id)
+    {
+        $kursus = Kursus::with('ratingKursus')->find($kursus_id);
+        if (!$kursus) {
+            return response()->json(['error' => 'Kursus tidak ditemukan.'], 404);
+        }
+
+        $ulasan = $kursus->ratingKursus;
+        $komentar = $ulasan->pluck('komentar')->filter(fn($val) => !empty(trim($val)))->toArray();
+
+        if (count($komentar) === 0) {
+            return response()->json([
+                'distribusi' => [],
+                'rekomendasi' => 'Tidak ada komentar untuk dianalisis.',
+                'batas_aman' => null,
+                'pred_negatif' => null,
+                'historis' => []
+            ]);
+        }
+
+        try {
+            $response = Http::timeout(10)->post('http://127.0.0.1:9999/predict-ulasan', [
+                'komentar' => $komentar
+            ]);
+
+            if ($response->successful()) {
+                return response()->json($response->json());
+            } else {
+                Log::warning("Flask API error: " . $response->status());
+                return response()->json(['error' => 'Analisa gagal, coba lagi.'], 500);
+            }
+        } catch (\Exception $e) {
+            Log::error("Flask API call failed: " . $e->getMessage());
+            return response()->json(['error' => 'Gagal memanggil analisa.'], 500);
+        }
     }
 }
