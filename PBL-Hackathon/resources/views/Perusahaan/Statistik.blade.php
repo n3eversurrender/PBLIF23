@@ -4,7 +4,7 @@
 
 <main>
     <!-- Stats Grid -->
-    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <!-- Stat Card 1 -->
         <div class="bg-white rounded-xl shadow-xl p-6 border-t-4 border-blue-500 card-hover">
             <div class="flex justify-between">
@@ -35,8 +35,20 @@
         <div class="bg-white rounded-xl shadow-xl p-6 border-t-4 border-blue-500 card-hover">
             <div class="flex justify-between">
                 <div>
-                    <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Rating Rata-rata</p>
+                    <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Rating Rata-rata Kursus</p>
                     <h3 class="text-3xl font-bold text-gray-800 mt-2">{{ number_format($ratingRataRata, 1) }}</h3>
+                </div>
+                <div class="p-3 rounded-lg bg-amber-50 text-amber-600">
+                    <i class="fas fa-star text-xl"></i>
+                </div>
+            </div>
+        </div>
+
+        <div class="bg-white rounded-xl shadow-xl p-6 border-t-4 border-blue-500 card-hover">
+            <div class="flex justify-between">
+                <div>
+                    <p class="text-sm font-medium text-gray-500 uppercase tracking-wider">Rating Rata-rata Perusahaan</p>
+                    <h3 class="text-3xl font-bold text-gray-800 mt-2">{{ number_format($ratingRataRataPerusahaan, 1) }}</h3>
                 </div>
                 <div class="p-3 rounded-lg bg-amber-50 text-amber-600">
                     <i class="fas fa-star text-xl"></i>
