@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\AnalisisKomentarController;
 use App\Http\Controllers\AuthController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Http\Request;
 use App\Http\Controllers\MainController;
 use App\Http\Controllers\ManajemenAkunController;
+use Illuminate\Support\Facades\Storage;
+use App\Jobs\ProsesAnalisisKomentarJob;
 
 
 use Illuminate\Support\Facades\Auth;
@@ -158,6 +161,11 @@ Route::middleware(['auth', PeranMiddleware::class . ':Perusahaan'])->group(funct
 
     //NEW
     Route::get('/statistik', [PerusahaanController::class, 'statistikPerusahaan'])->name('StatistikPerusahaan');
+    Route::get('/perusahaan/analisis-komentar', [PerusahaanController::class, 'analisisKomentar'])->name('analisisKomentar');
+
+    Route::post('/statistik/api/hasil-analisis', [AnalisisKomentarController::class, 'apiHasil']);
+
+
 
     // Beranda Perusahaan
     Route::get('/BerandaPerusahaan', [PerusahaanController::class, 'berandaPerusahaan'])->name('BerandaPerusahaan');

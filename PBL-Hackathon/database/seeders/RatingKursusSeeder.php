@@ -50,28 +50,28 @@ class RatingKursusSeeder extends Seeder
             'Cocok untuk pemula, tapi mungkin kurang menantang untuk lanjutan.',
             'Kualitas pelatihan rata-rata.'
         ];
+        $data = [];
 
-        // Total data (misal 2000 ulasan)
-        for ($i = 0; $i < 2000; $i++) {
+        for ($i = 0; $i < 1000; $i++) {
             $kursus_id = rand(1, 50);
             $pengguna_id = rand(13, 312);
 
             $randType = rand(1, 3);
-            if ($randType === 1) { // Positif
+            if ($randType === 1) {
                 $komentar = $faker->randomElement($positifKomentar);
                 $pred_label = 'positif';
                 $rating = rand(45, 50) / 10;
-            } elseif ($randType === 2) { // Netral
+            } elseif ($randType === 2) {
                 $komentar = $faker->randomElement($netralKomentar);
                 $pred_label = 'netral';
                 $rating = rand(30, 40) / 10;
-            } else { // Negatif
+            } else {
                 $komentar = $faker->randomElement($negatifKomentar);
                 $pred_label = 'negatif';
                 $rating = rand(15, 34) / 10;
             }
 
-            DB::table('rating_kursus')->insert([
+            $data[] = [
                 'kursus_id' => $kursus_id,
                 'pengguna_id' => $pengguna_id,
                 'rating' => $rating,
@@ -79,7 +79,12 @@ class RatingKursusSeeder extends Seeder
                 'pred_label' => $pred_label,
                 'created_at' => now(),
                 'updated_at' => now(),
-            ]);
+            ];
+        }
+
+        // Insert batch 100
+        foreach (array_chunk($data, 100) as $chunk) {
+            DB::table('rating_kursus')->insert($chunk);
         }
     }
 }

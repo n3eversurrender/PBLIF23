@@ -1,48 +1,102 @@
 from flask import Flask, request, jsonify
+import pandas as pd
 from transformers import AutoTokenizer, AutoModelForSequenceClassification, pipeline
-from bertopic import BERTopic
-from sklearn.feature_extraction.text import CountVectorizer
+from sqlalchemy import create_engine
 
 app = Flask(__name__)
 
-# Load model sekali saja saat server start
+# DB config
+DB_USERNAME = 'root'
+DB_PASSWORD = ''
+DB_HOST = '127.0.0.1'
+DB_PORT = '3306'
+DB_DATABASE = 'pbl_hackathon'
+
+engine = create_engine(
+    f"mysql+pymysql://{DB_USERNAME}:{DB_PASSWORD}@{DB_HOST}:{DB_PORT}/{DB_DATABASE}"
+)
+
+# Load models sekali saat startup
+print("🔹 Loading Sentimen Model...")
 sent_tokenizer = AutoTokenizer.from_pretrained("zainiridha/indobert-sentimen-finegrained")
 sent_model = AutoModelForSequenceClassification.from_pretrained("zainiridha/indobert-sentimen-finegrained")
 sent_pipeline = pipeline("text-classification", model=sent_model, tokenizer=sent_tokenizer)
 
+print("🔹 Loading Tema Model...")
 tema_tokenizer = AutoTokenizer.from_pretrained("zainiridha/indobert-sentimen-finegrained-v2")
 tema_model = AutoModelForSequenceClassification.from_pretrained("zainiridha/indobert-sentimen-finegrained-v2")
 tema_pipeline = pipeline("text-classification", model=tema_model, tokenizer=tema_tokenizer)
 
-@app.route("/analyze", methods=["POST"])
-def analyze():
-    data = request.get_json()
-    komentar_list = data.get("komentar", [])
-    
-    if not komentar_list:
-        return jsonify({"error": "Tidak ada komentar dikirim"}), 400
-    
-    import pandas as pd
-    df = pd.DataFrame({"komentar": komentar_list})
-
-    # Prediksi
+def predict_sentimen_tema(df):
     df['sentimen'] = df['komentar'].apply(lambda x: sent_pipeline(x)[0]['label'])
     df['tema_v2'] = df['komentar'].apply(lambda x: tema_pipeline(x)[0]['label'])
+    return df
 
-    # BERTopic
-    vectorizer_model = CountVectorizer(stop_words=[
-        "yang","dan","di","ke","dari","untuk","dengan","pada","adalah","itu","ini",
-        "sebagai","oleh","atau","sudah","akan","karena","juga"])
-    topic_model = BERTopic(vectorizer_model=vectorizer_model, nr_topics=20, min_topic_size=5)
-    
-    topics, _ = topic_model.fit_transform(df['komentar'])
-    df['topic_bertopic'] = topics
-    df['tema_bertopic_auto'] = df['topic_bertopic'].apply(lambda x: 
-        "Outlier / Tidak Terklasifikasi" if x == -1 else 
-        ", ".join([w for w, _ in topic_model.get_topic(x)][:3])
-    )
+@app.route("/proses-ulasan-realtime", methods=["POST"])
+def proses_ulasan_realtime():
+    try:
+        if not request.is_json:
+            return jsonify({"error": "Request harus dalam format JSON"}), 400
 
-    return jsonify(df.to_dict(orient="records"))
+        data = request.get_json()
+        pengguna_id = data.get('pengguna_id')
+        if not pengguna_id:
+            return jsonify({"error": "pengguna_id wajib dikirim"}), 400
+
+        # Ambil komentar kursus + perusahaan
+        query_kursus = """
+            SELECT rk.komentar AS komentar
+            FROM rating_kursus rk
+            JOIN kursus k ON rk.kursus_id = k.kursus_id
+            WHERE k.pengguna_id = %(pengguna_id)s
+        """
+
+        query_perusahaan = """
+            SELECT rp.komentar AS komentar
+            FROM rating_perusahaan rp
+            JOIN perusahaan p ON rp.perusahaan_id = p.perusahaan_id
+            WHERE p.pengguna_id = %(pengguna_id)s
+        """
+
+        df_kursus = pd.read_sql(query_kursus, engine, params={"pengguna_id": pengguna_id})
+        df_perusahaan = pd.read_sql(query_perusahaan, engine, params={"pengguna_id": pengguna_id})
+
+        df = pd.concat([df_kursus, df_perusahaan], ignore_index=True)
+
+        if df.empty:
+            return jsonify({
+                "message": "Tidak ada komentar untuk dianalisis.",
+                "distribusi": {},
+                "jumlah_prediksi": {},
+                "labels": [],
+                "tema_v2": []
+            }), 200
+
+        # Prediksi
+        print(f"🔹 Mulai prediksi {len(df)} komentar...")
+        df['sentimen'] = df['komentar'].apply(lambda x: sent_pipeline(x)[0]['label'])
+        df['tema_v2'] = df['komentar'].apply(lambda x: tema_pipeline(x)[0]['label'])
+
+        # Distribusi total
+        distribusi = df['sentimen'].value_counts(normalize=True).mul(100).round(0).to_dict()
+        jumlah = df['sentimen'].value_counts().to_dict()
+
+        # Distribusi per tema + sentimen
+        tema_sentimen_count = {}
+        grouped = df.groupby(['tema_v2', 'sentimen']).size().unstack(fill_value=0)
+        for tema, row in grouped.iterrows():
+            tema_sentimen_count[tema] = row.to_dict()
+
+        return jsonify({
+            "message": f"{len(df)} komentar berhasil dianalisis.",
+            "distribusi": distribusi,
+            "jumlah_prediksi": jumlah,
+            "tema_sentimen_count": tema_sentimen_count
+        })
+
+    except Exception as e:
+        print(f"❌ ERROR: {e}")
+        return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    app.run(host="127.0.0.1", port=9999, debug=True)

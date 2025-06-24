@@ -2,6 +2,10 @@
 
 @section('MainPerusahaan')
 
+<head>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+</head>
+
 <main>
     <!-- Stats Grid -->
     <section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -98,6 +102,14 @@
             </div>
         </div>
     </div>
+
+    <button onclick="prosesAnalisis()" class="bg-blue-500 text-white px-4 py-2 rounded mt-5">Proses Analisis</button>
+    <div id="loading" class="text-sm text-gray-500 mt-2 hidden">
+        <div class="inline-block w-4 h-4 border-2 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+        Memproses analisis...
+    </div>
+    <canvas id="temaChart" class="bg-white p-4 rounded shadow mt-6 hidden">
+    </canvas>
 
     <section class="mt-4">
         <h1 class="text-xl font-semibold mb-4">Kursus Terbaru</h1>
@@ -264,5 +276,85 @@
         </div>
     </section>
 </main>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    let chartInstance = null;
+
+    async function prosesAnalisis() {
+        const loading = document.getElementById('loading');
+        const canvas = document.getElementById('temaChart');
+
+        loading.classList.remove('hidden');
+        canvas.classList.add('hidden'); // Sembunyikan canvas saat proses mulai
+
+        try {
+            const csrfMeta = document.querySelector('meta[name="csrf-token"]');
+            const csrfToken = csrfMeta ? csrfMeta.getAttribute('content') : '';
+
+            const res = await fetch('{{ url("/statistik/api/hasil-analisis") }}', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': csrfToken
+                },
+                body: JSON.stringify({})
+            });
+
+            const data = await res.json();
+            console.log("API Response:", data);
+
+            if (data.tema_sentimen_count && Object.keys(data.tema_sentimen_count).length > 0) {
+                const temaLabels = Object.keys(data.tema_sentimen_count);
+
+                const positif = temaLabels.map(t => data.tema_sentimen_count[t]['positif'] || 0);
+                const negatif = temaLabels.map(t => data.tema_sentimen_count[t]['negatif'] || 0);
+                const netral = temaLabels.map(t => data.tema_sentimen_count[t]['netral'] || 0);
+
+                if (chartInstance) chartInstance.destroy();
+
+                chartInstance = new Chart(canvas.getContext('2d'), {
+                    type: 'bar',
+                    data: {
+                        labels: temaLabels,
+                        datasets: [{
+                                label: 'Positif',
+                                data: positif,
+                            },
+                            {
+                                label: 'Negatif',
+                                data: negatif,
+                            },
+                            {
+                                label: 'Netral',
+                                data: netral,
+                            }
+                        ]
+                    },
+                    options: {
+                        responsive: true,
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+
+                canvas.classList.remove('hidden'); // Tampilkan canvas kalau ada datanya
+                canvas.style.width = '100%';
+                canvas.style.height = 'auto';
+
+            } else {
+                alert("Data kosong atau tema_sentimen_count tidak tersedia.");
+            }
+
+        } catch (err) {
+            console.error(err);
+            alert("Terjadi kesalahan saat memproses: " + err.message);
+        } finally {
+            loading.classList.add('hidden');
+        }
+    }
+</script>
 
 @endsection
