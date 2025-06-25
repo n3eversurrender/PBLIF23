@@ -7,6 +7,7 @@ use App\Models\Kursus;
 use App\Models\Pendaftaran;
 use App\Models\Pengguna;
 use App\Models\UmpanBalik;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -52,51 +53,57 @@ class MainController extends Controller
         $kategori_id = $request->input('kategori_id');
         $tingkat_kesulitan = $request->input('tingkat_kesulitan');
 
-        // Query untuk mendapatkan kursus dengan total rating dan total jumlah rating
+        // Query awal: ambil kursus aktif dengan relasi & data rating
         $query = Kursus::with(['kategori', 'ratingKursus'])
-            ->withCount('ratingKursus as total_ratings')  // Menghitung jumlah rating
-            ->withSum('ratingKursus as total_rating_sum', 'rating')  // Jumlah total rating
-            ->where('status', 'Aktif');
+            ->withCount('ratingKursus as total_ratings')  // jumlah rating
+            ->withSum('ratingKursus as total_rating_sum', 'rating') // total nilai rating
+            ->where('status', 'Aktif')
+            ->whereDate('tgl_mulai', '<=', Carbon::today()) // Sudah dimulai
+            ->whereDate('tgl_selesai', '>=', Carbon::today()); // Belum selesai
 
-        if ($kategori_id) {
+        // Filter jika kategori dipilih
+        if (!empty($kategori_id)) {
             $query->where('kategori_id', $kategori_id);
         }
 
-        if ($tingkat_kesulitan && $tingkat_kesulitan !== '-') {
+        // Filter jika tingkat kesulitan dipilih (selain tanda '-')
+        if (!empty($tingkat_kesulitan) && $tingkat_kesulitan !== '-') {
             $query->where('tingkat_kesulitan', $tingkat_kesulitan);
         }
 
-        // Ambil semua data kursus
+        // Ambil hasil dengan pagination
         $kursus = $query->paginate(9);
 
-        // Mengambil tingkat kesulitan yang unik dari kursus yang ditemukan
+
+        // Ambil tingkat kesulitan unik dari hasil kursus
         $uniqueTingkatKesulitan = Kursus::select('tingkat_kesulitan')
             ->whereIn('kursus_id', $kursus->pluck('kursus_id'))
             ->distinct()
             ->get();
 
-        // Menghitung total rating yang terbatasi
+        // Hitung rata-rata rating yang ternormalisasi
         foreach ($kursus as $item) {
-            $totalRatings = $item->total_ratings;
-            $totalRatingSum = $item->total_rating_sum;
+            $totalRatings = $item->total_ratings ?? 0;
+            $totalRatingSum = $item->total_rating_sum ?? 0;
 
-            // Menghitung rata-rata rating
-            $averageRating = $totalRatingSum / $totalRatings;
+            if ($totalRatings > 0) {
+                $averageRating = $totalRatingSum / $totalRatings;
+            } else {
+                $averageRating = 0;
+            }
 
-            // Normalisasi hasil rata-rata agar berada dalam rentang 1-5
             $normalizedRating = max(1, min(5, $averageRating));
-
-            // Simpan rating yang sudah dinormalisasi
             $item->average_rating = round($normalizedRating, 1);
         }
 
-        // Ambil kategori untuk filter
+        // Ambil semua kategori untuk filter
         $kategori = Kategori::all();
 
-        // Ambil pengguna dengan peran Perusahaan
+        // Ambil daftar perusahaan
         $perusahaan = Pengguna::where('peran', 'Perusahaan')
             ->limit(10)
             ->get();
+
 
         return view('guest.DaftarKursus', [
             'kursus' => $kursus,
@@ -105,6 +112,7 @@ class MainController extends Controller
             'perusahaan' => $perusahaan,
         ]);
     }
+
 
 
 

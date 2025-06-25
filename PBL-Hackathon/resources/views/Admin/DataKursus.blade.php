@@ -32,7 +32,7 @@
                 <td class="px-6 py-4">Rp {{ number_format($kursus->harga, 2, ',', '.') }}</td>
                 <td class="px-6 py-4">{{ $kursus->tingkat_kesulitan }}</td>
                 <td class="px-6 py-4">
-                    <span class="px-2 py-1 text-sm rounded 
+                    <span class="px-2 py-1 text-sm rounded
                     @if($kursus->status == 'Aktif') bg-green-500 text-white
                     @else bg-red-500 text-white @endif">
                         {{ $kursus->status }}
@@ -66,7 +66,7 @@
                             </button>
                         </div>
                         <!-- Isi Modal -->
-                        <form action="{{ route('kursus.update', $kursus->kursus_id) }}" method="POST">
+                        <form action="{{ route('kursus.update.admin', $kursus->kursus_id) }}" method="POST">
                             @csrf
                             @method('PUT')
                             <div class="p-4 md:p-5 bg-white dark:bg-gray-800 rounded-lg shadow-lg space-y-4">
@@ -118,7 +118,7 @@
             @endforeach
         </tbody>
     </table>
-    
+
             @if (session('success'))
             <script>
                 document.addEventListener('DOMContentLoaded', (event) => {

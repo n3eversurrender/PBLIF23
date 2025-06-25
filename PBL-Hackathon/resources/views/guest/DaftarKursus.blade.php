@@ -214,7 +214,6 @@
         </div>
 
 
-
         <!-- card start -->
         <section class="mt-2 ms-5">
             <div class="mx-auto px-2 sm:px-4 2xl:px-0">
@@ -255,7 +254,7 @@
                                 <a href="/CoursePage/{{ $item->kursus_id }}" class="hover:text-HoverGlow active:text-ButtonBase text-sm sm:text-md font-bold text-gray-800 mb-1 line-clamp-2 text-left">
                                     {{ $item->judul }}
                                 </a>
-                                <p class="cursor-default text-gray-500 text-[10px] sm:text-xs mb-4 line-clamp-2 text-left">{{ $item->deskripsi }} </p>
+                                <p class="cursor-default text-gray-500 text-[10px] sm:text-xs mb-4 line-clamp-2 text-left">{!! $item->deskripsi !!} </p>
                             </div>
 
 

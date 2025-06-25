@@ -93,7 +93,8 @@ Route::get('/MainPeserta', [MainController::class, 'mainPeserta']);
 Route::get('/MainPelatih', [MainController::class, 'mainPelatih']);
 
 // Route Web Skill Bridge
-Route::get('/Home', [MainController::class, 'Home'])->name('home');;
+Route::get('/Home', [MainController::class, 'Home'])->name('home');
+;
 Route::get('/DaftarKursus', [MainController::class, 'daftarKursus'])->name('daftarKursus');
 Route::get('/TentangKami', [MainController::class, 'tentangKami']);
 Route::get('/Daftar', [ManajemenAkunController::class, 'Daftar']);
@@ -226,7 +227,7 @@ Route::middleware(['auth', PeranMiddleware::class . ':Admin'])->group(function (
     Route::delete('/TambahKategori/{kategori_id}', [DataKategoriController::class, 'destroy'])->name('kategori.destroy');
 
     Route::get('/DataKursus', [DataKursusController::class, 'dataKursus'])->name('DataKursus');
-    Route::put('/kursus/{kursus_id}', [DataKursusController::class, 'update'])->name('kursus.update');
+    Route::put('/DataKursus/{kursus_id}', [DataKursusController::class, 'update'])->name('kursus.update.admin');
     Route::delete('/kursus/{kursus_id}', [DataKursusController::class, 'destroy'])->name('kursus.destroy');
 
     Route::get('/DataPeserta', [DataPesertaController::class, 'dataPeserta'])->name('DataPeserta');
