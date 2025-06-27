@@ -150,7 +150,7 @@
     <section class="pb-20 mt-16">
         <div class="flex justify-between items-center mb-4">
             <h2 class="text-2xl font-semibold text-gray-800">Galeri Perusahaan</h2>
-            <a href="/KelolaGaleri" class="text-blue-500 hover:text-blue-700 flex items-center gap-1">
+            <a href="{{ route('KelolaGaleri', ['id' => $perusahaan_id]) }}" class="text-blue-500 hover:text-blue-700 flex items-center gap-1">
                 <i class="fas fa-edit"></i> Kelola Galeri
             </a>
         </div>
@@ -209,7 +209,7 @@
                     @endif
             </nav>
         </div>
-    
+
 
         <!-- Modal -->
         <div class="fixed inset-0 bg-black/90 z-50 hidden items-center justify-center" id="imageModal">

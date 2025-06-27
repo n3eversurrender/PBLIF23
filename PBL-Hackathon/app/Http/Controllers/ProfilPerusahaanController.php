@@ -24,7 +24,12 @@ class ProfilPerusahaanController extends Controller
         // Kalau tidak ada perusahaan, galeri = collection kosong
         $galeri = $perusahaan ? $perusahaan->fotoPerusahaan()->paginate(4) : collect([]);
 
-        return view('Perusahaan.Profil', compact('user', 'perusahaan', 'galeri'));
+        return view('Perusahaan.Profil', [
+            'user' => $user,
+            'perusahaan' => $perusahaan,
+            'galeri' => $galeri,
+            'perusahaan_id' => $perusahaan?->perusahaan_id // null-safe kalau perlu
+        ]);
     }
 
 

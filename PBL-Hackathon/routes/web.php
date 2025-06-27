@@ -93,8 +93,7 @@ Route::get('/MainPeserta', [MainController::class, 'mainPeserta']);
 Route::get('/MainPelatih', [MainController::class, 'mainPelatih']);
 
 // Route Web Skill Bridge
-Route::get('/Home', [MainController::class, 'Home'])->name('home');
-;
+Route::get('/Home', [MainController::class, 'Home'])->name('home');;
 Route::get('/DaftarKursus', [MainController::class, 'daftarKursus'])->name('daftarKursus');
 Route::get('/TentangKami', [MainController::class, 'tentangKami']);
 Route::get('/Daftar', [ManajemenAkunController::class, 'Daftar']);
@@ -185,7 +184,10 @@ Route::middleware(['auth', PeranMiddleware::class . ':Perusahaan'])->group(funct
 
 
     // Kelola Galeri
-    Route::get('/KelolaGaleri', [GaleriController::class, 'kelolaGaleri'])->name('KelolaGaleri');
+    Route::get('/KelolaGaleri/{id}', [GaleriController::class, 'kelolaGaleri'])->name('KelolaGaleri');
+    Route::post('/galeri/store', [GaleriController::class, 'store'])->name('galeri.store');
+    Route::put('/galeri/{id}', [GaleriController::class, 'update'])->name('galeri.update');
+    Route::delete('/galeri/{id}', [GaleriController::class, 'destroy'])->name('galeri.destroy');
 
     // Menampilkan halaman daftar kursus
     Route::get('/kursus', [KursusPerushaanController::class, 'indexKursus'])->name('KursusPerusahaan');
