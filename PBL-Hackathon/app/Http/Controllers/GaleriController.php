@@ -11,11 +11,12 @@ class GaleriController extends Controller
 {
     public function kelolaGaleri($id)
     {
-        // Ambil data galeri berdasarkan perusahaan_id
-        $galeri = FotoPerusahaan::where('perusahaan_id', $id)->get();
+        // Ambil data galeri berdasarkan perusahaan_id dengan pagination (misal 6 per halaman)
+        $galeri = FotoPerusahaan::where('perusahaan_id', $id)->paginate(6);
 
         return view('perusahaan.KelolaGaleri', compact('galeri'));
     }
+
     public function store(Request $request)
     {
         $request->validate([

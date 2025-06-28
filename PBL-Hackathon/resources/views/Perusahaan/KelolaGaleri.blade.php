@@ -106,28 +106,43 @@
         </tbody>
     </table>
 
-    <!-- Modal Edit -->
-    <div id="editModal" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-50 z-50">
-        <div class="bg-white p-6 rounded-lg w-full max-w-md relative">
-            <button id="closeEditModal" class="absolute top-2 right-3 text-gray-600 hover:text-red-600 text-lg font-bold">&times;</button>
-            <h2 class="text-xl font-semibold mb-4">Edit Kegiatan</h2>
-            <form id="editForm">
-                <div class="mb-4">
-                    <label class="block mb-1">Gambar</label>
-                    <input type="file" id="editImage" class="w-full border rounded" />
-                </div>
-                <div class="mb-4">
-                    <label class="block mb-1">Nama Kegiatan</label>
-                    <input type="text" id="editNama" class="w-full border px-3 py-2 rounded" />
-                </div>
-                <div class="mb-4">
-                    <label class="block mb-1">Tanggal Kegiatan</label>
-                    <input type="date" id="editTanggal" class="w-full border px-3 py-2 rounded" />
-                </div>
-                <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded">Simpan</button>
-            </form>
-        </div>
+    <!-- Pagination -->
+    <div class="flex justify-center items-center mt-5">
+        <ul class="inline-flex -space-x-px text-sm">
+            <!-- Tombol Sebelumnya -->
+            <li>
+                @if ($galeri->onFirstPage())
+                <span class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-400 bg-gray-100 border border-e-0 border-gray-300 rounded-s-lg cursor-not-allowed">
+                    Sebelumnya
+                </span>
+                @else
+                <a href="{{ $galeri->previousPageUrl() }}" class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-e-0 border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">
+                    Sebelumnya
+                </a>
+                @endif
+            </li>
+
+            <!-- Tombol Berikutnya -->
+            <li>
+                @if ($galeri->hasMorePages())
+                <a href="{{ $galeri->nextPageUrl() }}" class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">
+                    Berikutnya
+                </a>
+                @else
+                <span class="flex items-center justify-center px-3 h-8 leading-tight text-gray-400 bg-gray-100 border border-gray-300 rounded-e-lg cursor-not-allowed">
+                    Berikutnya
+                </span>
+                @endif
+            </li>
+        </ul>
     </div>
+
+    <!-- Info entri -->
+    <div class="mt-4 mb-5 text-center text-sm text-gray-600 dark:text-gray-400">
+        Menampilkan {{ $galeri->firstItem() }} sampai {{ $galeri->lastItem() }} dari {{ $galeri->total() }} entri
+    </div>
+
+
 </div>
 <script>
     document.getElementById('toggleTambahGaleri').addEventListener('click', function(e) {

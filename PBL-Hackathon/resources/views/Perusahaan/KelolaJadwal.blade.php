@@ -219,6 +219,61 @@
                 </tbody>
 
             </table>
+
+            <!-- Pagination Custom -->
+            <div class="flex justify-center items-center mt-5">
+                <ul class="inline-flex -space-x-px text-sm">
+                    {{-- Tombol Sebelumnya --}}
+                    <li>
+                        @if ($jadwal->onFirstPage())
+                        <span class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-400 bg-gray-100 border border-gray-300 rounded-s-lg cursor-not-allowed">
+                            Sebelumnya
+                        </span>
+                        @else
+                        <a href="{{ $jadwal->previousPageUrl() }}"
+                            class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">
+                            Sebelumnya
+                        </a>
+                        @endif
+                    </li>
+
+                    {{-- Tombol Nomor Halaman --}}
+                    @for ($i = 1; $i <= $jadwal->lastPage(); $i++)
+                        <li>
+                            @if ($i == $jadwal->currentPage())
+                            <span class="flex items-center justify-center px-3 h-8 leading-tight text-white bg-blue-600 border border-gray-300">
+                                {{ $i }}
+                            </span>
+                            @else
+                            <a href="{{ $jadwal->url($i) }}"
+                                class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
+                                {{ $i }}
+                            </a>
+                            @endif
+                        </li>
+                        @endfor
+
+                        {{-- Tombol Berikutnya --}}
+                        <li>
+                            @if ($jadwal->hasMorePages())
+                            <a href="{{ $jadwal->nextPageUrl() }}"
+                                class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">
+                                Berikutnya
+                            </a>
+                            @else
+                            <span class="flex items-center justify-center px-3 h-8 leading-tight text-gray-400 bg-gray-100 border border-gray-300 rounded-e-lg cursor-not-allowed">
+                                Berikutnya
+                            </span>
+                            @endif
+                        </li>
+                </ul>
+            </div>
+
+            <!-- Info entri -->
+            <div class="mt-4 mb-5 text-center text-sm text-gray-600 dark:text-gray-400">
+                Menampilkan {{ $jadwal->firstItem() }} sampai {{ $jadwal->lastItem() }} dari {{ $jadwal->total() }} entri
+            </div>
+
         </div>
     </div>
 </main>

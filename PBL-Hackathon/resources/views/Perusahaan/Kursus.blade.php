@@ -39,7 +39,7 @@
                         <th class="px-4 py-3 text-left font-semibold text-gray-600">Nama Kursus</th>
                         <th class="px-4 py-3 text-left font-semibold text-gray-600">Level</th>
                         <th class="px-4 py-3 text-left font-semibold text-gray-600">Kapasitas</th>
-                        <th class="px-4 py-3 text-left font-semibold text-gray-600">Peserta</th> 
+                        <th class="px-4 py-3 text-left font-semibold text-gray-600">Peserta</th>
                         <th class="px-4 py-3 text-left font-semibold text-gray-600">Status</th>
                         <th class="px-4 py-3 text-left font-semibold text-gray-600">Aksi</th>
                     </tr>
@@ -197,6 +197,61 @@
         </div>
         @endif
     </div>
+
+    <!-- Pagination Custom -->
+    <div class="flex justify-center items-center mt-5">
+        <ul class="inline-flex -space-x-px text-sm">
+            {{-- Tombol Sebelumnya --}}
+            <li>
+                @if ($kursus->onFirstPage())
+                <span class="flex items-center justify-center px-3 h-8 leading-tight text-gray-400 bg-gray-100 border border-gray-300 rounded-s-lg cursor-not-allowed">
+                    Sebelumnya
+                </span>
+                @else
+                <a href="{{ $kursus->previousPageUrl() }}"
+                    class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">
+                    Sebelumnya
+                </a>
+                @endif
+            </li>
+
+            {{-- Nomor Halaman --}}
+            @for ($i = 1; $i <= $kursus->lastPage(); $i++)
+                <li>
+                    @if ($i == $kursus->currentPage())
+                    <span class="flex items-center justify-center px-3 h-8 leading-tight text-white bg-blue-600 border border-gray-300">
+                        {{ $i }}
+                    </span>
+                    @else
+                    <a href="{{ $kursus->url($i) }}"
+                        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
+                        {{ $i }}
+                    </a>
+                    @endif
+                </li>
+                @endfor
+
+                {{-- Tombol Berikutnya --}}
+                <li>
+                    @if ($kursus->hasMorePages())
+                    <a href="{{ $kursus->nextPageUrl() }}"
+                        class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">
+                        Berikutnya
+                    </a>
+                    @else
+                    <span class="flex items-center justify-center px-3 h-8 leading-tight text-gray-400 bg-gray-100 border border-gray-300 rounded-e-lg cursor-not-allowed">
+                        Berikutnya
+                    </span>
+                    @endif
+                </li>
+        </ul>
+    </div>
+
+    <!-- Info entri -->
+    <div class="mt-4 mb-5 text-center text-sm text-gray-600 dark:text-gray-400">
+        Menampilkan {{ $kursus->firstItem() }} sampai {{ $kursus->lastItem() }} dari {{ $kursus->total() }} kursus
+    </div>
+
 </main>
 <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 

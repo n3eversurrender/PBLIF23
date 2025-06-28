@@ -21,7 +21,11 @@ class JadwalController extends Controller
             $penggunaId = Auth::id();
 
             // Ambil data kursus yang dimiliki oleh pengguna yang sedang login
-            $kursus = Kursus::where('pengguna_id', $penggunaId)->get();
+            $kursus = Kursus::where('pengguna_id', $penggunaId)
+                ->withCount('jadwalKursus') // optional biar efisien
+                ->orderBy('created_at', 'desc')
+                ->paginate(10);
+
 
             // Jika tidak ada kursus yang ditemukan, redirect dengan pesan
             if ($kursus->isEmpty()) {
@@ -47,8 +51,7 @@ class JadwalController extends Controller
             ->firstOrFail();
 
         // Ambil data jadwal untuk kursus ini
-        $jadwal = JadwalKursus::where('kursus_id', $kursus_id)->get();
-
+        $jadwal = JadwalKursus::where('kursus_id', $kursus_id)->paginate(10);
         // Kirim data kursus dan jadwal ke view
         return view('Perusahaan.KelolaJadwal', compact('kursus', 'jadwal'));
     }

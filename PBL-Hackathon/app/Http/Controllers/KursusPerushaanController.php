@@ -16,20 +16,16 @@ class KursusPerushaanController extends Controller
 {
     public function indexKursus()
     {
-        // Pastikan pengguna sudah login
         if (Auth::check()) {
-            // Dapatkan user yang sedang login
             $user = Auth::user();
 
-            // Ambil data kursus yang dimiliki oleh pengguna
             $kursus = Kursus::where('pengguna_id', $user->pengguna_id)
-                ->with('kategori', 'pendaftaran') // Eager load relasi
-                ->get();
+                ->with('kategori', 'pendaftaran')
+                ->orderBy('created_at', 'desc') // opsional untuk urutan
+                ->paginate(10); // tampilkan 5 per halaman
 
-            // Ambil data kategori untuk edit
             $kategori = Kategori::all();
 
-            // Kirim data ke view
             return view('Perusahaan.Kursus', compact('kursus', 'kategori', 'user'));
         } else {
             return redirect()->route('login')->with('error', 'Anda harus login untuk melihat kursus Anda.');
@@ -80,7 +76,7 @@ class KursusPerushaanController extends Controller
             'kapasitas' => $validated['kapasitas'],
             'tgl_mulai' => $validated['tgl_mulai'],
             'tgl_selesai' => $validated['tgl_selesai'],
-            'status' => 'Tidak Aktif',
+            'status' => 'Aktif',
             'foto_kursus' => $fotoPath,
         ]);
 

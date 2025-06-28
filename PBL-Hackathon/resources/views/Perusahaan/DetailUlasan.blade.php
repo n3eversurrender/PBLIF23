@@ -33,12 +33,12 @@
             </div>
             <div>
                 <p><span class="text-red-600 font-medium">Negatif:</span>
-                    <span class="text-red-700">{{ $distribusi['negatif'] }}% ({{ $negatif_count }}/{{ $total }})</span>
+                    <span class="text-red-700">{{ $negatif_count }}/{{ $total }} ({{ $distribusi['negatif'] }}%)</span>
                 </p>
             </div>
             <div>
                 <p><span class="text-yellow-600 font-medium">Netral:</span>
-                    <span class="text-yellow-700">{{ $distribusi['netral'] }}% ({{ $netral_count }}/{{ $total }})</span>
+                    <span class="text-yellow-700">{{ $netral_count }}/{{ $total }} ({{ $distribusi['netral'] }}%)</span>
                 </p>
             </div>
         </div>
@@ -61,9 +61,11 @@
             </tr>
         </thead>
         <tbody class="divide-y divide-gray-100">
-            @forelse ($ulasan as $index => $review)
+            @forelse ($ulasan as $review)
             <tr class="hover:bg-gray-50">
-                <td class="px-4 py-3">{{ $index + 1 }}</td>
+                <td class="px-4 py-3">
+                    {{ ($ulasan->currentPage() - 1) * $ulasan->perPage() + $loop->iteration }}
+                </td>
                 <td class="px-4 py-3 font-medium text-gray-800">
                     {{ $review->pengguna->nama ?? 'Pengguna Anonim' }}
                 </td>
@@ -82,6 +84,60 @@
             @endforelse
         </tbody>
     </table>
+
+    <!-- Pagination Custom -->
+    <div class="flex justify-center items-center mt-5">
+        <ul class="inline-flex -space-x-px text-sm">
+            {{-- Tombol Sebelumnya --}}
+            <li>
+                @if ($ulasan->onFirstPage())
+                <span class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-400 bg-gray-100 border border-gray-300 rounded-s-lg cursor-not-allowed">
+                    Sebelumnya
+                </span>
+                @else
+                <a href="{{ $ulasan->previousPageUrl() }}"
+                    class="flex items-center justify-center px-3 h-8 ms-0 leading-tight text-gray-500 bg-white border border-gray-300 rounded-s-lg hover:bg-gray-100 hover:text-gray-700">
+                    Sebelumnya
+                </a>
+                @endif
+            </li>
+
+            {{-- Tombol Nomor Halaman --}}
+            @for ($i = 1; $i <= $ulasan->lastPage(); $i++)
+            <li>
+                @if ($i == $ulasan->currentPage())
+                <span class="flex items-center justify-center px-3 h-8 leading-tight text-white bg-blue-600 border border-gray-300">
+                    {{ $i }}
+                </span>
+                @else
+                <a href="{{ $ulasan->url($i) }}"
+                    class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 hover:bg-gray-100 hover:text-gray-700">
+                    {{ $i }}
+                </a>
+                @endif
+            </li>
+            @endfor
+
+            {{-- Tombol Berikutnya --}}
+            <li>
+                @if ($ulasan->hasMorePages())
+                <a href="{{ $ulasan->nextPageUrl() }}"
+                    class="flex items-center justify-center px-3 h-8 leading-tight text-gray-500 bg-white border border-gray-300 rounded-e-lg hover:bg-gray-100 hover:text-gray-700">
+                    Berikutnya
+                </a>
+                @else
+                <span class="flex items-center justify-center px-3 h-8 leading-tight text-gray-400 bg-gray-100 border border-gray-300 rounded-e-lg cursor-not-allowed">
+                    Berikutnya
+                </span>
+                @endif
+            </li>
+        </ul>
+    </div>
+
+    <!-- Info entri -->
+    <div class="mt-4 mb-5 text-center text-sm text-gray-600 dark:text-gray-400">
+        Menampilkan {{ $ulasan->firstItem() }} sampai {{ $ulasan->lastItem() }} dari {{ $ulasan->total() }} entri
+    </div>
 
     <div class="mt-6">
         <a href="{{ route('UlasanPerusahaan') }}"
