@@ -2,6 +2,23 @@
 
 @section('Main')
 
+<style>
+    @keyframes scroll-left {
+        0% {
+            transform: translateX(0);
+        }
+
+        100% {
+            transform: translateX(-50%);
+        }
+    }
+
+    .animate-scroll-company {
+        animation: scroll-left 30s linear infinite;
+    }
+</style>
+
+
 <!-- search start -->
 <div class="flex justify-end mt-24 mx-10">
     <form class="w-full max-w-lg">
@@ -20,38 +37,30 @@
 <!-- Perusahaan -->
 <div class="mt-10 mx-10">
     <h1 class="text-2xl font-bold">Perusahaan Penyedia Jasa</h1>
-    <div class="grid grid-cols-2 sm:grid-cols-4 lg:grid-cols-8 mt-8 mx-4 justify-items-center text-center">
-        @foreach($perusahaan as $p)
-        <a href="/detailProfil/{{ $p->pengguna_id }}" class="mt-2 hover:opacity-75 transition duration-500">
-            <div class="flex flex-col items-center">
-                <img src="{{ $p->foto_profil ? asset('storage/' . $p->foto_profil) : asset('image/thumnnail.jpg') }}"
-                    alt="Foto {{ $p->nama }}" class="h-20 w-20 rounded-full" />
-                <span class="font-semibold mt-2">{{ $p->nama }}</span>
-            </div>
-        </a>
-        @endforeach
-    </div>
-
-
-
-    <div class="flex flex-col items-center mt-5">
-        <div class="inline-flex mt-2 xs:mt-0">
-            <!-- Buttons -->
-            <button class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 rounded-s hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                <svg class="w-3.5 h-3.5 me-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5H1m0 0 4 4M1 5l4-4" />
-                </svg>
-                Prev
-            </button>
-            <button class="flex items-center justify-center px-3 h-8 text-sm font-medium text-white bg-gray-800 border-0 border-s border-gray-700 rounded-e hover:bg-gray-900 dark:bg-gray-800 dark:border-gray-700 dark:text-gray-400 dark:hover:bg-gray-700 dark:hover:text-white">
-                Next
-                <svg class="w-3.5 h-3.5 ms-2 rtl:rotate-180" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
-                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
-                </svg>
-            </button>
+    <div class="overflow-hidden relative w-full mt-4">
+        <div id="scrollContainer" class="flex gap-3 w-max animate-scroll-company">
+            @foreach($perusahaan as $p)
+            <a href="/detailProfil/{{ $p->pengguna_id }}" class="flex-shrink-0 hover:opacity-80 transition duration-500">
+                <div class="flex flex-col items-center">
+                    <img src="{{ $p->foto_profil ? asset('storage/' . $p->foto_profil) : asset('image/thumnnail.jpg') }}"
+                        alt="Foto {{ $p->nama }}" class="h-24 w-24 rounded-full border-2 border-black" />
+                </div>
+            </a>
+            @endforeach
+            {{-- Duplicate for infinite loop effect --}}
+            @foreach($perusahaan as $p)
+            <a href="/detailProfil/{{ $p->pengguna_id }}" class="flex-shrink-0 hover:opacity-80 transition duration-500">
+                <div class="flex flex-col items-center">
+                    <img src="{{ $p->foto_profil ? asset('storage/' . $p->foto_profil) : asset('image/thumnnail.jpg') }}"
+                        alt="Foto {{ $p->nama }}" class="h-24 w-24 rounded-full border-2 border-black" />
+                </div>
+            </a>
+            @endforeach
         </div>
     </div>
 </div>
+
+
 
 <section class="flex mx-4 sm:mx-12 mt-16">
     <aside class="h-auto min-h-screen">
