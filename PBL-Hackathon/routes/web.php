@@ -62,6 +62,7 @@ use App\Http\Controllers\ProfilPerusahaanController;
 use App\Http\Controllers\LandingPageController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\KursusPerushaanController;
+use App\Models\SkillMatching;
 
 // Route Default
 Route::get('/', function () {
@@ -73,15 +74,25 @@ Route::get('/SkillMatching', function () {
     return view('SkillMatching');
 });
 
+// lupa kata sandi
+Route::get('/lupasandi', function () {
+    return view('guest.LupaKataSandi');
+});
+
+
 Route::post('/forgot-password', [AuthController::class, 'sendResetLink'])->name('password.email');
 
 Route::get('reset-password/{token}', [AuthController::class, 'showResetForm'])->name('password.reset');
 Route::post('reset-password', [AuthController::class, 'reset'])->name('password.update');
 
+
+
+
 // konfirmasi kata sandi
 Route::get('/konfirmasi', function () {
     return view('guest.KonfirmasiKataSandi');
 });
+
 
 
 // perubahan end
@@ -128,6 +139,11 @@ Route::middleware(['auth', PeranMiddleware::class . ':Peserta'])->group(function
     Route::get('/Riwayat', [RiwayatController::class, 'riwayat'])->name('Riwayat');
     Route::get('/DetailRiwayat/{id}', [DetailRiwayatController::class, 'detailRiwayat'])->name('DetailRiwayat');
     Route::post('/ulasan/{id}', [DetailRiwayatController::class, 'submitUlasan'])->name('ulasan.submit');
+
+    Route::get('/SkillMatching', [SkillMatchingController::class, 'view'])->name('SkillMatching');
+    Route::get('/RekomendasiSaya', [SkillMatchingController::class, 'rekomendasiSaya'])->name('rekomendasiSaya');
+    Route::post('/peserta/skillmatching', [SkillMatchingController::class, 'skillmatching'])->name('peserta.skillmatching');
+
 
     Route::get('/Profil', [ProfilController::class, 'profil'])->name('Profil');
     Route::post('/profil/update', [ProfilController::class, 'update'])->name('profile.update');

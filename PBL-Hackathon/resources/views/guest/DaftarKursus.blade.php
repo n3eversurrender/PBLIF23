@@ -354,4 +354,37 @@
         }
     </script>
 
+    @if (session('success'))
+        <script>
+            // {{ session('success') }}
+            document.addEventListener('DOMContentLoaded', (event) => {
+                Swal.fire({
+    icon: 'success',
+    title: "{{ session('success') }}",
+    confirmButtonText: 'OK',
+    customClass: {
+        confirmButton: 'my-swal-button'
+    }
+});
+            });
+            
+        </script>
+        @endif
+
+        @if (session('error'))
+    <script>
+        // {{ session('error') }}
+        document.addEventListener('DOMContentLoaded', (event) => {
+            Swal.fire({
+                icon: 'error',
+                title: "{{ session('error') }}",
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'my-swal-button'
+                }
+            });
+        });
+    </script>
+@endif
+
     @endsection

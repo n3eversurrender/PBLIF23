@@ -1,0 +1,14 @@
+# Abaikan folder myenv
+ModelAI/myenv/
+
+# Abaikan folder env lain (jika ada)
+env/
+venv/
+myenv/
+
+# Abaikan file sementara
+*.log
+*.tmp
+
+# Abaikan dependency Python jika pakai pipenv
+Pipfile.lock

@@ -1,4 +1,7 @@
-flask
-sqlalchemy
+Flask
 pandas
-numpy
+torch
+transformers
+SQLAlchemy
+pymysql
+sentence-transformers

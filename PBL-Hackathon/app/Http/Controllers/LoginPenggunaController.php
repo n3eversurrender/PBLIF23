@@ -44,15 +44,15 @@ class LoginPenggunaController extends Controller
         // Arahkan ke dashboard sesuai peran
         switch ($pengguna->peran) {
             case 'Perusahaan':
-                return redirect()->route('StatistikPerusahaan');
+                return redirect()->route('StatistikPerusahaan')->with('success', 'Login berhasil!');
             case 'Peserta':
-                return redirect()->route('BerandaTrainee');
+                return redirect()->route('SkillMatching')->with('success', 'Login berhasil!');
             case 'Admin':
-                return redirect()->route('dashboard');
+                return redirect()->route('dashboard')->with('success', 'Login berhasil!');
             case 'Superadmin':
-                return redirect()->route('dashboard');
+                return redirect()->route('dashboard')->with('success', 'Login berhasil!');
             default:
-                return redirect()->route('login'); // Rute fallback jika peran tidak dikenal
+                return redirect()->route('login')->with('error', 'Login gagal!'); // Rute fallback jika peran tidak dikenal
         }
     }
 
@@ -96,8 +96,23 @@ class LoginPenggunaController extends Controller
                 'kata_sandi' => Hash::make(rand(100000, 999999)),
             ]);
         }
+        // Login berhasil
         Auth::login($user);
-        return redirect()->route('BerandaTrainee')->with('success', 'login berhasil');
+
+        // Arahkan ke dashboard sesuai peran
+        switch ($user->peran) {
+            case 'Perusahaan':
+                return redirect()->route('StatistikPerusahaan')->with('success', 'Login berhasil!');
+            case 'Peserta':
+                return redirect()->route('SkillMatching')->with('success', 'Login berhasil!');
+            case 'Admin':
+                return redirect()->route('dashboard')->with('success', 'Login berhasil!');
+            case 'Superadmin':
+                return redirect()->route('dashboard')->with('success', 'Login berhasil!');
+            default:
+                return redirect()->route('login')->with('error', 'Login gagal!'); // Rute fallback jika peran tidak dikenal
+        }
+        
     }
 
 

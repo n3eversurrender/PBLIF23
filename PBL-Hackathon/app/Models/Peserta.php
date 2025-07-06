@@ -18,17 +18,34 @@ class Peserta extends Model
         'pendidikan',
         'minat_bidang',
         'bidang_saat_ini',
-        'kemampuan',
-        'tahun_pengalaman',
-        'bulan_pengalaman',
-        'nama_keahlian'
+        'bidang',
+        'nama_keahlian',
+        'level'
     ];
 
-    protected $casts = [
-        'minat_bidang' => 'array',
-        'bidang_saat_ini' => 'array',
-        'kemampuan' => 'array',
-    ];
+    // protected $fillable = [
+    //     'pengguna_id',
+    //     'status',
+    //     'pendidikan',
+    //     'minat_bidang',
+    //     'bidang_saat_ini',
+    //     'kemampuan',
+    //     'tahun_pengalaman',
+    //     'bulan_pengalaman',
+    //     'nama_keahlian'
+    // ];
+
+    // protected $casts = [
+    //     'minat_bidang' => 'array',
+    //     'bidang_saat_ini' => 'array',
+    //     'kemampuan' => 'array',
+    // ];
+
+     // Relasi ke SkillMatching
+    public function skills()
+    {
+        return $this->hasMany(Skill::class, 'peserta_id', 'peserta_id');
+    }
 
     public function pengguna()
     {
