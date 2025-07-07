@@ -18,4 +18,9 @@ class Kategori extends Model
     {
         return $this->hasMany(Kursus::class, 'kategori_id', 'kategori_id');
     }
+
+    public function kategori()
+    {
+        return $this->hasMany(Kategori::class, 'kategori_id', 'kategori_id');
+    }
 }

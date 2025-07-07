@@ -63,12 +63,18 @@
                         <p class="mb-5 text-gray-700">Tingkatkan kemampuan dengan kursus yang sesuai bidangmu.</p>
                     </div>
                     <!-- Grid Container -->
+                     @if($skills->isEmpty())
+    <div class="text-center text-gray-600 py-10">
+        <p class="text-lg font-semibold">Belum ada rekomendasi 😔</p>
+        <p class="text-sm mt-2">Silakan lengkapi form pengalaman di profil untuk mendapatkan rekomendasi kursus!</p>
+    </div>
+@else
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach ($skills as $item)
     <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
         <!-- Course Image -->
         <div class="relative cursor-default">
-            <img class="w-full h-44 sm:h-36 lg:h-44 object-cover" src="{{ $item->kursus->thumbnail ?? 'https://via.placeholder.com/300' }}" alt="Course thumbnail">
+            <img class="w-full h-44 sm:h-36 lg:h-44 object-cover" src="{{ asset('storage/' . $item->foto_kursus) }}" alt="{{ $item->judul }}">
             <div class="absolute top-3 left-3 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
                 {{ $item->kursus->tingkat_kesulitan }}
             </div>
@@ -77,7 +83,7 @@
         <!-- Course Content -->
         <div class="p-6">
             <div class="flex justify-between items-start mb-2 cursor-default">
-                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">{{ $item->kursus->kategori }}</span>
+                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">{{ $item->kursus->kategori->nama_kategori }}</span>
                 <div class="flex items-center">
                     <i class="fas fa-star text-yellow-400 text-sm"></i>
                     <span class="text-gray-700 text-sm font-medium ml-1">{{ $item->kursus->rating }}</span>
@@ -110,6 +116,7 @@
         </div>
     </div>
 @endforeach
+@endif
 
 
                         

@@ -19,15 +19,41 @@ public function skillmatching(Request $request)
 {
     $id = Auth::id();
 
+
+    $messages = [
+    'minat_bidang.required' => 'Bidang yang diminati wajib diisi.',
+    'minat_bidang.string' => 'Bidang yang diminati harus berupa teks.',
+    'minat_bidang.max' => 'Bidang yang diminati maksimal 255 karakter.',
+
+    'bidang.required' => 'Bidang saat ini wajib diisi.',
+    'bidang.string' => 'Bidang saat ini harus berupa teks.',
+    'bidang.max' => 'Bidang saat ini maksimal 255 karakter.',
+
+    'level.required' => 'Level kursus wajib dipilih.',
+    'level.string' => 'Level kursus harus berupa teks.',
+    'level.in' => 'Level kursus harus salah satu dari: Pemula, Menengah, atau Lanjutan.',
+
+    'pendidikan.required' => 'Riwayat pendidikan wajib diisi.',
+    'pendidikan.string' => 'Riwayat pendidikan harus berupa teks.',
+    'pendidikan.max' => 'Riwayat pendidikan maksimal 255 karakter.',
+
+    'status.required' => 'Status wajib dipilih.',
+    'status.string' => 'Status harus berupa teks.',
+    'status.in' => 'Status harus salah satu dari: Siswa, Mahasiswa, atau Pekerja.',
+
+    'nama_keahlian.required' => 'Keahlian wajib diisi.',
+    'nama_keahlian.string' => 'Keahlian harus berupa teks.',
+];
+
     // Validasi data
     $request->validate([
         'minat_bidang' => 'required|string|max:255',
         'bidang' => 'required|string|max:255',
         'level' => 'required|string|in:Pemula,Menengah,Lanjutan',
-        'pendidikan' => 'nullable|string|max:255',
-        'status' => 'nullable|string|in:Siswa,Mahasiswa,Pekerja',
-        'nama_keahlian' => 'nullable|string',
-    ]);
+        'pendidikan' => 'required|string|max:255',
+        'status' => 'required|string|in:Siswa,Mahasiswa,Pekerja',
+        'nama_keahlian' => 'required|string',
+    ], $messages);
 
     // Simpan data trainee ke database
     Peserta::updateOrCreate(
@@ -67,7 +93,7 @@ public function skillmatching(Request $request)
 
     // Simpan hasil rekomendasi
     foreach ($result['skillmatching'] as $skillmatching) {
-        Skill::create([
+        Skill::Create([
             'peserta_id' => $pesertaId, // yang disimpan ID peserta
             'kursus_id' => $skillmatching['kursus_id'],
             'score' => $skillmatching['score'],
@@ -77,7 +103,7 @@ public function skillmatching(Request $request)
     return redirect()->route('BerandaTrainee')->with('success', 'Rekomendasi berhasil disimpan.');
 
 } catch (\Exception $e) {
-    return redirect()->route('BerandaTrainee')->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
+    return back()->with('error', 'Terjadi kesalahan: ' . $e->getMessage());
 }
 
 

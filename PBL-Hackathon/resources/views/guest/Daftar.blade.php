@@ -51,7 +51,7 @@
                             class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Nama</label>
                         <input type="text" id="nama" name="nama"
                             class="border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            placeholder="John Doe" />
+                            placeholder="John Doe" value="{{ old('nama') }}"/>
                         @error('nama')
                             <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
                         @enderror
@@ -61,7 +61,7 @@
                             class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">Email</label>
                         <input type="email" id="email" name="email"
                             class="border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
-                            placeholder="john.doe@company.com" />
+                            placeholder="john.doe@company.com" value="{{ old('email') }}"/>
                         @error('email')
                             <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
                         @enderror
@@ -92,7 +92,7 @@
                             <input type="password" id="kata_sandi_confirmation" name="kata_sandi_confirmation"
                                 class="border @error('kata_sandi_confirmation') border-red-500 @else border-Border @enderror text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 pr-10"
                                 placeholder="•••••••••" />
-                            <i id="toggleConfirmPassword"
+                          <i id="toggleConfirmPassword"
                                 class="fas fa-eye absolute top-1/2 right-3 transform -translate-y-1/2 cursor-pointer"></i>
                         </div>
                     </div>
@@ -152,6 +152,39 @@
             });
         });
     </script>
+
+    @if (session('success'))
+        <script>
+            // {{ session('success') }}
+            document.addEventListener('DOMContentLoaded', (event) => {
+                Swal.fire({
+    icon: 'success',
+    title: "{{ session('success') }}",
+    confirmButtonText: 'OK',
+    customClass: {
+        confirmButton: 'my-swal-button'
+    }
+});
+            });
+            
+        </script>
+        @endif
+
+        @if (session('error'))
+    <script>
+        // {{ session('error') }}
+        document.addEventListener('DOMContentLoaded', (event) => {
+            Swal.fire({
+                icon: 'error',
+                title: "{{ session('error') }}",
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'my-swal-button'
+                }
+            });
+        });
+    </script>
+@endif
 
 
 </body>

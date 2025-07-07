@@ -45,7 +45,7 @@ class BerandaTraineeController extends Controller
 
     if ($peserta) {
         $skills = $peserta->skills()
-            ->with('kursus')
+            ->with('kursus.kategori')
             ->orderByDesc('score')
             ->take(3)
             ->get();

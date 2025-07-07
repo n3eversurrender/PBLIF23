@@ -57,6 +57,9 @@
                     </label>
                     <input type="text" name="minat_bidang" class="border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Masukkan bidang minat Anda anda">  
+                        @error('minat_bidang')
+                            <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
+                        @enderror
                 </div>
                  <!-- Bidang saat ini -->
                     <div class="mb-4 sm:mb-0">
@@ -65,6 +68,9 @@
                         </label>
                         <input type="text" name="bidang" class="border w-full border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Masukkan bidang saat ini">  
+                        @error('bidang')
+                            <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
+                        @enderror
                     </div>
 
                 <!-- Preferensi level -->
@@ -78,16 +84,9 @@
                         <option value="Menengah">Menengah</option>
                         <option value="Lanjutan">Lanjutan</option>
                     </select>
-                </div>
-
-
-                <!-- Line pengalaman opsional -->
-                <div class="flex items-center justify-center my-6">
-                    <div class="w-full border-t border-gray-400"></div>
-                    <h4 class="px-4 text-sm font-semibold text-gray-950 whitespace-nowrap">
-                        Pengalaman Opsional
-                    </h4>
-                    <div class="w-full border-t border-gray-300"></div>
+                    @error('level')
+                        <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
+                    @enderror
                 </div>
 
                  <!-- Pendidikan -->
@@ -96,7 +95,10 @@
                         Pendidikan
                     </label>
                     <input type="text"  name="pendidikan" class="border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Masukkan riwayat pendidikan anda">  
+                        placeholder="Masukkan riwayat pendidikan anda">
+                       @error('pendidikan')
+                            <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
+                        @enderror 
                 </div>
 
                  <!-- Status -->
@@ -110,6 +112,9 @@
                         <option value="Mahasiswa">Mahasiswa</option>
                         <option value="Pekerja">Pekerja</option>
                     </select>
+                    @error('status')
+                       <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <!-- Keahlian -->
@@ -119,6 +124,9 @@
                     </label>
                     <textarea name="nama_keahlian" rows="4" class="border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                         placeholder="Tuliskan keahlian yang anda miliki"></textarea>
+                    @error('nama_keahlian')
+                        <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
+                    @enderror
                 </div>
 
                 <div class="sm:mt-8 mt-0 lg:mt-0">
@@ -130,7 +138,7 @@
             </form>
             <div class="bg-white p-4 w-full flex flex-col justify-center items-center lg:mb-20">
                 <div class="sm:flex sm:gap-2 w-full font-semibold px-12 lg:px-0 lg:max-w-md text-xs sm:text-sm">
-                    <h3>Belum ada pengalaman?</h3>
+                    <h3>Belum ada pengalaman atau sudah mengisi form?</h3>
                     <a href="{{ route('BerandaTrainee') }}" class="text-ButtonBase transition duration-700 hover:text-HoverGlow">lewati halaman ini</a>
                 </div>
             </div>

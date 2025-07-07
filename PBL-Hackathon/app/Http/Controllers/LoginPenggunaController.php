@@ -98,6 +98,7 @@ class LoginPenggunaController extends Controller
         }
         // Login berhasil
         Auth::login($user);
+        
 
         // Arahkan ke dashboard sesuai peran
         switch ($user->peran) {

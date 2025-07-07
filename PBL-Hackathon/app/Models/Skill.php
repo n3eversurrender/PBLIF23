@@ -31,4 +31,11 @@ class Skill extends Model
         return $this->belongsTo(Kursus::class, 'kursus_id', 'kursus_id');
     }
 
+      public function kategori()
+    {
+        return $this->belongsTo(Kategori::class, 'kategori_id', 'kategori_id');
+    }
+
+
+
 }

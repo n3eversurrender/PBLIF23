@@ -23,15 +23,6 @@ class ManajemenAkunController extends Controller
             'email.required' => 'Email wajib diisi.',
             'email.email' => 'Format email tidak valid.',
             'email.unique' => 'Email sudah digunakan, silakan gunakan email lain.',
-            'no_telepon.required' => 'Nomor telepon wajib diisi.',
-            'no_telepon.digits_between' => 'Nomor telepon harus antara 10 hingga 15 digit.',
-            'alamat.required' => 'Alamat wajib diisi.',
-            'alamat.string' => 'Alamat harus berupa teks.',
-            'jenis_kelamin.required' => 'Jenis kelamin wajib dipilih.',
-            'jenis_kelamin.in' => 'Jenis kelamin tidak valid.',
-
-            'peran.required' => 'Peran wajib dipilih.',
-            'peran.in' => 'Peran tidak valid.',
 
             'kata_sandi.required' => 'Kata sandi wajib diisi.',
             'kata_sandi.string' => 'Kata sandi harus berupa teks.',
@@ -43,10 +34,6 @@ class ManajemenAkunController extends Controller
         $validator = Validator::make($request->all(), [
             'nama' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:pengguna',
-            'no_telepon' => 'required|digits_between:10,15',
-            'alamat' => 'required|string',
-            'jenis_kelamin' => 'required|in:Laki-laki,Perempuan',
-            'peran' => 'required|in:Peserta,Pelatih',
             'kata_sandi' => [
                 'required',
                 'string',
@@ -63,18 +50,11 @@ class ManajemenAkunController extends Controller
                 ->withInput();
         }
 
-        // Ambil status dari form
-        $status = $request->status;
-
         // Simpan data pengguna
         Pengguna::create([
             'nama' => $request->nama,
             'email' => $request->email,
-            'no_telepon' => $request->no_telepon,
-            'alamat' => $request->alamat,
-            'jenis_kelamin' => $request->jenis_kelamin,
-            'peran' => $request->peran,
-            'status' => $status, // Gunakan status yang dikirimkan dari form
+            'peran' => 'Peserta',
             'kata_sandi' => Hash::make($request->kata_sandi),
         ]);
 
