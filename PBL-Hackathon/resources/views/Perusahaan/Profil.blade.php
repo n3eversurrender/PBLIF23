@@ -277,5 +277,19 @@
         document.body.style.overflow = 'auto'; // Mengembalikan scrolling
     }
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if (session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: "{{ session('success') }}",
+        confirmButtonText: 'OK',
+        customClass: {
+            confirmButton: 'my-swal-button'
+        }
+    });
+</script>
+@endif
 
 @endsection

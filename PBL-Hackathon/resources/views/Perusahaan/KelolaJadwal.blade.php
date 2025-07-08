@@ -50,27 +50,27 @@
 
                             <div class="mb-4">
                                 <label class="block text-sm font-medium text-gray-700">Sesi</label>
-                                <input type="text" name="sesi" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                                <input type="text" name="sesi" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" placeholder="Contoh: Sesi 1" />
                             </div>
 
                             <div class="mb-4">
                                 <label class="block text-sm font-medium text-gray-700">Tanggal</label>
-                                <input type="date" name="tanggal" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                                <input type="date" name="tanggal" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
                             </div>
 
                             <div class="mb-4">
                                 <label class="block text-sm font-medium text-gray-700">Jam Mulai</label>
-                                <input type="time" name="jam_mulai" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                                <input type="time" name="jam_mulai" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
                             </div>
 
                             <div class="mb-4">
                                 <label class="block text-sm font-medium text-gray-700">Jam Selesai</label>
-                                <input type="time" name="jam_selesai" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                                <input type="time" name="jam_selesai" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
                             </div>
 
                             <div class="mb-4">
                                 <label class="block text-sm font-medium text-gray-700">Lokasi</label>
-                                <input type="text" name="lokasi" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm">
+                                <input type="text" name="lokasi" class="mt-1 block w-full border-gray-300 rounded-md shadow-sm" />
                             </div>
 
                             <div class="flex justify-end space-x-2">
@@ -143,35 +143,35 @@
                                         <div class="mb-4">
                                             <label for="sesi" class="block text-sm font-semibold text-gray-700 dark:text-gray-400">Sesi</label>
                                             <input type="text" name="sesi" id="sesi" value="{{ old('sesi', $item->sesi) }}"
-                                                class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                                                class="mt-1 p-2 border border-gray-300 rounded w-full" />
                                         </div>
 
                                         <!-- Tanggal -->
                                         <div class="mb-4">
                                             <label for="tanggal" class="block text-sm font-semibold text-gray-700 dark:text-gray-400">Tanggal</label>
                                             <input type="date" name="tanggal" id="tanggal" value="{{ old('tanggal', $item->tanggal) }}"
-                                                class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                                                class="mt-1 p-2 border border-gray-300 rounded w-full" />
                                         </div>
 
                                         <!-- Jam Mulai -->
                                         <div class="mb-4">
                                             <label for="jam_mulai" class="block text-sm font-semibold text-gray-700 dark:text-gray-400">Jam Mulai</label>
                                             <input type="time" name="jam_mulai" id="jam_mulai" value="{{ \Carbon\Carbon::parse(old('jam_mulai', $item->jam_mulai))->format('H:i') }}"
-                                                class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                                                class="mt-1 p-2 border border-gray-300 rounded w-full" />
                                         </div>
 
                                         <!-- Jam Selesai -->
                                         <div class="mb-4">
                                             <label for="jam_selesai" class="block text-sm font-semibold text-gray-700 dark:text-gray-400">Jam Selesai</label>
                                             <input type="time" name="jam_selesai" id="jam_selesai" value="{{ \Carbon\Carbon::parse(old('jam_selesai', $item->jam_selesai))->format('H:i') }}"
-                                                class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                                                class="mt-1 p-2 border border-gray-300 rounded w-full" />
                                         </div>
 
                                         <!-- Lokasi -->
                                         <div class="mb-4">
                                             <label for="lokasi" class="block text-sm font-semibold text-gray-700 dark:text-gray-400">Lokasi</label>
                                             <input type="text" name="lokasi" id="lokasi" value="{{ old('lokasi', $item->lokasi) }}"
-                                                class="mt-1 p-2 border border-gray-300 rounded w-full" required>
+                                                class="mt-1 p-2 border border-gray-300 rounded w-full" />
                                         </div>
 
                                         <!-- Tombol -->
@@ -277,5 +277,44 @@
         </div>
     </div>
 </main>
+
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if (session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: "{{ session('success') }}",
+        confirmButtonText: 'OK',
+        customClass: {
+            confirmButton: 'my-swal-button'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.reload();
+        }
+    });
+</script>
+@endif
+
+@if ($errors->any())
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Gagal!',
+        html: `{!! implode('<br>', $errors->all()) !!}`,
+        confirmButtonText: 'OK',
+        customClass: {
+            confirmButton: 'my-swal-button'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.reload();
+        }
+    });
+</script>
+@endif
+
 
 @endsection

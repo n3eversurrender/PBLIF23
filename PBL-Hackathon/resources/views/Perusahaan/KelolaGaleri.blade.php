@@ -51,7 +51,7 @@
             @forelse($galeri as $item)
             <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 border-gray-200">
                 <td class="px-6 py-4">
-                    <img src="{{ asset('storage/' . $item->file_path) }}" alt="Foto Kegiatan" class="w-24 h-24 object-cover aspect-square rounded-lg img-kegiatan">
+                    <img src="{{ asset('storage/' . $item->file_path) }}?t={{ $item->updated_at->timestamp }}" class="w-24 h-24 object-cover aspect-square rounded-lg img-kegiatan">
                 </td>
                 <td class="px-6 py-4 nama-kegiatan">{{ $item->created_at->format('Y-m-d') }}</td>
                 <td class="px-6 py-4 tanggal-kegiatan">{{ $item->updated_at->format('Y-m-d') }}</td>
@@ -182,4 +182,40 @@
         }
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if (session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: "{{ session('success') }}",
+        confirmButtonText: 'OK',
+        customClass: {
+            confirmButton: 'my-swal-button'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.reload();
+        }
+    });
+</script>
+@endif
+
+@if ($errors->any())
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Gagal!',
+        html: `{!! implode('<br>', $errors->all()) !!}`,
+        confirmButtonText: 'OK',
+        customClass: {
+            confirmButton: 'my-swal-button'
+        }
+    }).then((result) => {
+        if (result.isConfirmed) {
+            window.location.reload();
+        }
+    });
+</script>
+@endif
 @endsection

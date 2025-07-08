@@ -51,58 +51,6 @@
     </div>
 </section>
 
-<!-- esklusif wilayah batam desain 2 -->
-<!-- <section>
-    <div class="relative bg-white rounded-2xl overflow-hidden shadow-lg">
-        <div class="absolute inset-0 bg-gradient-to-br from-blue-50 to-indigo-50 opacity-70"></div>
-        <div class="relative z-10 grid md:grid-cols-2 gap-8 p-8">
-            <div class="flex flex-col justify-center">
-                <h2 class="text-3xl font-bold text-gray-900 mb-4">Kami Hadir Khusus untuk Batam</h2>
-                <p class="text-gray-700 mb-6">
-                    Sebagai bagian dari komitmen kami terhadap kualitas, saat ini kami membatasi layanan hanya untuk wilayah Batam. Ini memungkinkan kami memberikan fokus dan pelayanan terbaik.
-                </p>
-                <ul class="space-y-3">
-                    <li class="flex items-start">
-                        <svg class="flex-shrink-0 h-6 w-6 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        <span class="text-gray-700">Kurikulum disesuaikan dengan kebutuhan Batam</span>
-                    </li>
-                    <li class="flex items-start">
-                        <svg class="flex-shrink-0 h-6 w-6 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        <span class="text-gray-700">Instruktur yang memahami konteks lokal</span>
-                    </li>
-                    <li class="flex items-start">
-                        <svg class="flex-shrink-0 h-6 w-6 text-green-500 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path>
-                        </svg>
-                        <span class="text-gray-700">Jaringan alumni yang kuat di Batam</span>
-                    </li>
-                </ul>
-            </div>
-            <div class="relative">
-                <div class="relative h-full min-h-[300px] bg-blue-50 rounded-xl overflow-hidden flex items-center justify-center">
-                   
-                    <svg class="w-full h-auto max-w-xs" viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
-                        <path fill="#3B82F6" fill-opacity="0.2" stroke="#3B82F6" stroke-width="2" d="M100,50 Q120,30 140,50 Q160,70 150,90 Q140,110 120,120 Q100,130 80,120 Q60,110 50,90 Q40,70 60,50 Q80,30 100,50 Z" />
-                        
-                        <circle cx="100" cy="80" r="5" fill="#EF4444" class="animate-pulse" />
-                        <circle cx="120" cy="100" r="3" fill="#10B981" />
-                        <circle cx="80" cy="100" r="3" fill="#10B981" />
-                        <circle cx="90" cy="70" r="3" fill="#10B981" />
-                        <circle cx="130" cy="70" r="3" fill="#10B981" />
-                        <text x="100" y="180" text-anchor="middle" font-family="sans-serif" font-size="14" fill="#1E40AF">Pulau Batam</text>
-                    </svg>
-                </div>
-                <div class="absolute -bottom-4 -right-4 bg-white px-4 py-2 rounded-lg shadow-md border border-gray-100">
-                    <span class="text-sm font-medium text-blue-600">Wilayah Layanan Kami</span>
-                </div>
-            </div>
-        </div>
-    </div>
-</section> -->
 
 <section class=" cursor-default">
     <div class="bg-white">
@@ -184,7 +132,6 @@
             </div>
         </div>
     </div>
-    <!-- Row 2: Empat kolom -->
 </section>
 
 <div class="container mx-auto mt-20 cursor-default">
@@ -210,7 +157,6 @@
                 <div class="absolute inset-0 bg-black opacity-30 rounded-t-lg"></div>
                 <div class="absolute left-8 sm:left-24 bottom-1/2 transform translate-y-1/2">
                     <p class="text-white text-2xl sm:text-3xl font-bold mb-5">Bergabunglah dengan SkillBridge</p>
-                    <!-- <a href="#" class="bg-[#0D92F4] rounded-lg text-white text-base font-medium text-center px-6 sm:px-4 py-2.5">Bergabung</a> -->
                 </div>
             </div>
         </div>

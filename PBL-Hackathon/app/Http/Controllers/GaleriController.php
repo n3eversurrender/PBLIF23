@@ -21,6 +21,11 @@ class GaleriController extends Controller
     {
         $request->validate([
             'file_path' => 'required|image|mimes:jpeg,png,jpg,webp|max:2048',
+        ], [
+            'file_path.required' => 'Gambar wajib diisi',
+            'file_path.image' => 'Format gambar tidak sesuai',
+            'file_path.mimes' => 'Format gambar tidak sesuai',
+            'file_path.max' => 'Foto profil tidak boleh lebih dari 2MB',
         ]);
 
         $user = auth()->user();

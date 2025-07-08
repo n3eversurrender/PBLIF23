@@ -255,4 +255,34 @@
 </main>
 <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
 
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if (session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: "{{ session('success') }}",
+        confirmButtonText: 'OK',
+        customClass: {
+            confirmButton: 'my-swal-button'
+        }
+    });
+</script>
+@endif
+
+@if ($errors->any())
+<script>
+    Swal.fire({
+        icon: 'error',
+        title: 'Perubahan Gagal!',
+        html: `{!! implode('<br>', $errors->all()) !!}`,
+        confirmButtonText: 'OK',
+        customClass: {
+            confirmButton: 'my-swal-button'
+        }
+    });
+</script>
+@endif
+
+
 @endsection

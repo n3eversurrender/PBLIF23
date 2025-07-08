@@ -23,7 +23,7 @@
     @endif
 
     {{-- Error message --}}
-    @if ($errors->any())
+    <!-- @if ($errors->any())
     <div class="mb-4 p-4 bg-red-100 text-red-800 rounded">
         <ul class="list-disc list-inside">
             @foreach ($errors->all() as $error)
@@ -31,7 +31,7 @@
             @endforeach
         </ul>
     </div>
-    @endif
+    @endif -->
 
     <form action="{{ route('SimpanKursus') }}" method="POST" enctype="multipart/form-data" id="kursusForm">
         @csrf
@@ -40,6 +40,9 @@
             <label class="block mb-2 text-base lg:text-xl font-semibold text-gray-900 dark:text-white">Judul Kursus</label>
             <input type="text" name="judul" value="{{ old('judul') }}"
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full" />
+            @error('judul')
+            <div class="text-red-500 text-sm">{{ $message }}</div>
+            @enderror
         </div>
 
         <div class="mb-5">
@@ -48,6 +51,9 @@
                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
             {{ old('deskripsi') }}
             </textarea>
+            @error('deskripsi')
+            <div class="text-red-500 text-sm">{{ $message }}</div>
+            @enderror
         </div>
 
 
@@ -61,6 +67,9 @@
                     <option value="Menengah" {{ old('tingkat_kesulitan') == 'Menengah' ? 'selected' : '' }}>Menengah</option>
                     <option value="Lanjutan" {{ old('tingkat_kesulitan') == 'Lanjutan' ? 'selected' : '' }}>Lanjutan</option>
                 </select>
+                @error('tingkat_kesulitan')
+                <div class="text-red-500 text-sm">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="sm:w-1/2 sm:mt-0 mt-5">
@@ -74,6 +83,9 @@
                     </option>
                     @endforeach
                 </select>
+                @error('kategori_id')
+                <div class="text-red-500 text-sm">{{ $message }}</div>
+                @enderror
             </div>
         </div>
 
@@ -82,12 +94,18 @@
                 <label class="block mb-2 text-base lg:text-xl font-semibold text-gray-900">Harga</label>
                 <input type="number" name="harga" value="{{ old('harga') }}"
                     class="bg-gray-50 border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full" />
+                @error('harga')
+                <div class="text-red-500 text-sm">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="sm:w-1/2 sm:mt-0 mt-5">
                 <label class="block mb-2 text-base lg:text-xl font-semibold text-gray-900 dark:text-white">Kapasitas</label>
                 <input type="number" name="kapasitas" value="{{ old('kapasitas') }}"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full">
+                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full" />
+                @error('kapasitas')
+                <div class="text-red-500 text-sm">{{ $message }}</div>
+                @enderror
             </div>
         </div>
 
@@ -96,11 +114,17 @@
                 <label class="block mb-2 text-base lg:text-xl font-semibold text-gray-900 dark:text-white">Tanggal Mulai</label>
                 <input type="date" name="tgl_mulai" value="{{ old('tgl_mulai') }}"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full" />
+                @error('tgl_mulai')
+                <div class="text-red-500 text-sm">{{ $message }}</div>
+                @enderror
             </div>
             <div class="sm:w-1/2 sm:mt-0 mt-5">
                 <label class="block mb-2 text-base lg:text-xl font-semibold text-gray-900 dark:text-white">Tanggal Selesai</label>
                 <input type="date" name="tgl_selesai" value="{{ old('tgl_selesai') }}"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full" />
+                @error('tgl_selesai')
+                <div class="text-red-500 text-sm">{{ $message }}</div>
+                @enderror
             </div>
         </div>
 
@@ -109,12 +133,18 @@
                 <label class="block mb-2 text-base lg:text-xl font-semibold text-gray-900 dark:text-white">Lokasi</label>
                 <input type="text" name="lokasi" value="{{ old('lokasi') }}"
                     class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full" />
+                @error('lokasi')
+                <div class="text-red-500 text-sm">{{ $message }}</div>
+                @enderror
             </div>
             <div class="sm:w-1/2 sm:mt-0 mt-5">
                 <label class="block mb-2 text-base lg:text-xl font-semibold text-gray-900 dark:text-white">Foto Kursus</label>
                 <input type="file" name="foto_kursus"
                     class="block w-full text-sm text-gray-900 border border-gray-300 rounded-lg cursor-pointer bg-gray-50 focus:outline-none"
                     accept=".jpg,.jpeg,.png,.gif" />
+                @error('foto_kursus')
+                <div class="text-red-500 text-sm">{{ $message }}</div>
+                @enderror
             </div>
         </div>
 
@@ -150,4 +180,18 @@
         deskripsiInput.value = html;
     });
 </script>
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if (session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: "{{ session('success') }}",
+        confirmButtonText: 'OK',
+        customClass: {
+            confirmButton: 'my-swal-button'
+        }
+    });
+</script>
+@endif
 @endsection

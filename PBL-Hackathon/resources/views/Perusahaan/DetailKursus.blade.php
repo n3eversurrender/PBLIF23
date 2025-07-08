@@ -45,10 +45,10 @@
 
                     <div class="mt-6 pb-10">
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-y-3 gap-x-6 text-gray-700 mt-4">
-                            <div class="flex">
+                            <!-- <div class="flex">
                                 <h3 class="font-semibold">Mentor:</h3>
                                 <span class="ms-3 font-normal text-sm self-center">{{ $kursus->mentor ?? '-' }}</span>
-                            </div>
+                            </div> -->
 
                             <div class="flex">
                                 <h3 class="font-semibold">Jadwal:</h3>

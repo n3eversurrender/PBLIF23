@@ -66,6 +66,14 @@ class JadwalController extends Controller
             'jam_mulai' => 'required',
             'jam_selesai' => 'required',
             'lokasi' => 'required|string|max:255',
+        ], [
+            'sesi.required' => 'Sesi wajib diisi',
+            'sesi.max' => 'Sesi maksimal 100',
+            'tanggal.required' => 'Tanggal wajib diisi',
+            'jam_mulai.required' => 'Jam mulai wajib diisi',
+            'jam_selesai.required' => 'Jam selesai wajib diisi',
+            'lokasi.required' => 'Lokasi wajib diisi',
+            'lokasi.max' => 'Lokasi maksimal 255 karakter',
         ]);
 
         // Simpan jadwal
@@ -85,6 +93,14 @@ class JadwalController extends Controller
             'jam_mulai' => 'required|string|max:8', // Karena sudah string
             'jam_selesai' => 'required|string|max:8',
             'lokasi' => 'required|string|max:255',
+        ], [
+            'sesi.required' => 'Sesi wajib diisi',
+            'sesi.max' => 'Sesi maksimal 100',
+            'tanggal.required' => 'Tanggal wajib diisi',
+            'jam_mulai.required' => 'Jam mulai wajib diisi',
+            'jam_selesai.required' => 'Jam selesai wajib diisi',
+            'lokasi.required' => 'Lokasi wajib diisi',
+            'lokasi.max' => 'Lokasi maksimal 255 karakter',
         ]);
 
         $jadwal = JadwalKursus::findOrFail($jadwal_id);

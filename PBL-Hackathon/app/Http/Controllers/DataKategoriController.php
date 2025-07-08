@@ -28,6 +28,9 @@ class DataKategoriController extends Controller
     {
         $validated = $request->validate([
             'nama_kategori' => 'required|string|max:255',
+        ], [
+            'nama_kategori.required' => 'Kategori wajib diisi',
+            'nama_kategori.max' => 'Kategori maksimal 255 karakter',
         ]);
 
         Kategori::create([

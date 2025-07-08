@@ -65,6 +65,21 @@ class ProfilPerusahaanController extends Controller
             'file_akta_pendirian' => 'nullable|mimes:pdf|max:2048',
             'file_izin_operasional' => 'nullable|mimes:pdf|max:2048',
             'file_sertifikasi_bnsp' => 'nullable|mimes:pdf|max:2048',
+        ], [
+            'nama.required' => 'Nama wajib diisi',
+            'nama.max' => 'Nama maksimal 255 karakter',
+            'no_telepon.max' => 'Nomor telepon maksimal 20',
+            'foto_profil.image' => 'Format gambar tidak sesuai',
+            'foto_profil.mimes' => 'Format gambar tidak sesuai',
+            'foto_profil.max' => 'Foto profil tidak boleh lebih dari 2MB',
+            'file_npwp.mimes' => 'Format harus PDF',
+            'file_npwp.max' => 'File tidak boleh lebih dari 2MB',
+            'file_akta_pendirian.mimes' => 'Format harus PDF',
+            'file_akta_pendirian.max' => 'File tidak boleh lebih dari 2MB',
+            'file_izin_operasional.mimes' => 'Format harus PDF',
+            'file_izin_operasional.max' => 'File tidak boleh lebih dari 2MB',
+            'file_sertifikasi_bnsp.mimes' => 'Format harus PDF',
+            'file_sertifikasi_bnsp.max' => 'File tidak boleh lebih dari 2MB',
         ]);
 
         // Update user

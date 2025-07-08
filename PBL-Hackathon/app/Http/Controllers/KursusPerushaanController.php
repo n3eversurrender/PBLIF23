@@ -46,7 +46,6 @@ class KursusPerushaanController extends Controller
         $validated = $request->validate([
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required|string',
-            'mentor' => 'nullable|string',
             'tingkat_kesulitan' => 'required',
             'kategori_id' => 'required|exists:kategori,kategori_id',
             'harga' => 'required|numeric',
@@ -55,6 +54,20 @@ class KursusPerushaanController extends Controller
             'tgl_selesai' => 'required|date|after_or_equal:tgl_mulai',
             'lokasi' => 'required|string',
             'foto_kursus' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ], [
+            'judul.required' => 'Nama wajib diisi.',
+            'judul.max' => 'Judul maksimal 255 karakter',
+            'deskripsi.required' => 'Deskripsi wajib diisi',
+            'tingkat_kesulitan.required' => 'Tingkat kesulitan wajib diisi',
+            'kategori_id.required' => 'Kategori wajib diisi',
+            'harga.required' => 'Harga wajib diisi',
+            'kapasitas.required' => 'Kapasitas wajib diisi',
+            'tgl_mulai.required' => 'Tanggal mulai wajib diisi',
+            'tgl_selesai.required' => 'Tanggal selesai wajib diisi',
+            'lokasi.required' => 'Lokasi wajib diisi',
+            'foto_kursus.image' => 'Format gambar tidak sesuai',
+            'foto_kursus.mimes' => 'Format gambar tidak sesuai',
+            'foto_kursus.max' => 'Foto kursus tidak boleh lebih dari 2MB',
         ]);
 
         Log::info('Validasi berhasil', $validated);
@@ -83,6 +96,7 @@ class KursusPerushaanController extends Controller
         Log::info('Kursus berhasil disimpan: ', $kursus->toArray());
 
         return redirect()->route('KursusPerusahaan')->with('success', 'Kursus berhasil ditambahkan.');
+        
     }
 
     public function detailKursus($id)
@@ -124,6 +138,20 @@ class KursusPerushaanController extends Controller
             'tgl_mulai' => 'required|date',
             'tgl_selesai' => 'required|date|after_or_equal:tgl_mulai',
             'foto_kursus' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
+        ], [
+            'judul.required' => 'Nama wajib diisi.',
+            'judul.max' => 'Judul maksimal 255 karakter',
+            'deskripsi.required' => 'Deskripsi wajib diisi',
+            'tingkat_kesulitan.required' => 'Tingkat kesulitan wajib diisi',
+            'kategori_id.required' => 'Kategori wajib diisi',
+            'harga.required' => 'Harga wajib diisi',
+            'kapasitas.required' => 'Kapasitas wajib diisi',
+            'tgl_mulai.required' => 'Tanggal mulai wajib diisi',
+            'tgl_selesai.required' => 'Tanggal selesai wajib diisi',
+            'lokasi.required' => 'Lokasi wajib diisi',
+            'foto_kursus.image' => 'Format gambar tidak sesuai',
+            'foto_kursus.mimes' => 'Format gambar tidak sesuai',
+            'foto_kursus.max' => 'Foto kursus tidak boleh lebih dari 2MB',
         ]);
 
         // Cari kursus berdasarkan ID

@@ -41,6 +41,9 @@
                     <input type="file" name="foto_profil"
                         class="bg-gray-50 border border-Border text-gray-900 text-sm rounded-lg block w-full dark:bg-gray-600 dark:border-gray-500 dark:placeholder-gray-400 dark:text-white"
                         accept="image/jpeg, image/png, image/gif, image/svg+xml">
+                    @error('foto_profil')
+                    <div class="text-red-500 text-sm">{{ $message }}</div>
+                    @enderror
                 </div>
 
                 <div class="grid sm:grid-cols-2 gap-6">
@@ -48,13 +51,19 @@
                         <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Nama Perusahaan</label>
                         <input type="text" name="nama" value="{{ $user->nama ?? '' }}"
                             class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
-                            placeholder="Contoh: PT. Sukses Makmur">
+                            placeholder="Contoh: PT. Sukses Makmur" />
+                        @error('nama')
+                        <div class="text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
                     </div>
                     <div>
                         <label class="block mb-2 text-sm font-bold text-gray-900 dark:text-white">Nomor Telepon</label>
                         <input type="tel" name="no_telepon" value="{{ $user->no_telepon ?? '' }}"
                             class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-300"
                             placeholder="Contoh: 0812xxxxxxx">
+                        @error('no_telepon')
+                        <div class="text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
 
@@ -106,7 +115,10 @@
                         <label class="block mt-2 text-sm font-bold text-gray-900 dark:text-white">File NPWP (PDF)</label>
                         <input type="file" name="file_npwp"
                             class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"
-                            accept="application/pdf">
+                            accept="application/pdf" />
+                        @error('file_npwp')
+                        <div class="text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div>
@@ -117,6 +129,9 @@
                         <input type="file" name="file_akta_pendirian"
                             class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"
                             accept="application/pdf">
+                        @error('file_akta_pendirian')
+                        <div class="text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div>
@@ -127,6 +142,9 @@
                         <input type="file" name="file_izin_operasional"
                             class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"
                             accept="application/pdf">
+                        @error('file_izin_operasional')
+                        <div class="text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
                     </div>
 
                     <div>
@@ -137,6 +155,9 @@
                         <input type="file" name="file_sertifikasi_bnsp"
                             class="border border-gray-300 text-gray-900 text-sm rounded-lg w-full p-2.5"
                             accept="application/pdf">
+                        @error('file_sertifikasi_bnsp')
+                        <div class="text-red-500 text-sm">{{ $message }}</div>
+                        @enderror
                     </div>
                 </div>
             </div>
@@ -156,5 +177,20 @@
 
 </main>
 <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+@if (session('success'))
+<script>
+    Swal.fire({
+        icon: 'success',
+        title: 'Berhasil!',
+        text: "{{ session('success') }}",
+        confirmButtonText: 'OK',
+        customClass: {
+            confirmButton: 'my-swal-button'
+        }
+    });
+</script>
+@endif
 
 @endsection

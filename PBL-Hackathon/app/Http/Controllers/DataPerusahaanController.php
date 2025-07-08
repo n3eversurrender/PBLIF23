@@ -67,6 +67,15 @@ class DataPerusahaanController extends Controller
             'email' => 'required|email|unique:pengguna',
             'no_telepon' => 'required|string|max:20',
             'kata_sandi' => 'required|min:8',
+        ], [
+            'nama.required' => 'Nama wajib diisi',
+            'nama.max' => 'Nama maksimal 255 karakter',
+            'email.required' => 'Email wajib diisi',
+            'email.unique' => 'Email ini sudah terdaftar',
+            'no_telepon.required' => 'Nomor telepon wajib diisi',
+            'no_telepon.max' => 'Nomor telepon maksimal 20',
+            'kata_sandi.required' => 'Kata sandi wajib diisi',
+            'kata_sandi.min' => 'Kata sandi minimal 8 karakter',
         ]);
 
         try {
