@@ -5,6 +5,8 @@ namespace Database\Seeders;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Database\Seeder;
 use Faker\Factory as Faker;
+use Carbon\Carbon;
+
 
 class KursusSeeder extends Seeder
 {
@@ -284,27 +286,53 @@ class KursusSeeder extends Seeder
             ],
         ];
 
-        // Insert data kursus ke dalam database
+        // 1. Buat 45 tanggal acak unik dari Jan - Jul
+        $startDatesJanToJul = collect();
+        while ($startDatesJanToJul->count() < 45) {
+            $date = Carbon::now()->startOfYear()->addDays(rand(0, 210));
+            if (!$startDatesJanToJul->contains($date->toDateString())) {
+                $startDatesJanToJul->push($date->toDateString());
+            }
+        }
+
+        // 2. Buat 5 tanggal acak dari Agustus ke atas
+        $startDatesAugToDec = collect();
+        while ($startDatesAugToDec->count() < 5) {
+            $date = Carbon::now()->startOfYear()->addDays(rand(211, 364));
+            if (
+                !$startDatesAugToDec->contains($date->toDateString()) &&
+                !$startDatesJanToJul->contains($date->toDateString())
+            ) {
+                $startDatesAugToDec->push($date->toDateString());
+            }
+        }
+
+        // Gabungkan semua tanggal jadi 50 item
+        $allStartDates = $startDatesJanToJul->concat($startDatesAugToDec)->values();
+
+        // Insert data kursus
         foreach ($kursus_data as $index => $data) {
+            $tgl_mulai = Carbon::parse($allStartDates[$index]);
+            $tgl_selesai = $tgl_mulai->copy()->addDays(rand(5, 30));
+
             DB::table('kursus')->insert([
-                'pengguna_id' => $data['pengguna_id'], // ID Perusahaan
-                'kategori_id' => rand(1, 5),  // Mengambil kategori acak
-                'judul' => $data['judul'], // Judul kursus sesuai dengan data
-                'deskripsi' => $data['deskripsi'], // Deskripsi kursus sesuai dengan data
-                'harga' => rand(3100000, 10000000), // Harga acak
+                'pengguna_id' => $data['pengguna_id'],
+                'kategori_id' => rand(1, 5),
+                'judul' => $data['judul'],
+                'deskripsi' => $data['deskripsi'],
+                'harga' => rand(3100000, 10000000),
                 'tingkat_kesulitan' => rand(1, 3) == 1 ? 'Pemula' : (rand(1, 3) == 2 ? 'Menengah' : 'Lanjutan'),
                 'status' => 'Aktif',
-                'tgl_mulai' => now()->addDays(rand(1, 365)),  // Tanggal mulai acak
-                'tgl_selesai' => now()->addDays(rand(365, 730)),  // Tanggal selesai acak
-                'kapasitas' => rand(50, 100), // Kapasitas acak
-                'lokasi' => 'Batam ' . $this->generateLocation(), // Lokasi acak
-                // Set foto_kursus sesuai urutan: kursus1.jpg, kursus2.jpg, dst
+                'tgl_mulai' => $tgl_mulai,
+                'tgl_selesai' => $tgl_selesai,
+                'kapasitas' => rand(50, 100),
+                'lokasi' => 'Batam ' . $this->generateLocation(),
                 'foto_kursus' => 'kursus/kursus' . ($index + 1) . '.jpg',
             ]);
         }
     }
 
-    // Fungsi untuk generate lokasi acak
+    // Fungsi lokasi acak
     private function generateLocation()
     {
         $lokasi_batam = [

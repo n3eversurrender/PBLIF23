@@ -10,125 +10,137 @@
 
     <!-- Script modal -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 </head>
 
 <body>
-
-@if (session('success'))
-        <script>
-            // {{ session('success') }}
-            document.addEventListener('DOMContentLoaded', (event) => {
-                Swal.fire({
-    icon: 'success',
-    title: "{{ session('success') }}",
-    text: "Ayo isi Data Pengalaman Anda untuk Mendapatkan Rekomendasi Kursus",
-    confirmButtonText: 'OK',
-    customClass: {
-        confirmButton: 'my-swal-button'
-    }
-});
+    @if (session('success'))
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            Swal.fire({
+                icon: 'success',
+                title: "{{ session('success') }}",
+                text: "Ayo isi Data Pengalaman Anda untuk Mendapatkan Rekomendasi Kursus",
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'my-swal-button'
+                }
             });
-            
-        </script>
-        @endif
+        });
+    </script>
+    @endif
 
     <div class="flex flex-col lg:flex-row lg:justify-between">
         <!-- Image Section -->
         <img class="w-full h-48 sm:h-1/3 object-cover lg:w-1/3 lg:h-auto"
             src="{{ asset('image/12.webp') }}"
             alt="Background Main" />
-        
-        <!-- form Section -->
+
+        <!-- Form Section -->
         <div class="bg-white p-4 w-full mt-5 sm:mt-14 flex flex-col justify-center items-center">
             <h2 class="font-bold text-2xl sm:text-3xl lg:text-4xl text-center mb-6 lg:mb-10 w-full">
-                Isi Data
-                <br>Pengalaman Anda
+                Isi Data<br>Pengalaman Anda
             </h2>
 
-            <!-- Form -->
             <form class="w-full px-12 lg:px-0 mt-5 lg:mt-0 lg:max-w-md" method="POST" action="{{ route('peserta.skillmatching') }}">
                 @csrf
+
                 <!-- Minat Bidang -->
                 <div class="mb-4 lg:mb-6">
                     <label class="block mb-2 text-sm font-semibold text-gray-950 dark:text-white">
                         Bidang yang Diminati
                     </label>
-                    <input type="text" name="minat_bidang" class="border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Masukkan bidang minat Anda anda">  
-                        @error('minat_bidang')
-                            <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
-                        @enderror
+                    <input type="text" name="minat_bidang"
+                        class="border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                        placeholder="Masukkan bidang minat Anda">
+                    @error('minat_bidang')
+                    <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
+                    @enderror
                 </div>
-                 <!-- Bidang saat ini -->
-                    <div class="mb-4 sm:mb-0">
-                        <label class="block mb-2 text-sm font-semibold text-gray-950 dark:text-white">
-                        Bidang Saat ini
-                        </label>
-                        <input type="text" name="bidang" class="border w-full border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Masukkan bidang saat ini">  
-                        @error('bidang')
-                            <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
-                        @enderror
-                    </div>
 
-                <!-- Preferensi level -->
+                <!-- Bidang Saat Ini -->
                 <div class="mb-4 lg:mb-6">
-                    <label for="level" class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">
-                        Preferensi Level Kursus
+                    <label class="block mb-2 text-sm font-semibold text-gray-950 dark:text-white">
+                        Bidang Saat Ini
                     </label>
-                    <select id="level" name="level" class="border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required class="...">
-                        <option selected disabled>Pilih preferensi level kursus yang Anda inginkan</option>
+                    <input type="text" name="bidang_saat_ini"
+                        class="border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                        placeholder="Masukkan bidang saat ini">
+                    @error('bidang_saat_ini')
+                    <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
+                    @enderror
+                </div>
+
+                <!-- Tingkat Kesulitan Kursus -->
+                <div class="mb-4 lg:mb-6">
+                    <label for="tingkat_kesulitan" class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">
+                        Preferensi Tingkat Kesulitan
+                    </label>
+                    <select id="tingkat_kesulitan" name="tingkat_kesulitan"
+                        class="border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                        <option selected disabled>Pilih tingkat kesulitan kursus</option>
                         <option value="Pemula">Pemula</option>
                         <option value="Menengah">Menengah</option>
                         <option value="Lanjutan">Lanjutan</option>
                     </select>
-                    @error('level')
-                        <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
+                    @error('tingkat_kesulitan')
+                    <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
                     @enderror
                 </div>
 
-                 <!-- Pendidikan -->
+                <!-- Pendidikan -->
                 <div class="mb-4 lg:mb-6">
-                    <label  class="block mb-2 text-sm font-semibold text-gray-950 dark:text-white">
+                    <label class="block mb-2 text-sm font-semibold text-gray-950 dark:text-white">
                         Pendidikan
                     </label>
-                    <input type="text"  name="pendidikan" class="border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Masukkan riwayat pendidikan anda">
-                       @error('pendidikan')
-                            <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
-                        @enderror 
+                    <select id="pendidikan" name="pendidikan"
+                        class="border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                        <option selected disabled>Pilih tingkat pendidikan terakhir Anda</option>
+                        <option value="SD">SD</option>
+                        <option value="SMP">SMP</option>
+                        <option value="SMA">SMA</option>
+                        <option value="D3">D3</option>
+                        <option value="S1">S1</option>
+                        <option value="S2">S2</option>
+                        <option value="S3">S3</option>
+                    </select>
+                    @error('pendidikan')
+                    <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
+                    @enderror
                 </div>
 
-                 <!-- Status -->
+                <!-- Status -->
                 <div class="mb-4 lg:mb-6">
-                    <label for="jenis_kelamin" class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">
+                    <label for="status" class="block mb-2 text-sm font-semibold text-gray-900 dark:text-white">
                         Status
                     </label>
-                    <select id="status" name="status" class="border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required class="...">
-                        <option selected disabled>Pilih status pekerjaan anda saat ini</option>
-                        <option value="Siswa">Siswa</option>
+                    <select id="status" name="status"
+                        class="border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5" required>
+                        <option selected disabled>Pilih status pekerjaan Anda saat ini</option>
                         <option value="Mahasiswa">Mahasiswa</option>
                         <option value="Pekerja">Pekerja</option>
+                        <option value="Dosen">Dosen</option>
+                        <option value="Lainnya">Lainnya</option>
                     </select>
                     @error('status')
-                       <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
+                    <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
                     @enderror
                 </div>
 
                 <!-- Keahlian -->
-                 <div class="mb-4 lg:mb-6">
+                <div class="mb-4 lg:mb-6">
                     <label class="block mb-2 text-sm font-semibold text-gray-950 dark:text-white">
                         Keahlian
                     </label>
-                    <textarea name="nama_keahlian" rows="4" class="border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="Tuliskan keahlian yang anda miliki"></textarea>
+                    <textarea name="nama_keahlian" rows="4"
+                        class="border border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                        placeholder="Tuliskan keahlian yang Anda miliki"></textarea>
                     @error('nama_keahlian')
-                        <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
+                    <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
                     @enderror
                 </div>
 
+                <!-- Tombol Submit -->
                 <div class="sm:mt-8 mt-0 lg:mt-0">
                     <button type="submit"
                         class="text-white bg-ButtonBase hover:bg-HoverGlow focus:ring-4 focus:outline-none focus:ring-HoverGlow font-semibold rounded-lg text-sm w-full sm:w-1/2 lg:w-1/4 px-5 sm:px-2 py-2 text-center transition duration-700">
@@ -136,6 +148,8 @@
                     </button>
                 </div>
             </form>
+
+            <!-- Link Lewati -->
             <div class="bg-white p-4 w-full flex flex-col justify-center items-center lg:mb-20">
                 <div class="sm:flex sm:gap-2 w-full font-semibold px-12 lg:px-0 lg:max-w-md text-xs sm:text-sm">
                     <h3>Belum ada pengalaman atau sudah mengisi form?</h3>
@@ -145,3 +159,5 @@
         </div>
     </div>
 </body>
+
+</html>

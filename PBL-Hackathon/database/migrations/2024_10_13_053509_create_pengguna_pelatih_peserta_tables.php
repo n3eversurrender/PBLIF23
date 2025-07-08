@@ -19,7 +19,7 @@ class CreatePenggunaPelatihPesertaTables extends Migration
             $table->id('pengguna_id');
             $table->string('nama');
             $table->string('email')->unique();
-            $table->string('no_telepon');
+            $table->string('no_telepon')->nullable();
             $table->text('alamat')->nullable();
             $table->enum('jenis_kelamin', ['Laki-laki', 'Perempuan'])->nullable();
             $table->string('kata_sandi');
@@ -62,7 +62,7 @@ class CreatePenggunaPelatihPesertaTables extends Migration
         Schema::create('foto_perusahaan', function (Blueprint $table) {
             $table->id('foto_id');
             $table->unsignedBigInteger('perusahaan_id');
-            $table->string('file_path');  
+            $table->string('file_path');
             $table->timestamps();
 
             $table->foreign('perusahaan_id')->references('perusahaan_id')->on('perusahaan')->onDelete('cascade');
@@ -98,8 +98,8 @@ class CreatePenggunaPelatihPesertaTables extends Migration
             $table->enum('pendidikan', ['SD', 'SMP', 'SMA', 'D3', 'S1', 'S2', 'S3'])->nullable();
 
             $table->string('minat_bidang')->nullable();
-            $table->json('bidang_saat_ini')->nullable(); // Contoh: [{"bidang": "Welding", "tahun": 2, "bulan": 3}, ...]
-            $table->json('kemampuan')->nullable(); // Contoh: ["AutoCAD", "SolidWorks", "CNC"]
+            $table->json('bidang_saat_ini')->nullable();
+            $table->json('kemampuan')->nullable(); 
 
             $table->integer('tahun_pengalaman')->nullable();
             $table->integer('bulan_pengalaman')->nullable();
@@ -146,6 +146,17 @@ class CreatePenggunaPelatihPesertaTables extends Migration
             $table->foreign('kursus_id')->references('kursus_id')->on('kursus')->onDelete('cascade');
             $table->foreign('pengguna_id')->references('pengguna_id')->on('pengguna')->onDelete('cascade');
             $table->timestamps();
+        });
+
+        Schema::create('skill', function (Blueprint $table) {
+            $table->id();
+            $table->unsignedBigInteger('peserta_id');
+            $table->unsignedBigInteger('kursus_id');
+            $table->float('score')->default(0);
+            $table->timestamps();
+
+            $table->foreign('peserta_id')->references('peserta_id')->on('peserta')->onDelete('cascade');
+            $table->foreign('kursus_id')->references('kursus_id')->on('kursus')->onDelete('cascade');
         });
 
 

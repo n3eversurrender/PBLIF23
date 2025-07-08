@@ -10,13 +10,17 @@
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@2.8.2/dist/alpine.min.js" defer></script>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
-     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
 
     <!-- Script modal -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </head>
 
 <body class="w-full">
+    @php
+    $user = Auth::user();
+    @endphp
+
     <!-- Navbar + Image -->
     <nav class="bg-white shadow-md border-b border-gray-200 dark:bg-black dark:bg-opacity-50 fixed top-0 left-0 w-full z-10">
         <div class="max-w-screen-2xl grid grid-cols-12 items-center sm:justify-between mx-auto px-2 py-2 sm:px-4 ">
@@ -42,7 +46,7 @@
                     <!-- Menu untuk Pelatih -->
                     <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                         <span class="sr-only">Open user menu</span>
-                        <img class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src="{{ $user->foto_profil ? asset('storage/foto_profil/' . $user->foto_profil) : asset('image/9203764.png') }}" alt="user photo">
+                        <img class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src="{{ $user && $user->foto_profil ? asset('storage/foto_profil/' . $user->foto_profil) : asset('image/9203764.png') }}" alt="user photo">
                     </button>
 
                     <div class="z-50 block my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">
@@ -68,7 +72,7 @@
                     <!-- Menu untuk Peserta -->
                     <button type="button" class="flex text-sm bg-gray-800 rounded-full md:me-0 focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" id="user-menu-button" aria-expanded="false" data-dropdown-toggle="user-dropdown" data-dropdown-placement="bottom">
                         <span class="sr-only">Open user menu</span>
-                        <img class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src="{{ $user->foto_profil ? asset('storage/foto_profil/' . $user->foto_profil) : asset('image/9203764.png') }}" alt="user photo">
+                        <img class="w-10 h-10 p-1 rounded-full ring-2 ring-gray-300 dark:ring-gray-500" src="{{ $user->foto_profil ? asset('storage/' . $user->foto_profil) : asset('image/9203764.png') }}" alt="user photo">
                     </button>
 
                     <div class="z-50 block my-4 text-base list-none bg-white divide-y divide-gray-100 rounded-lg shadow dark:bg-gray-700 dark:divide-gray-600" id="user-dropdown">

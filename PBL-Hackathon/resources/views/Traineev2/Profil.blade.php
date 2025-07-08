@@ -93,32 +93,38 @@
                     </select>
                 </div>
             </div>
-
             <div class="sm:flex gap-6 mt-5">
+                <!-- Bidang Saat Ini -->
                 <div class="w-full sm:w-1/3">
                     <label class="block mb-2 text-sm font-medium text-gray-900">Bidang saat ini</label>
                     <input type="text" name="bidang_saat_ini"
-                        value="{{ old('bidang_saat_ini', is_array($user->peserta->bidang_saat_ini ?? null) ? implode(', ', array_column($user->peserta->bidang_saat_ini, 'bidang')) : '') }}"
+                        value="{{ old('bidang_saat_ini', isset($user->peserta->bidang_saat_ini) && is_array(json_decode($user->peserta->bidang_saat_ini, true)) ? implode(', ', array_column(json_decode($user->peserta->bidang_saat_ini, true), 'bidang')) : '') }}"
+                        placeholder="{{ isset($user->peserta->bidang_saat_ini) && is_array(json_decode($user->peserta->bidang_saat_ini, true)) ? implode(', ', array_column(json_decode($user->peserta->bidang_saat_ini, true), 'bidang')) : 'Data masih kosong' }}"
                         class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:opacity-70"
-                        placeholder="{{ old('bidang_saat_ini', is_array($user->peserta->bidang_saat_ini ?? null) ? implode(', ', array_column($user->peserta->bidang_saat_ini, 'bidang')) : '') }}">
+                        disabled>
                 </div>
 
+                <!-- Pengalaman Tahun -->
                 <div class="w-full sm:w-1/3 mt-5 sm:mt-0">
                     <label class="block mb-2 text-sm font-medium text-gray-900">Pengalaman (Tahun)</label>
                     <input type="number" name="tahun_pengalaman"
                         value="{{ old('tahun_pengalaman', $user->peserta->tahun_pengalaman ?? '') }}"
+                        placeholder="{{ $user->peserta->tahun_pengalaman ?? 'Data masih kosong' }}"
                         class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:opacity-70"
-                        placeholder="Tahun">
+                        disabled>
                 </div>
 
+                <!-- Pengalaman Bulan -->
                 <div class="w-full sm:w-1/3 mt-5 sm:mt-0">
                     <label class="block mb-2 text-sm font-medium text-gray-900">Pengalaman (Bulan)</label>
                     <input type="number" name="bulan_pengalaman"
                         value="{{ old('bulan_pengalaman', $user->peserta->bulan_pengalaman ?? '') }}"
+                        placeholder="{{ $user->peserta->bulan_pengalaman ?? 'Data masih kosong' }}"
                         class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:opacity-70"
-                        placeholder="Bulan">
+                        disabled>
                 </div>
             </div>
+
             @php
             $minatBidang = isset($user->peserta) ? $user->peserta->minat_bidang : [];
             $kemampuan = isset($user->peserta) ? $user->peserta->kemampuan : [];
@@ -148,21 +154,20 @@
                 <div class="w-full sm:w-1/2">
                     <label class="block mb-2 text-sm font-medium text-gray-900">Minat Bidang</label>
                     <input name="minat_bidang" id="minat_bidang"
-                        value="{{ old('minat_bidang', is_array($minatBidang) ? implode(', ', $minatBidang) : '') }}"
-                        class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:opacity-70"
-                        placeholder="Contoh: Welding, CNC">
+                        value="{{ old('minat_bidang', isset($peserta->minat_bidang) ? $peserta->minat_bidang : '') }}"
+                        placeholder="{{ isset($peserta->minat_bidang) && $peserta->minat_bidang !== '' ? $peserta->minat_bidang : 'Data masih kosong' }}"
+                        class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:opacity-70">
                 </div>
 
                 <!-- Kemampuan -->
                 <div class="w-full sm:w-1/2 mt-5 sm:mt-0">
                     <label class="block mb-2 text-sm font-medium text-gray-900">Kemampuan (Opsional)</label>
                     <input name="kemampuan" id="kemampuan"
-                        value="{{ old('kemampuan', is_array($kemampuan) ? implode(', ', $kemampuan) : '') }}"
-                        class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:opacity-70"
-                        placeholder="Contoh: AutoCAD, SolidWorks">
+                        value="{{ old('kemampuan', $peserta->kemampuan ? implode(', ', json_decode($peserta->kemampuan, true)) : '') }}"
+                        placeholder="{{ $peserta->kemampuan ? implode(', ', json_decode($peserta->kemampuan, true)) : 'Data masih kosong' }}"
+                        class="border border-gray-300 text-sm rounded-lg block w-full p-2.5 disabled:cursor-not-allowed disabled:bg-gray-100 disabled:opacity-70">
                 </div>
             </div>
-
         </div>
 
         <!-- Tombol -->

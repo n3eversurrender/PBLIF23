@@ -11,36 +11,35 @@
 
 <!-- Javascript home -->
 @if (session('success'))
-        <script>
-            // {{ session('success') }}
-            document.addEventListener('DOMContentLoaded', (event) => {
-                Swal.fire({
-    icon: 'success',
-    title: "{{ session('success') }}",
-    confirmButtonText: 'OK',
-    customClass: {
-        confirmButton: 'my-swal-button'
-    }
-});
-            });
-            
-        </script>
-        @endif
-
-        @if (session('error'))
-    <script>
-        // {{ session('error') }}
-        document.addEventListener('DOMContentLoaded', (event) => {
-            Swal.fire({
-                icon: 'error',
-                title: "{{ session('error') }}",
-                confirmButtonText: 'OK',
-                customClass: {
-                    confirmButton: 'my-swal-button'
-                }
-            });
+<script>
+    // {{ session('success') }}
+    document.addEventListener('DOMContentLoaded', (event) => {
+        Swal.fire({
+            icon: 'success',
+            title: "{{ session('success') }}",
+            confirmButtonText: 'OK',
+            customClass: {
+                confirmButton: 'my-swal-button'
+            }
         });
-    </script>
+    });
+</script>
+@endif
+
+@if (session('error'))
+<script>
+    // {{ session('error') }}
+    document.addEventListener('DOMContentLoaded', (event) => {
+        Swal.fire({
+            icon: 'error',
+            title: "{{ session('error') }}",
+            confirmButtonText: 'OK',
+            customClass: {
+                confirmButton: 'my-swal-button'
+            }
+        });
+    });
+</script>
 @endif
 
 
@@ -63,64 +62,60 @@
                         <p class="mb-5 text-gray-700">Tingkatkan kemampuan dengan kursus yang sesuai bidangmu.</p>
                     </div>
                     <!-- Grid Container -->
-                     @if($skills->isEmpty())
-    <div class="text-center text-gray-600 py-10">
-        <p class="text-lg font-semibold">Belum ada rekomendasi 😔</p>
-        <p class="text-sm mt-2">Silakan lengkapi form pengalaman di profil untuk mendapatkan rekomendasi kursus!</p>
-    </div>
-@else
+                    @if($skills->isEmpty())
+                    <div class="text-center text-gray-600 py-10">
+                        <p class="text-lg font-semibold">Belum ada rekomendasi 😔</p>
+                        <p class="text-sm mt-2">Silakan lengkapi form pengalaman di profil untuk mendapatkan rekomendasi kursus!</p>
+                    </div>
+                    @else
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                         @foreach ($skills as $item)
-    <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-        <!-- Course Image -->
-        <div class="relative cursor-default">
-            <img class="w-full h-44 sm:h-36 lg:h-44 object-cover" src="{{ asset('storage/' . $item->foto_kursus) }}" alt="{{ $item->judul }}">
-            <div class="absolute top-3 left-3 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
-                {{ $item->kursus->tingkat_kesulitan }}
-            </div>
-        </div>
+                        <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+                            <!-- Course Image -->
+                            <div class="relative cursor-default">
+                                <img class="w-full h-44 sm:h-36 lg:h-44 object-cover" src="{{ asset('storage/' . $item->kursus->foto_kursus) }}" alt="{{ $item->kursus->judul }}">
+                                <div class="absolute top-3 left-3 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                                    {{ $item->kursus->tingkat_kesulitan }}
+                                </div>
+                            </div>
 
-        <!-- Course Content -->
-        <div class="p-6">
-            <div class="flex justify-between items-start mb-2 cursor-default">
-                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">{{ $item->kursus->kategori->nama_kategori }}</span>
-                <div class="flex items-center">
-                    <i class="fas fa-star text-yellow-400 text-sm"></i>
-                    <span class="text-gray-700 text-sm font-medium ml-1">{{ $item->kursus->rating }}</span>
-                    <span class="text-gray-400 text-sm ml-1">(128)</span>
-                </div>
-            </div>
+                            <!-- Course Content -->
+                            <div class="p-6">
+                                <div class="flex justify-between items-start mb-2 cursor-default">
+                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">{{ $item->kursus->kategori->nama_kategori }}</span>
+                                    <div class="flex items-center">
+                                        <i class="fas fa-star text-yellow-400 text-sm"></i>
+                                        <span class="text-gray-700 text-sm font-medium ml-1">{{ $item->kursus->rating }}</span>
+                                        <span class="text-gray-400 text-sm ml-1">(128)</span>
+                                    </div>
+                                </div>
 
-            <div class="w-full text-left">
-                <a href="#" class="lg:text-lg text-md font-bold text-gray-800 mb-1 line-clamp-2 text-left hover:text-HoverGlow active:text-ButtonBase">
-                    {{ $item->kursus->judul }}
-                </a>
-                <p class="text-gray-500 text-xs mb-4 line-clamp-2 text-left cursor-default">
-                    {{ $item->kursus->deskripsi }}
-                </p>
-            </div>
+                                <div class="w-full text-left">
+                                    <a href="#" class="lg:text-lg text-md font-bold text-gray-800 mb-1 line-clamp-2 text-left hover:text-HoverGlow active:text-ButtonBase">
+                                        {{ $item->kursus->judul }}
+                                    </a>
+                                    <p class="text-gray-500 text-xs mb-4 line-clamp-2 text-left cursor-default">
+                                        {{ $item->kursus->deskripsi }}
+                                    </p>
+                                </div>
 
-            <div class="flex items-center justify-between cursor-default">
-                <div class="flex items-center">
-                    <img class="w-8 h-8 rounded-full" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Instructor">
-                    <div class="ml-2">
-                        <p class="lg:text-sm text-xs font-medium text-gray-700">Sarah Johnson</p>
-                        <p class="text-xs text-gray-500">Senior Developer</p>
-                    </div>
-                </div>
+                                <div class="flex items-center justify-between cursor-default">
+                                    <div class="flex items-center">
+                                        <img class="w-8 h-8 rounded-full" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Instructor">
+                                        <div class="ml-2">
+                                            <p class="lg:text-sm text-xs font-medium text-gray-700">Sarah Johnson</p>
+                                            <p class="text-xs text-gray-500">Senior Developer</p>
+                                        </div>
+                                    </div>
 
-                <div class="text-right">
-                    <p class="text-ButtonBase font-bold text-base lg:text-lg">Rp. {{ number_format($item->kursus->harga, 0, ',', '.') }}</p>
-                </div>
-            </div>
-        </div>
-    </div>
-@endforeach
-@endif
-
-
-                        
-
+                                    <div class="text-right">
+                                        <p class="text-ButtonBase font-bold text-base lg:text-lg">Rp. {{ number_format($item->kursus->harga, 0, ',', '.') }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        @endforeach
+                        @endif
                     </div>
                 </div>
             </div>
@@ -140,7 +135,7 @@
                         <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
                             <!-- Course Image -->
                             <div class="relative cursor-default">
-                            <img class="w-full h-36 object-cover" src="{{ asset('storage/' . $item->foto_kursus) }}" alt="{{ $item->judul }}">
+                                <img class="w-full h-36 object-cover" src="{{ asset('storage/' . $item->foto_kursus) }}" alt="{{ $item->judul }}">
 
                                 <div class="absolute top-3 left-3 text-white text-xs font-semibold px-2 py-1 rounded-full
                                 @if($item->tingkat_kesulitan == 'Pemula') bg-green-500
@@ -248,63 +243,6 @@
             </div>
         </div>
     </section>
-
-
-
-
-
-    <!-- <section class="bg-gray-100 min-h-screen p-6">
-        <div class="max-w-2xl mx-auto bg-white p-6 rounded shadow">
-            <h1 class="text-xl font-bold mb-4 text-center">Quill Editor</h1>
-
-           
-            <div id="toolbar" class="mb-2">
-                <span class="ql-formats">
-                    <button class="ql-bold"></button>
-                    <button class="ql-italic"></button>
-                    <button class="ql-underline"></button>
-                </span>
-                <span class="ql-formats">
-                    <button class="ql-list" value="ordered"></button>
-                    <button class="ql-list" value="bullet"></button>
-                </span>
-            </div>
-
-            
-            <div id="editor" class="bg-white h-60 border border-gray-300 rounded p-2"></div>
-        </div>
-
-        
-        <script src="https://cdn.quilljs.com/1.3.6/quill.min.js"></script>
-
-        
-        <script>
-            const quill = new Quill('#editor', {
-                theme: 'snow',
-                modules: {
-                    toolbar: '#toolbar'
-                }
-            });
-        </script>
-    </section> -->
-
-    <!-- <section>
-        <textarea id="editor" class="w-full p-3 border border-gray-300 rounded-md">
-  <p>Ini contoh <strong>CKEditor</strong>.</p>
-</textarea>
-
-        <script>
-            ClassicEditor
-                .create(document.querySelector('#editor'))
-                .then(editor => {
-                    console.log('CKEditor aktif', editor);
-                })
-                .catch(error => {
-                    console.error(error);
-                });
-        </script>
-
-    </section> -->
 </main>
 
 
