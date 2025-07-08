@@ -10,6 +10,39 @@
 
 
 <!-- Javascript home -->
+@if (session('success'))
+        <script>
+            // {{ session('success') }}
+            document.addEventListener('DOMContentLoaded', (event) => {
+                Swal.fire({
+    icon: 'success',
+    title: "{{ session('success') }}",
+    confirmButtonText: 'OK',
+    customClass: {
+        confirmButton: 'my-swal-button'
+    }
+});
+            });
+            
+        </script>
+        @endif
+
+        @if (session('error'))
+    <script>
+        // {{ session('error') }}
+        document.addEventListener('DOMContentLoaded', (event) => {
+            Swal.fire({
+                icon: 'error',
+                title: "{{ session('error') }}",
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'my-swal-button'
+                }
+            });
+        });
+    </script>
+@endif
+
 
 <main class="bg-gray-100">
     <section class="mt-14 mb-15 px-6 lg:px-16">
@@ -30,195 +63,63 @@
                         <p class="mb-5 text-gray-700">Tingkatkan kemampuan dengan kursus yang sesuai bidangmu.</p>
                     </div>
                     <!-- Grid Container -->
+                     @if($skills->isEmpty())
+    <div class="text-center text-gray-600 py-10">
+        <p class="text-lg font-semibold">Belum ada rekomendasi 😔</p>
+        <p class="text-sm mt-2">Silakan lengkapi form pengalaman di profil untuk mendapatkan rekomendasi kursus!</p>
+    </div>
+@else
                     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                        <!-- Card 1 -->
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-                            <!-- Course Image -->
-                            <div class="relative cursor-default">
-                                <img class="w-full h-44 sm:h-36 lg:h-44 object-cover" src="https://images.unsplash.com/photo-1542626991-cbc4e32524cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Course thumbnail">
-                                <div class="absolute top-3 left-3 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
-                                    Lanjutan
-                                </div>
-                                <!-- <div class="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm text-gray-800 text-xs font-bold px-2 py-1 rounded-full flex items-center">
-                                    <i class="fas fa-clock text-xs mr-1 text-emerald-500"></i> 12 Hours
-                                </div> -->
-                            </div>
+                        @foreach ($skills as $item)
+    <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
+        <!-- Course Image -->
+        <div class="relative cursor-default">
+            <img class="w-full h-44 sm:h-36 lg:h-44 object-cover" src="{{ asset('storage/' . $item->foto_kursus) }}" alt="{{ $item->judul }}">
+            <div class="absolute top-3 left-3 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
+                {{ $item->kursus->tingkat_kesulitan }}
+            </div>
+        </div>
 
-                            <!-- Course Content -->
-                            <div class="p-6">
-                                <div class="flex justify-between items-start mb-2 cursor-default">
-                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">Pengelasan</span>
-                                    <div class="flex items-center">
-                                        <i class="fas fa-star text-yellow-400 text-sm"></i>
-                                        <span class="text-gray-700 text-sm font-medium ml-1">4.9</span>
-                                        <span class="text-gray-400 text-sm ml-1">(128)</span>
-                                    </div>
-                                </div>
+        <!-- Course Content -->
+        <div class="p-6">
+            <div class="flex justify-between items-start mb-2 cursor-default">
+                <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">{{ $item->kursus->kategori->nama_kategori }}</span>
+                <div class="flex items-center">
+                    <i class="fas fa-star text-yellow-400 text-sm"></i>
+                    <span class="text-gray-700 text-sm font-medium ml-1">{{ $item->kursus->rating }}</span>
+                    <span class="text-gray-400 text-sm ml-1">(128)</span>
+                </div>
+            </div>
 
-                                <div class="w-full text-left">
-                                    <a href="#" class="lg:text-lg text-md font-bold text-gray-800 mb-1 line-clamp-2 text-left hover:text-HoverGlow active:text-ButtonBase">
-                                        Advanced React Patterns and Modern JavaScript Techniques
-                                    </a>
-                                    <p class="text-gray-500 text-xs mb-4 line-clamp-2 text-left cursor-default">Master React hooks, context API, and advanced state management to </p>
-                                </div>
+            <div class="w-full text-left">
+                <a href="#" class="lg:text-lg text-md font-bold text-gray-800 mb-1 line-clamp-2 text-left hover:text-HoverGlow active:text-ButtonBase">
+                    {{ $item->kursus->judul }}
+                </a>
+                <p class="text-gray-500 text-xs mb-4 line-clamp-2 text-left cursor-default">
+                    {{ $item->kursus->deskripsi }}
+                </p>
+            </div>
 
+            <div class="flex items-center justify-between cursor-default">
+                <div class="flex items-center">
+                    <img class="w-8 h-8 rounded-full" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Instructor">
+                    <div class="ml-2">
+                        <p class="lg:text-sm text-xs font-medium text-gray-700">Sarah Johnson</p>
+                        <p class="text-xs text-gray-500">Senior Developer</p>
+                    </div>
+                </div>
 
-                                <div class="flex items-center justify-between cursor-default">
-                                    <div class="flex items-center">
-                                        <img class="w-8 h-8 rounded-full" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Instructor">
-                                        <div class="ml-2">
-                                            <p class="lg:text-sm text-xs font-medium text-gray-700">Sarah Johnson</p>
-                                            <p class="text-xs text-gray-500">Senior Developer</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-right">
-                                        <p class="text-ButtonBase font-bold text-base lg:text-lg">Rp. 6.000.000</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Course Footer -->
-                            <!-- <div class="text-right px-6 py-4 bg-gray-50 border-t border-gray-100">
-                                <div class="flex space-x-2">
-                                    <span class="text-xs text-gray-500 flex items-center">
-                                        <i class="fas fa-users mr-1"></i> 245 Students
-                                    </span>
-                                    <span class="text-xs text-gray-500 flex items-center">
-                                        <i class="fas fa-book mr-1"></i> 15 Lessons
-                                    </span>
-                                </div>
-                                <button class="bg-ButtonBase hover:bg-HoverGlow text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300 text-sm">
-                                    Lihat Detail
-                                </button>
-                            </div> -->
-                        </div>
-
-                        <!-- Card 2 -->
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-                            <!-- Course Image -->
-                            <div class="relative cursor-default">
-                                <img class="w-full h-44 sm:h-36 lg:h-44 object-cover" src="https://images.unsplash.com/photo-1542626991-cbc4e32524cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Course thumbnail">
-                                <div class="absolute top-3 left-3 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
-                                    Lanjutan
-                                </div>
-                                <!-- <div class="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm text-gray-800 text-xs font-bold px-2 py-1 rounded-full flex items-center">
-                                    <i class="fas fa-clock text-xs mr-1 text-emerald-500"></i> 12 Hours
-                                </div> -->
-                            </div>
-
-                            <!-- Course Content -->
-                            <div class="p-6">
-                                <div class="flex justify-between items-start mb-2 cursor-default">
-                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">Pengelasan</span>
-                                    <div class="flex items-center">
-                                        <i class="fas fa-star text-yellow-400 text-sm"></i>
-                                        <span class="text-gray-700 text-sm font-medium ml-1">4.9</span>
-                                        <span class="text-gray-400 text-sm ml-1">(128)</span>
-                                    </div>
-                                </div>
-
-                                <div class="w-full text-left">
-                                    <a href="#" class="lg:text-lg text-md font-bold text-gray-800 mb-1 line-clamp-2 text-left hover:text-HoverGlow active:text-ButtonBase">
-                                        Advanced React Patterns and Modern JavaScript Techniques
-                                    </a>
-                                    <p class="text-gray-500 text-xs mb-4 line-clamp-2 text-left cursor-default">Master React hooks, context API, and advanced state management to </p>
-                                </div>
+                <div class="text-right">
+                    <p class="text-ButtonBase font-bold text-base lg:text-lg">Rp. {{ number_format($item->kursus->harga, 0, ',', '.') }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+@endforeach
+@endif
 
 
-                                <div class="flex items-center justify-between cursor-default">
-                                    <div class="flex items-center">
-                                        <img class="w-8 h-8 rounded-full" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Instructor">
-                                        <div class="ml-2">
-                                            <p class="lg:text-sm text-xs font-medium text-gray-700">Sarah Johnson</p>
-                                            <p class="text-xs text-gray-500">Senior Developer</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-right">
-                                        <p class="text-ButtonBase font-bold text-base lg:text-lg">Rp. 6.000.000</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Course Footer -->
-                            <!-- <div class="text-right px-6 py-4 bg-gray-50 border-t border-gray-100">
-                                <div class="flex space-x-2">
-                                    <span class="text-xs text-gray-500 flex items-center">
-                                        <i class="fas fa-users mr-1"></i> 245 Students
-                                    </span>
-                                    <span class="text-xs text-gray-500 flex items-center">
-                                        <i class="fas fa-book mr-1"></i> 15 Lessons
-                                    </span>
-                                </div>
-                                <button class="bg-ButtonBase hover:bg-HoverGlow text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300 text-sm">
-                                    Lihat Detail
-                                </button>
-                            </div> -->
-                        </div>
-
-                        <!-- Card 3 -->
-                        <div class="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 hover:shadow-2xl hover:-translate-y-1">
-                            <!-- Course Image -->
-                            <div class="relative cursor-default">
-                                <img class="w-full h-44 sm:h-36 lg:h-44 object-cover" src="https://images.unsplash.com/photo-1542626991-cbc4e32524cc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1000&q=80" alt="Course thumbnail">
-                                <div class="absolute top-3 left-3 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-full">
-                                    Lanjutan
-                                </div>
-                                <!-- <div class="absolute bottom-3 right-3 bg-white/90 backdrop-blur-sm text-gray-800 text-xs font-bold px-2 py-1 rounded-full flex items-center">
-                                    <i class="fas fa-clock text-xs mr-1 text-emerald-500"></i> 12 Hours
-                                </div> -->
-                            </div>
-
-                            <!-- Course Content -->
-                            <div class="p-6">
-                                <div class="flex justify-between items-start mb-2 cursor-default">
-                                    <span class="bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded">Pengelasan</span>
-                                    <div class="flex items-center">
-                                        <i class="fas fa-star text-yellow-400 text-sm"></i>
-                                        <span class="text-gray-700 text-sm font-medium ml-1">4.9</span>
-                                        <span class="text-gray-400 text-sm ml-1">(128)</span>
-                                    </div>
-                                </div>
-
-                                <div class="w-full text-left">
-                                    <a href="#" class="lg:text-lg text-md font-bold text-gray-800 mb-1 line-clamp-2 text-left hover:text-HoverGlow active:text-ButtonBase">
-                                        Advanced React Patterns and Modern JavaScript Techniques
-                                    </a>
-                                    <p class="text-gray-500 text-xs mb-4 line-clamp-2 text-left cursor-default">Master React hooks, context API, and advanced state management to </p>
-                                </div>
-
-
-                                <div class="flex items-center justify-between cursor-default">
-                                    <div class="flex items-center">
-                                        <img class="w-8 h-8 rounded-full" src="https://randomuser.me/api/portraits/women/44.jpg" alt="Instructor">
-                                        <div class="ml-2">
-                                            <p class="lg:text-sm text-xs font-medium text-gray-700">Sarah Johnson</p>
-                                            <p class="text-xs text-gray-500">Senior Developer</p>
-                                        </div>
-                                    </div>
-
-                                    <div class="text-right">
-                                        <p class="text-ButtonBase font-bold text-base lg:text-lg">Rp. 6.000.000</p>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!-- Course Footer -->
-                            <!-- <div class="text-right px-6 py-4 bg-gray-50 border-t border-gray-100">
-                                <div class="flex space-x-2">
-                                    <span class="text-xs text-gray-500 flex items-center">
-                                        <i class="fas fa-users mr-1"></i> 245 Students
-                                    </span>
-                                    <span class="text-xs text-gray-500 flex items-center">
-                                        <i class="fas fa-book mr-1"></i> 15 Lessons
-                                    </span>
-                                </div>
-                                <button class="bg-ButtonBase hover:bg-HoverGlow text-white font-medium py-2 px-4 rounded-lg transition-colors duration-300 text-sm">
-                                    Lihat Detail
-                                </button>
-                            </div> -->
-                        </div>
+                        
 
                     </div>
                 </div>

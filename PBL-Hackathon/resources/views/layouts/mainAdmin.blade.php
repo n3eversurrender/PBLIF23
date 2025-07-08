@@ -8,6 +8,7 @@
     @vite(['resources/css/app.css','resources/js/app.js'])
     @vite(['resources/js/Waktu.js'])
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
     <style>
         /* CSS untuk rotasi berlawanan arah jarum jam */
         .rotate-180 {

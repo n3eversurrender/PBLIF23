@@ -12,3 +12,22 @@ myenv/
 
 # Abaikan dependency Python jika pakai pipenv
 Pipfile.lock
+
+# Virtual environment
+venv/
+.env/
+__pycache__/
+*.pyc
+
+# Jupyter/VSCode cache
+.ipynb_checkpoints/
+.vscode/
+
+# Model & download cache (opsional)
+*.bin
+*.pt
+*.h5
+*.ckpt
+
+# HuggingFace cache (opsional)
+~/.cache/huggingface/

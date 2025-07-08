@@ -96,7 +96,7 @@
                 Swal.fire({
                     icon: "error",
                     title: "Validasi gagal!",
-                    html: `{!! implode('<br>', $errors->all()) !!}`
+                   html: "{!! implode('<br>', $errors->all()) !!}"
                 });
             });
         </script>
