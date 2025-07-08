@@ -62,7 +62,7 @@ class CreatePenggunaPelatihPesertaTables extends Migration
         Schema::create('foto_perusahaan', function (Blueprint $table) {
             $table->id('foto_id');
             $table->unsignedBigInteger('perusahaan_id');
-            $table->string('file_path');  
+            $table->string('file_path');
             $table->timestamps();
 
             $table->foreign('perusahaan_id')->references('perusahaan_id')->on('perusahaan')->onDelete('cascade');
@@ -94,16 +94,17 @@ class CreatePenggunaPelatihPesertaTables extends Migration
             $table->id('peserta_id');
             $table->unsignedBigInteger('pengguna_id')->nullable();
 
-            $table->enum('status', ['Mahasiswa', 'Pekerja', 'Dosen', 'Lainnya'])->nullable();
+            $table->enum('status', ['Mahasiswa', 'Pekerja', 'Siswa'])->nullable();
             $table->enum('pendidikan', ['SD', 'SMP', 'SMA', 'D3', 'S1', 'S2', 'S3'])->nullable();
 
             $table->string('minat_bidang')->nullable();
-            $table->json('bidang_saat_ini')->nullable(); // Contoh: [{"bidang": "Welding", "tahun": 2, "bulan": 3}, ...]
+            $table->string('bidang_saat_ini')->nullable();
             $table->json('kemampuan')->nullable(); // Contoh: ["AutoCAD", "SolidWorks", "CNC"]
 
             $table->integer('tahun_pengalaman')->nullable();
             $table->integer('bulan_pengalaman')->nullable();
             $table->string('nama_keahlian')->nullable();
+            $table->enum('level', ['Pemula', 'Menengah', 'Lanjutan'])->nullable();
 
             $table->foreign('pengguna_id')->references('pengguna_id')->on('pengguna')->onDelete('cascade');
             $table->timestamps();
@@ -162,6 +163,20 @@ class CreatePenggunaPelatihPesertaTables extends Migration
 
             $table->foreign('kursus_id')->references('kursus_id')->on('kursus')->onDelete('cascade');
             $table->timestamps();
+        });
+
+        // Tabel skill matching
+        Schema::create('skill', function (Blueprint $table) {
+            $table->id('skillmatching_id');
+            $table->unsignedBigInteger('peserta_id');
+            $table->unsignedBigInteger('kursus_id');
+            $table->decimal('score', 10, 4);
+
+            // Foreign Key
+            $table->foreign('peserta_id')->references('peserta_id')->on('peserta')->onDelete('cascade');
+            $table->foreign('kursus_id')->references('kursus_id')->on('kursus')->onDelete('cascade');
+
+            $table->unique(['peserta_id', 'kursus_id']);
         });
 
 
@@ -239,5 +254,6 @@ class CreatePenggunaPelatihPesertaTables extends Migration
         Schema::dropIfExists('pengguna');
         Schema::dropIfExists('sub_kategori');
         Schema::dropIfExists('kategori');
+        Schema::dropIfExists('skill');
     }
 }

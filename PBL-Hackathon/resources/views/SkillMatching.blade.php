@@ -66,9 +66,9 @@
                         <label class="block mb-2 text-sm font-semibold text-gray-950 dark:text-white">
                         Bidang Saat ini
                         </label>
-                        <input type="text" name="bidang" class="border w-full border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        <input type="text" name="bidang_saat_ini" class="border w-full border-Border text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="Masukkan bidang saat ini">  
-                        @error('bidang')
+                        @error('bidang_saat_ini')
                             <span class="text-red-500 text-sm mt-1 block">{{ $message }}</span>
                         @enderror
                     </div>
@@ -144,4 +144,20 @@
             </div>
         </div>
     </div>
+
+    @if (session('error'))
+    <script>
+        // {{ session('error') }}
+        document.addEventListener('DOMContentLoaded', (event) => {
+            Swal.fire({
+                icon: 'error',
+                title: "{{ session('error') }}",
+                confirmButtonText: 'OK',
+                customClass: {
+                    confirmButton: 'my-swal-button'
+                }
+            });
+        });
+    </script>
+@endif
 </body>
