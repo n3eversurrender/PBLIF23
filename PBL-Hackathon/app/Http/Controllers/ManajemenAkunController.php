@@ -66,4 +66,52 @@ class ManajemenAkunController extends Controller
     {
         return view('guest/Masuk', []);
     }
+
+    public function apiMasuk(Request $request)
+    {
+        // Validasi input
+        $validator = Validator::make($request->all(), [
+            'email' => 'required|email',
+            'kata_sandi' => 'required|string',
+        ]);
+
+        if ($validator->fails()) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Validasi gagal',
+                'errors' => $validator->errors(),
+            ], 422);
+        }
+
+        // Cari pengguna berdasarkan email
+        $user = Pengguna::where('email', $request->email)->first();
+
+        if (!$user) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Email tidak ditemukan',
+            ], 404);
+        }
+
+        // Cek password
+        if (!Hash::check($request->kata_sandi, $user->kata_sandi)) {
+            return response()->json([
+                'status' => 'error',
+                'message' => 'Kata sandi salah',
+            ], 401);
+        }
+
+        // Jika berhasil, bisa return data user atau token
+        return response()->json([
+            'status' => 'success',
+            'message' => 'Login berhasil',
+            'data' => [
+                'user_id' => $user->pengguna_id,
+                'nama' => $user->nama,
+                'email' => $user->email,
+                'peran' => $user->peran,
+                // kalau pakai token (misal JWT) bisa ditambahkan di sini
+            ],
+        ]);
+    }
 }

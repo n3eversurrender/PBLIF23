@@ -3,6 +3,7 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\DataPengguna;
+use App\Http\Controllers\ManajemenAkunController;
 use App\Http\Controllers\PaymentController;
 
 // // API route group
@@ -23,3 +24,4 @@ Route::delete('/pengguna/destroy/{id}', [DataPengguna::class, 'destroy']);
 
 Route::post('/payment/notification', [PaymentController::class, 'handleNotification']);
 
+Route::post('/Masuk', [ManajemenAkunController::class, 'apiMasuk'])->name('api.masuk');

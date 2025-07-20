@@ -105,6 +105,7 @@ class CreatePenggunaPelatihPesertaTables extends Migration
             $table->integer('bulan_pengalaman')->nullable();
             $table->string('nama_keahlian')->nullable();
 
+            
             $table->foreign('pengguna_id')->references('pengguna_id')->on('pengguna')->onDelete('cascade');
             $table->timestamps();
         });

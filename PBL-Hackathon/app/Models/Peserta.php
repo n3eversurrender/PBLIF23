@@ -20,6 +20,7 @@ class Peserta extends Model
         'bidang_saat_ini',
         'bidang',
         'nama_keahlian',
+        'kemampuan',
         'level'
     ];
 
